@@ -1,0 +1,457 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153204503-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-153204503-1');
+</script>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Sosho</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <%--<meta name="title" content="Nadiad's Famous Aaswad  Green Chilli Mathiya at ₹90/500g" />--%>
+   <%-- <meta name="description" content="OFFER ONLY TILL 25 OCT 2019 12 PM | DELIVERY TO AHMEDABAD ONLY | FREE SHIPPING | CASH ON DELIVERY | DELIVERY IN 2-3 WORKING DAYS | SPECIAL OFFERS DAILY" />
+    <meta name="keywords" content="mathiya, green chilly mathiya, snacks, Indian snacks, Indian mathiya, gujarati snacks, snacks online, mathiya online" />--%>
+    <meta content="http://sosho.in/" name="og:site_name" />
+    <meta content="blog" name="og:type" />
+    <meta content="http://sosho.in" name="og:url" />
+   <%-- <meta content="http://sosho.in/images/og_image/Sosho_Mathiya.png" name="og:image" />--%>
+    <meta property="og:image" content="http://admin.salebhai.in:98/ProductOGImage/sosho-logo.jpg"/>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    
+
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+   <%-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>--%>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+    <form id="form1" runat="server">
+
+        <div class="col-md-12 top hide">
+            <div class="col-md-6"></div>
+            <div class="col-md-6 padding">
+                <div class="login-options" runat="server" id="divlogininfo1">
+                    <%--    <asp:LinkButton ID="" Text="Registration" runat="server" />
+                       <i class="fa fa-user-plus"></i> <asp:Button ID="registration" runat="server" Text="Registration" />
+                             <i class="fa fa-sign-in"></i> <asp:Button ID="login" runat="server" Text="Login" />--%>
+                    <p><i class="fa fa-user-plus"></i><span><a href="register.aspx">Registration</a></span></p>
+                    <p><i class="fa fa-sign-in"></i><span><a href="register.aspx">Login</a></span></p>
+                </div>
+            </div>
+        </div>
+      
+
+        <%--header top strat--%>
+        <div class="header hide">
+            <div class="container">
+                <div class="col-md-6 col-sm-6 col-xs-6 padding">
+                    <a href="default.aspx">
+                        <img src="images/logo.png" /></a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 padding">
+                    <div class="right-section">
+                        <div class="icon section1"><i class="fa fa-whatsapp" aria-hidden="true"></i><span>7069926537</span></div>
+                        <div class="icon section2"><i class="fa fa-phone" aria-hidden="true"></i><span>7069926537</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <%--header top strat--%>
+        <%--final-layout strat--%>
+        <header class="custom-header">
+            <div class="custom-header-container">
+                <div class="row section-top">
+                    <div class="custom-header-menu-wrap custom-header-flex">
+                        <div class="custom-header-logo">
+                            <a href="Default.aspx" title="Logo">
+                                <img src="images/sosho-logo.png" /></a>
+                        </div>
+                        <div class="mobile-number">
+                            <p  id="app">
+                                <img src="images/whatsapp_tiny.png" /><span><button @click="sendMessage" style="background:#fff;border:none" id="btnsendMessage">6359408097</button></span>
+                                <input type="hidden" id="hdnJurisdictionId" />
+                            </p>
+                        </div>
+                        <div id="lblshow" runat="server">
+                        <a class="custom-header-toggle-button" href="javascript:void(0);" id="Menulist1">
+                            <img class="custom-header-menu-nav-icon" src="images/align-justify1.png" alt="Nav" />
+                            <img class="custom-header-menu-close-icon" src="images/close-button.png" alt="Close" />
+                        </a>
+                        </div>
+
+                        <ul class="custom-header-menu custom-header-flex custom-header-animate" id="lbllogout" runat="server">
+
+                            <%--<li><a href="address_diary.aspx">Personal Information</a></li>
+                            <li><a href="wallet.aspx">My Wallet</a></li>
+                            <li><a href="order.aspx">My Order</a></li>
+                            <li><a href="register.aspx" id="lbllogout1" runat="server"></a></li>--%>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row offer-time">
+                    <div class="col-md-12">
+                        <div class="col-md-6 col-sm-6 col-xs-7 padding">
+                            <i class="fa fa-map-marker" style="font-size: 25px; color: red"></i>
+                            <span id="spanpincode"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+              <%--  <div class="row offer-time">
+                    <div class="col-md-12">--%>
+                        <%--<div class="">--%>
+                            <%--<div class="col-md-7 col-sm-6 col-xs-8 padding">--%>
+                              <%--  <div class="col-md-6 col-sm-6 col-xs-7 padding">
+                                <div id="location" class="inner">
+                                    <div  class="address-search">
+                                    <img src="images/Icon.png" />
+                                        
+                                        <input type="text" id="txtpincode" class="avability" placeholder="Pin code" style="height: 27px; width:60px;" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="6" />
+                <input type="button" runat="server" id="btncheckpincode" class="check-btnnew" value="Check" onclick="checkservices()" /> 
+                                    <span id="lblpinmsg" runat="server" style="height: 16px; color: green; align-content: center; font: bold; /* size: 37px; */font-size: 14px; margin: 0"></span>
+                <span id="lblpinnotmsg" runat="server" style="height: 16px; color: red; align-content: center; font: bold; /* size: 37px; */font-size: 14px; margin: 4px"></span>
+                                    </div>--%>
+                                        
+                                 <%--   /*<style>
+                                        body {
+                                                  font-family: 'Titillium Web', cursive;
+                                                  width: 800px;
+                                                  margin: 0 auto;
+                                                  text-align: center;
+                                                  color: white;
+                                                  background: #222;
+                                                  font-weight: 100;
+                                                }
+
+                                                div {
+                                                  display: inline-block;
+                                                  line-height: 1;
+                                                  padding: 20px;
+                                                  font-size: 40px;
+                                                }
+
+                                                span {
+                                                  display: block;
+                                                  font-size: 20px;
+                                                  color: white;
+                                                }
+
+                                        #days {
+                                            font-size: 17px;
+                                            color: #db4844;
+                                        }
+
+                                        #hours {
+                                            font-size: 17px;
+                                            color: #f07c22;
+                                        }
+
+                                        #minutes {
+                                            font-size: 17px;
+                                            color: #f6da74;
+                                        }
+
+                                        #seconds {
+                                            font-size: 17px;
+                                            color: #abcd58;
+                                        }
+                                    </style>*/--%>
+
+                                    <script>
+                                        //function convert123(str) {
+                                        //    var date = new Date(str),
+                                        //      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+                                        //      day = ("0" + date.getDate()).slice(-2);
+                                        //    return [date.getFullYear(), mnth, day].join("-");
+                                        //}
+
+                                        //$(document).ready(function () {
+
+
+                                        //    function makeTimer() {
+
+                                        //        var data123 = $("#lblenddate").val();
+                                        //        var datae = convert123(data123);
+                                        //        alert(datae);
+                                        //        //		var endTime = new Date("29 April 2018 9:56:00 GMT+01:00");	
+
+                                        //        var endTime = new Date(datae);
+                                        //        endTime = (Date.parse(endTime) / 1000);
+
+                                        //        var now = new Date();
+                                        //        now = (Date.parse(now) / 1000);
+
+                                        //        var timeLeft = endTime - now;
+
+                                        //        var days = Math.floor(timeLeft / 86400);
+                                        //        var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
+                                        //        var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600)) / 60);
+                                        //        var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
+
+                                        //        if (hours < "10") { hours = "0" + hours; }
+                                        //        if (minutes < "10") { minutes = "0" + minutes; }
+                                        //        if (seconds < "10") { seconds = "0" + seconds; }
+
+                                        //        $("#days").html(days + "<span>Days</span>");
+                                        //        $("#hours").html(hours + "<span>Hours</span>");
+                                        //        $("#minutes").html(minutes + "<span>Minutes</span>");
+                                        //        $("#seconds").html(seconds + "<span>Seconds</span>");
+
+                                        //    }
+
+                                        //    setInterval(function () { makeTimer(); }, 1000);
+
+                                        //});
+
+
+
+                                    </script>
+
+                                    <script>
+                                          <%--function checkservices() {
+
+                                              var pincode = $("#txtpincode").val();
+                                              var msg1 = "<%=clsCommon.Pincodemaxlen6erromsg%>";
+                                              var strlen = pincode.length;--%>
+                        //if (strlen == 6)
+                        //{
+                                              //$.ajax({
+
+                                              //    type: "POST",
+                                              //    url: "Default.aspx/PincodeCheck",
+                                              //    data: '{Pincode:"' + pincode + '"}',
+                                              //    contentType: "application/json",
+                                              //    dataType: "json",
+
+                                              //    success: function (response) {
+
+                                              //        var getdata = {
+                                              //            data: JSON.parse(response.d),
+                                              //        }
+                                              //        var message = getdata.data.Message;
+                                              //        var resultflag = getdata.data.resultflag;
+                                                      //alert(resultflag);
+                                                    <%--  if (resultflag == "1") {
+                                                          $("#lblpinnotmsg").hide();
+                                                          $("#lblpinmsg").show();
+                                                          var labelObj = document.getElementById("<%=lblpinmsg.ClientID %>");
+                                                          labelObj.innerHTML = message;
+                                                          $("#lblpinmsg").val(message);
+                                                      }
+                                                      else {
+                                                          $("#lblpinmsg").hide();
+                                                          $("#lblpinnotmsg").show();
+                                                          var labelObj = document.getElementById("<%=lblpinnotmsg.ClientID %>");
+                                                          labelObj.innerHTML = message;
+                                                          $("#lblpinnotmsg").val(message);
+                                                      }
+                                                  },
+                                                  failure: function (response) {
+
+                                                      alert("Something Wrong....");
+
+                                                  }
+                                              });--%>
+                                        //}
+
+                                        // };
+
+
+
+                                        //$(document).ready(function () {
+                                        //    var x = setInterval(function () {
+                                        //        $('#ContentPlaceHolder1_content').find('.offer-time').each(function (index) {
+
+                                        //            // Set the date we're counting down to
+                                        //            var data123 = $(this).find("#lblenddate").val();
+
+
+                                        //            var ddd = Date.parse(data123);
+                                        //            //var countDownDate = new Date("Oct 15, 2019 12:00:00").getTime();
+                                        //            var countDownDate = new Date(ddd).getTime();
+
+                                        //            // Update the count down every 1 second
+
+
+                                        //            // Get today's date and time
+                                        //            var now = new Date().getTime();
+
+                                        //            // Find the distance between now and the count down date
+                                        //            var distance = countDownDate - now;
+
+                                        //            // Time calculations for days, hours, minutes and seconds
+                                        //            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                        //            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                        //            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                        //            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                        //            // Output the result in an element with id="demo"
+                                        //            //document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                                        //            //+ minutes + "m " + seconds + "s ";
+                                        //            $(this).find("#demo")[0].innerHTML = days + "d " + hours + "h "
+                                        //                + minutes + "m " + seconds + "s ";
+
+                                        //            // If the count down is over, write some text 
+                                        //            if (distance < 0) {
+                                        //                clearInterval(x);
+                                        //                $(this).find("#demo")[0].innerHTML = "EXPIRED";
+                                        //            }
+                                        //        });
+                                        //    }, 1000);
+
+
+                                        //});
+</script>
+
+                                </div>
+                           <%-- </div>--%>
+                            <%--<div class="col-md-5 col-sm-6 col-xs-4 padding">--%>
+                                <%--<div class="col-md-6 col-sm-6 col-xs-5 padding">--%>
+                                <%--<div class="offer-zone">
+                                    <span id="Button1" class="button" runat="server"></span>
+                                </div>--%>
+                                 
+                               <%-- <div class="offer-zone">
+                                    <p id="count"></p>
+                                    <span id="cnfrm" class="button hide" onclick="ConfirmOrder()" style="cursor: pointer;"> Confirm Order </span>
+                                </div>--%>
+                           <%-- </div>--%>
+                            <%--<div id="divMainloader" style="text-align:center;display:none;">
+                                Loading...
+                            </div>--%>
+                      <%--  </div>--%>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <%--final-layout end--%>
+        <div class="container">
+            <div class="main-content">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+            <div class="row hide">
+        <div id="top-footer">
+            <p id="ms" runat="server"></p>
+        </div>
+    </div>
+        <div class="footer hide">
+
+            <div class="copyright" style="padding: 10px;">© 2019 <a href="http://www.xpditesolutions.com">Expedite Solution</a> All rights reserved.</div>
+        </div>
+
+        <div id="message" class="msg">
+            Loding....
+        </div>
+    
+    </form>
+    <script>
+        //var vm = new Vue({
+        //    el: '#app',
+        //    data: {
+        //        tel: '',
+        //    },
+        //    methods: {
+        //        sendMessage: function (event) {
+        //            window.open('https://api.whatsapp.com/send?phone=916359408097' + this.tel.trim());
+        //        }
+        //    }
+        //});
+    </script>
+    <script>
+        var ranNum = Math.floor(Math.random() * Math.floor(14382));
+       <%-- $.ajax({
+            url: '<%=clsCommon.strApiUrl%>/api/Common/getRandomMessageTextForPopup',
+            method: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: { "randomNumber": ranNum },
+            success: function (data) {
+                var m = $("#message");
+                m.addClass("is-visible");
+                m.removeClass("is-removed");
+                showMessage(data.message, data.response);
+            },
+            fail: function (jqXHR, textStatus) {
+            }
+        })--%>
+</script>
+ <script>
+
+     //$(function () {
+     //    window.setInterval(function () {
+             /// call your function here
+
+      <%--   var ranNum = Math.floor(Math.random() * Math.floor(14382));
+         $.ajax({
+             url: '<%=clsCommon.strApiUrl%>/api/Common/getRandomMessageTextForPopup',
+             method: 'GET',
+             dataType: 'json',
+             contentType: 'application/json; charset=utf-8',
+             data: { "randomNumber": ranNum },
+             success: function (data) {
+                 var m = $("#message");
+                 m.addClass("is-visible");
+                 m.removeClass("is-removed");
+                 showMessage(data.message, data.response);
+             },
+             fail: function (jqXHR, textStatus) {
+             }
+         })
+         }, 300000);--%>
+     //});
+
+     //function showMessage(s,k) {
+     //    var m = $("#message");
+     //    m.html(s);
+
+     //    m.addClass("is-visible");
+     //    if (k != "Success") {
+     //        $("#Button1").html(k);
+     //    }
+     //    //setTimeout(function () {
+     //        //m.removeClass("is-visible");
+     //        //m.addClass("is-hidden");
+     //    setTimeout(function () {
+     //        m.removeClass("is-visible");
+     //            m.addClass("is-removed");
+     //    }, 10000);
+     //    //}, 10000);
+     //}
+ </script>
+    <script>
+        (function () {
+            document.querySelector('.custom-header-toggle-button').addEventListener('click', function () {
+                document.querySelector('.custom-header').classList.toggle("custom-header-navbar-expanded");
+                document.querySelector('body').classList.toggle("custom-header-overlay");
+            }, false);
+        })();
+
+
+    </script>
+    
+</body>
+</html>
