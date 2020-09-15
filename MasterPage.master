@@ -24,8 +24,10 @@
     <meta content="blog" name="og:type" />
     <meta content="http://sosho.in" name="og:url" />
    <%-- <meta content="http://sosho.in/images/og_image/Sosho_Mathiya.png" name="og:image" />--%>
-    <meta property="og:image" content="http://admin.salebhai.in:98/ProductOGImage/sosho-logo.jpg"/>
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet" />
+    <%--<meta property="og:image" content="http://admin.salebhai.in:98/ProductOGImage/sosho-logo.jpg"/>--%>
+    <meta property="og:image" content="images/newsosho_logo.png"/>
+    <%--<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet" />--%>
+    <link href="css/bootstrap-3.0.0-glyphicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link href="css/style.css" rel="stylesheet" />
@@ -33,7 +35,8 @@
     
 
     
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <%--<script src="https://code.jquery.com/jquery-3.4.1.js"></script>--%>
+    <script src="js/jquery-3.4.1.js"></script>
    <%-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>--%>
@@ -52,7 +55,7 @@
                        <i class="fa fa-user-plus"></i> <asp:Button ID="registration" runat="server" Text="Registration" />
                              <i class="fa fa-sign-in"></i> <asp:Button ID="login" runat="server" Text="Login" />--%>
                     <p><i class="fa fa-user-plus"></i><span><a href="register.aspx">Registration</a></span></p>
-                    <p><i class="fa fa-sign-in"></i><span><a href="register.aspx">Login</a></span></p>
+                    <p><i class="fa fa-sign-in"></i><span><a href="register.aspx" style="color:#FFFFFF;">Login</a></span></p>
                 </div>
             </div>
         </div>
@@ -83,12 +86,17 @@
                     <div class="custom-header-menu-wrap custom-header-flex">
                         <div class="custom-header-logo">
                             <a href="Default.aspx" title="Logo">
-                                <img src="images/sosho-logo.png" /></a>
+                                <%--<img src="images/sosho-logo.png" />--%>
+                                <img src="images/newsosho_logo.png" />
+                            </a>
                         </div>
                         <div class="mobile-number">
-                            <p  id="app">
-                                <img src="images/whatsapp_tiny.png" /><span><button @click="sendMessage" style="background:#fff;border:none" id="btnsendMessage">6359408097</button></span>
+                            <p  id="app" style="background:#1DA1F2;color:#FFFFFF;">
+                                <%--<img src="images/whatsapp_tiny.png" /><span><button @click="sendMessage" style="background:#fff;border:none" id="btnsendMessage">6359408097</button></span>--%>
+                                <img src="images/whatsapp_tiny.png" /><span><button @click="sendMessage" style="background:#1DA1F2;color:#FFFFFF;border:none" id="btnsendMessage">6359408097</button></span>
                                 <input type="hidden" id="hdnJurisdictionId" />
+                                <input type="hidden" id="hdnProductEndNo"/>
+                                <input type="hidden" id="hdnBannerCount" />
                             </p>
                         </div>
                         <div id="lblshow" runat="server">
@@ -109,15 +117,33 @@
                     </div>
                 </div>
 
-                <div class="row offer-time">
+                <div class="row offer-time" style="background:#1DA1F2;color:#FFFFFF;font-size:16px;">
                     <div class="col-md-12">
-                        <div class="col-md-6 col-sm-6 col-xs-7 padding">
-                            <i class="fa fa-map-marker" style="font-size: 25px; color: red"></i>
-                            <span id="spanpincode"></span>
+                        <div class="col-md-6 col-sm-6 col-xs-5 padding">
+                            <%--<i class="fa fa-map-marker" style="font-size: 25px; color: red"></i>--%>
+                            <i class="fa fa-map-marker"></i>
+                            <span style="color:#FFFFFF;font-size:16px;font-family:'Amazon Ember'">Deliver to </span>
+                            <span id="spanpincode" style="color:#FFFFFF;font-size:16px;font-family:'Amazon Ember';cursor:pointer;" onclick="CallPinCodePopup()"></span>
                         </div>
+                         
+                             <div class="col-md-6 col-sm-6 col-xs-5 padding">
+                                <div class="offer-zone">
+                                    <%--<p id="count" style="font-family:'Amazon Ember';text-align:right;"></p>--%>
+                                    <span id="count" style="color:#FFFFFF;font-family:'Amazon Ember'"></span>
+                                    <span id="cnfrm" class="button hide" onclick="ConfirmOrder()" style="cursor: pointer;text-align:left;"> Confirm Order </span>         
+                                    <input type="hidden" id="hdnProductCount" />
+                                </div>
+                                 </div>
+                            <%-- <div class="col-md-3 col-sm-3 col-xs-4 padding">
+                                 <div class="offer-zone">
+                                <span id="cnfrm" class="button hide" onclick="ConfirmOrder()" style="cursor: pointer;text-align:left;"> Confirm Order </span>         
+                            </div>--%>
+                             </div>
+                            
+                        
                     </div>
                 </div>
-
+                
 
               <%--  <div class="row offer-time">
                     <div class="col-md-12">--%>
@@ -336,15 +362,15 @@
                                <%-- <div class="offer-zone">
                                     <p id="count"></p>
                                     <span id="cnfrm" class="button hide" onclick="ConfirmOrder()" style="cursor: pointer;"> Confirm Order </span>
-                                </div>--%>
-                           <%-- </div>--%>
+                                </div>
+                            </div>--%>
                             <%--<div id="divMainloader" style="text-align:center;display:none;">
                                 Loading...
                             </div>--%>
                       <%--  </div>--%>
-                    </div>
+                    <%--</div>
                 </div>
-            </div>
+            </div>--%>
         </header>
         <%--final-layout end--%>
         <div class="container">
@@ -363,9 +389,9 @@
             <div class="copyright" style="padding: 10px;">© 2019 <a href="http://www.xpditesolutions.com">Expedite Solution</a> All rights reserved.</div>
         </div>
 
-        <div id="message" class="msg">
+       <%-- <div id="message" class="msg">
             Loding....
-        </div>
+        </div>--%>
     
     </form>
     <script>

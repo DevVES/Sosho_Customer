@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="category.aspx.cs" Inherits="category" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
@@ -16,11 +16,6 @@
 
         #web {
             display: block;
-        }
-
-        /* Solid border */
-        hr.solid {
-            border-top: 3px solid #bbb;
         }
 
         .CategoryImagecenter {
@@ -148,11 +143,6 @@
 
         .WeightText {
             width: 120px;
-        }
-
-        .boldPackSize {
-            background-Color: #F00;
-            color: #FFF;
         }
 
         @media only screen and (max-width: 600px) {
@@ -405,12 +395,18 @@
 
 
 
-    <div id="divCategory" class="ca-new-container" runat="server">
+    <div id="divCategory" runat="server" style="color: #1A1A1A; font-family: 'Amazon Ember'; font-weight: bold;">
+        <div class="col-md-12" style="text-align:center;font-size:22px">
+            <asp:Label ID="lblCategoryName" runat="server"></asp:Label>
+        </div>
+        <div class="col-md-12" style="display:none;" id="divOrderMsg">
+            <span style="font-size:21px;">No order has been placed</span>
+        </div>
     </div>
-
-    <div id="divBannerImage">
+    <div id="div" style="display: none;">
+        <asp:Label ID="lblCategoryId" runat="server"></asp:Label>
+        <asp:Label ID="lblJurisdictionId" runat="server"></asp:Label>
     </div>
-
     <%--<div class="row">
         <div class="offer-banner">--%>
     <%--<img src="images/Testing/BannerImage/Deals and Offers_Strip Banner_940 x 120px(1).jpg" class="img" />--%>
@@ -660,7 +656,7 @@
                             </fieldset>
                         </div>
                         <div style="text-align: center;">
-                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()" id="BtnPinCodeApply">Apply</button>
+                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()">Apply</button>
                         </div>
                     </form>
                 </div>
@@ -670,38 +666,18 @@
 
 
     <%--Product Description Modal Popup--%>
-    <%--<div id="modalProductDescription" class="modalcenter fade">--%>
-    <div id="modalProductDescription" class="modal">
+    <div id="modalProductDescription" class="modalcenter fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <div id="home-product-detail">
-                            <div class="product-description">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-5">
-                                    <div id="ProdName" style="color: #FFFFFF; font-family: 'Amazon Ember'; font-weight: bold; text-align: center;"></div>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" class="btn close" aria-label="Close" data-dismiss="modal">
-                                        <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="description">
-                                    <div class="inner">
-                                        <h5>Description</h5>
-                                        <div id="divPDescription" style="font-family: 'Amazon Ember';"></div>
-                                    </div>
-                                </div>
-                                <div class="feature">
-                                    <div class="inner">
-                                        <h5>Key features</h5>
-                                        <div id="divPKeyFeature" style="font-family: 'Amazon Ember';"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="ProdName" style="font-family: 'Amazon Ember'; font-weight: bold;"></h4>
+                </div>
+
+                <div class="modal-body" style="text-align: left;">
+                    <p style="font-family: 'Amazon Ember'; font-weight: bold;">Description:</p>
+                    <div id="divPDescription" style="font-family: 'Amazon Ember';"></div>
+                    <p style="font-family: 'Amazon Ember'; font-weight: bold;">Key Features:</p>
+                    <div id="divPKeyFeature" style="font-family: 'Amazon Ember';"></div>
                 </div>
 
             </div>
@@ -714,9 +690,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="PackingProdName" style="font-family: 'Amazon Ember'; font-weight: bold;"></h4>
-                    <button type="button" class="btn close" aria-label="Close" data-dismiss="modal">
-                        <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
-                    </button>
                 </div>
 
                 <div class="modal-body" style="text-align: left;">
@@ -921,37 +894,7 @@
             var dataval = parent.find('input');
             dataval[0].value = value;
         }
-        function BannerAddClick(rowindex, prodid, mrp, el) {
-            $('#divBannerAddShow' + rowindex).show();
-            $('#divBannerAdd' + rowindex).hide();
 
-            var $this = $(el);
-
-            var qty = $('#divBannerAddShow' + rowindex).find('input').val();
-
-            var grpId = prodid;
-            var productvariant = "BannerProduct";
-            var unitId = $('#hdnddlUnit' + rowindex).val();
-            var unitvalue = $('#hdnddlUnit' + rowindex).val();
-            var parts = unitvalue.split('-');
-            obj = {
-                Productid: prodid,
-                Grpid: grpId,
-                Mrp: parseInt(mrp),
-                Qty: parseInt(qty),
-                Unit: parts[0],
-                UnitId: parts[1],
-                Productvariant: productvariant
-
-            }
-            products.push(obj);
-            count = products.length;
-            if (products.length > 0) {
-                $('#count')[0].innerHTML = count + " Product Added";
-                $('#cnfrm').removeClass('hide');
-                $('#hdnProductCount').val(count);
-            }
-        }
         function BuyFivewithFriend_Click(prodid, mrp, PWeight, el) {
             $('#count')[0].innerHTML = "";
             $('#cnfrm').addClass('hide');
@@ -1161,30 +1104,16 @@
                 }
             });
         }
-        function Categoryimage(categoryId, categoryName, el) {
-            var JurisdictionId = $("#hdnJurisdictionId").val();
-            window.location = "category.aspx?categoryId=" + categoryId + "&JurisdictionId=" + JurisdictionId + "&CatgoryName=" + categoryName + "";
+        function Categoryimage(categoryId, el) {
+            window.location = "category.aspx";
         }
-        function image(rowindex, prodid, el) {
+        function image(rowindex, el) {
             $('#divPDescription').text('');
             $('#divPKeyFeature').text('');
             $('#hdnPName' + rowindex).val();
             $('#ProdName').text($('#hdnPName' + rowindex).val());
-
-            if (AllProducts.length > 0) {
-                var FilterProduct = AllProducts[0].find(x => x.ProductId == prodid);
-                if (FilterProduct != null && FilterProduct != undefined) {
-                    var sDesc = FilterProduct.ProductDescription;
-                    var sKeyfeature = FilterProduct.ProductKeyFeatures;
-
-                    $('#divPDescription').append(sDesc);
-                    $('#divPKeyFeature').append(sKeyfeature);
-                }
-            }
-
-            //$('#divPDescription').append($('#hdnPDescription' + rowindex).val());
-            //$('#divPKeyFeature').append($('#hdnPKeyFeature' + rowindex).val());
-
+            $('#divPDescription').append($('#hdnPDescription' + rowindex).val());
+            $('#divPKeyFeature').append($('#hdnPKeyFeature' + rowindex).val());
             $('#modalProductDescription').modal('show');
 
         }
@@ -1284,7 +1213,7 @@
 
 
 
-    <%-- <!-- The Modal -->
+    <!-- The Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1300,28 +1229,28 @@
                                         <%-- <ul  id="lblproductdec" runat="server">
                           
                         </ul>--%>
-    <%-- </div>
+                                    </div>
                                 </div>
                                 <div class="feature">
                                     <div class="inner">
                                         <h5>Key features</h5>
                                         <div id="lblprodkeyfeature" runat="server">
-                                        </div>--%>
-    <%--<ul id="lblprodkeyfeature" runat="server">
+                                        </div>
+                                        <%--<ul id="lblprodkeyfeature" runat="server">
                            
                            
                         </ul>--%>
-    <%--</div>
+                                    </div>
                                 </div>
                                 <div class="notes">
                                     <div class="inner">
                                         <h5>Terms & conditions</h5>
                                         <div id="lblprodnote" runat="server">
-                                        </div>--%>
-    <%--                        <ul id="lblprodnote" runat="server">
+                                        </div>
+                                        <%--                        <ul id="lblprodnote" runat="server">
                            
                         </ul>--%>
-    <%--                          </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1335,7 +1264,7 @@
 
             </div>
         </div>
-    </div>--%>
+    </div>
 
     <div class="container hide">
         <div class="product-title">
@@ -1445,52 +1374,53 @@
         <script>
             $(document).ready(function () {
                 //$("#myPinCodeModal").modal('show');
-                $('.mobile-number').hide();
-                $('.offer-time').hide();
-                $('#ContentPlaceHolder1_divCategory').hide();
-                $('#lbllogout').hide();
-                $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
 
-                //$(document).on('click', '#dvPackSizeModal0', function () {
-                //    alert("H111led.");
-                //});
+                //$('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
+
+
+
                 //const urlParams1 = new URLSearchParams(window.location.search);
 
                 //if (urlParams1 != null && urlParams1 != "") {
 
                 //    lbllogout.InnerHtml = "<li><p><span><a href=\"register.aspx\">Login</a></span></p><li>";
                 //}
+                var JurisdictionId = $("#ContentPlaceHolder1_lblJurisdictionId").text();
+                var CategoryId = $('#ContentPlaceHolder1_lblCategoryId').text();
 
+                $.ajax({
+                    type: 'POST',
+                    url: "category.aspx/GetCategoryProductdata",
+                    data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",CategoryId:"' + CategoryId + '"}',
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.d.response == "") {
+                            $('#divOrderMsg').show();
+                        }
+                        else {
+                            var ProductEndNo = parseInt("5");
+                            $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                            //var getdata = {
+                            //    data: JSON.parse(response.d.whatsapp),
+                            //}
+                            //$("#btnsendMessage").text(getdata.data);
+                            $("#btnsendMessage").text(response.d.whatsapp);
+                            //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
+                            $("#divProductNew").append(response.d.response);
+
+                            AllProducts.push(response.d.productdata.ProductList);
+                        }
+                    },
+                    failure: function (response) {
+
+                        alert("Something Wrong....");
+
+                    }
+                });
 
             });
-            //$(document).on('click', '#dvPackSizeModal0', function () {
-            //    alert("H111led.");
-            //});
-            // Attach a click event to every span inside the DIV.
-            $('#divPackSize').on('click', 'div', function () {
-                //$(this).parent().removeClass("boldPackSize");
-                var check = $(this);
-                $(this).css({ 'backgroundColor': '#F00', 'color': '#FFF' });    // Change its style.
 
-                var AttrId = $(this).attr("id");
-                var AttrIndex = $(this).attr("id").replace('dvPackSizeModal', '');
-                var AttrProductId = $(this).find("#hdnPackSizeProductId" + AttrIndex).text();
-                var AttrGrpId = $(this).find("#hdnPackSizeGrpId" + AttrIndex).text();
-
-                //Hide Modeal Popup
-                $('#modalProductPackingSize').modal('hide');
-
-                //Hide Product
-                $('.trProductId' + AttrProductId).css('display', 'none');
-
-                //Show Grp Product
-                $('.trGrp' + AttrGrpId).css('display', '');
-            });
-
-            //   $("#divPackSize").click(function(evt){
-            //alert($(this).attr("id"));
-
-            //});
             function Newcheckservices() {
 
                 var pincode = $("#txtPinCodeval").val();
@@ -1498,8 +1428,6 @@
                 var strlen = pincode.length;
                 //if (strlen == 6)
                 //{
-
-                $("#BtnPinCodeApply").attr("disabled", true);
                 $.ajax({
 
                     type: "POST",
@@ -1529,7 +1457,6 @@
                             $("#spanpincode").html(pincode);
                             //Get Product Data Load
 
-                            $("#BtnPinCodeApply").attr("disabled", false);
                             //$.ajax({
                             //    type: 'POST',
                             //    url: "Default.aspx/GetFillData",
@@ -1561,43 +1488,7 @@
                             //        //    "EndNo": '5'
                             //        //};
 
-                            $('#divBannerImage').html('');
-                            $("#divProductNew").html('');
-                            $("#divIntermediateBannerImage").html('');
-                            $('#OtherBanner').html('');
 
-                            $.ajax({
-                                type: 'POST',
-                                url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1"}',
-                                contentType: "application/json",
-                                dataType: "json",
-                                success: function (response) {
-                                    var ProductEndNo = parseInt("5");
-                                    $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
-                                    //var getdata = {
-                                    //    data: JSON.parse(response.d.whatsapp),
-                                    //}
-                                    //$("#btnsendMessage").text(getdata.data);
-
-                                    $('.mobile-number').show();
-                                    $('.offer-time').show();
-                                    $('#ContentPlaceHolder1_divCategory').show();
-                                    $('#lbllogout').show();
-                                    $("#btnsendMessage").text(response.d.whatsapp);
-                                    //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
-                                    $("#divProductNew").append(response.d.response);
-                                    $("#divBannerImage").append(response.d.bannerresponse);
-                                    $("#divIntermediateBannerImage").append(response.d.intermediateresponse);
-                                    AllProducts.push(response.d.productdata.ProductList);
-                                    $("#hdnBannerCount").val(parseInt("1"));
-                                },
-                                failure: function (response) {
-
-                                    alert("Something Wrong....");
-
-                                }
-                            });
 
                             //    },
                             //    failure: function (response) {
@@ -1646,16 +1537,8 @@
                             var sDiscount = FilterProduct.ProductAttributesList[i].Discount;
                             var sWeight = FilterProduct.ProductAttributesList[i].weight;
                             var sisSelected = FilterProduct.ProductAttributesList[i].isSelected;
-                            var grpid = FilterProduct.ProductAttributesList[i].packSizeId;
-                            if (sisSelected == 'true') {
-                                divsize += '<div style="border-radius: 22px; border: solid;background-Color:#F00;" id="dvPackSizeModal' + i + '">';
-                            }
-                            else
-                            {
-                                divsize += '<div style="border-radius: 22px; border: solid;" id="dvPackSizeModal' + i + '">';
-                            }
 
-                            divsize += '<span id="hdnPackSizeProductId' + i + '" style="display:none;">' + prodid + '</span><span id="hdnPackSizeGrpId' + i + '" style="display:none;">' + grpid + '</span>';
+                            divsize += '<div style="border-radius: 22px; border: solid">';
                             divsize += ' <table style="width: 100%; color: black;">';
                             divsize += '<tr>';
                             divsize += '<td style="width: 22%; text-align: center">';
@@ -1673,7 +1556,7 @@
                             divsize += '<tr>';
 
                             divsize += '<td style="width: 22%; text-align: center">Pouch</td>';
-                            divsize += '<td>MRP:<del><span id="spanProductMrp">' + smrp + '</span></del><input type="hidden" id="hdnPackSizeProductId' + i + '" value="' + prodid + '"><input type="hidden" id="hdnPackSizeGrpId' + i + '" value="' + grpid + '"></td>';
+                            divsize += '<td>MRP:<del><span id="spanProductMrp">' + smrp + '</span></del></td>';
                             divsize += '<td></td>';
                             divsize += '<td></td>';
                             divsize += '<td></td>';
@@ -1703,17 +1586,18 @@
             $(window).scroll(function () {
                 if ($(window).scrollTop() + $(window).height() == $(document).height()) {
                     //alert("END!");
-                    var JurisdictionId = $("#hdnJurisdictionId").val();
+
                     //var ProductStartNo = parseInt($('#hdnProductEndNo').val()) + 1;
                     var ProductStartNo = parseInt($('#hdnProductEndNo').val());
                     var ProductEndNo = parseInt(ProductStartNo + 4);
-                    var bannercount = $("#hdnBannerCount").val();
 
+                    var JurisdictionId = $("#ContentPlaceHolder1_lblJurisdictionId").text();
+                    var CategoryId = $('#ContentPlaceHolder1_lblCategoryId').text();
                     if (ProductStartNo > 0) {
                         $.ajax({
                             type: 'POST',
-                            url: "Default.aspx/GetProductdata",
-                            data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '"}',
+                            url: "category.aspx/GetCategoryProductdata",
+                            data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",,CategoryId:"' + CategoryId + '"}',
                             contentType: "application/json",
                             dataType: "json",
                             success: function (response) {
@@ -1722,17 +1606,11 @@
                                     //var getdata = {
                                     //    data: JSON.parse(response.d.whatsapp),
                                     //}
-                                    //$("#btnsendMessage").text(getdata.data);
                                     $("#btnsendMessage").text(response.d.whatsapp);
+                                    //$("#btnsendMessage").text(getdata.data);
                                     //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
-                                    //$("#divProductNew").append(response.d.response);
-                                    var responsenew = response.d.response;
-                                    responsenew += response.d.intermediateresponse;
-                                    //$("#divIntermediateBannerImage").after(response.d.response);
-                                    $("#divIntermediateBannerImage").after(responsenew);
-                                    //$("#divBannerImage").append(response.d.bannerresponse);
-                                    //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
-                                    //$("#divProductNew").after(response.d.intermediateresponse);
+                                    $("#divProductNew").append(response.d.response);
+
                                     AllProducts.push(response.d.productdata.ProductList);
                                 }
                                 else {
@@ -1749,16 +1627,6 @@
                     }
                 }
             });
-
-            //$(document.body).on('touchmove', onScroll); // for mobile
-            //$(window).on('scroll', onScroll);
-
-            //// callback
-            //function onScroll() {
-            //    if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
-
-            //    }
-            //}
         </script>
     </div>
     <%--<script src="OwlCarousel/docs/assets/vendors/jquery.min.js"></script>--%>
@@ -1798,7 +1666,7 @@
 
     <script src="js/CircularContentCarousel/jquery.easing.1.3.js"></script>
     <!-- the jScrollPane script -->
-    <%--<script src="js/CircularContentCarousel/jquery.mousewheel.js"></script>--%>
+    <script src="js/CircularContentCarousel/jquery.mousewheel.js"></script>
     <script src="js/CircularContentCarousel/jquery.contentcarousel.js"></script>
     <script type="text/javascript">
         //$('#ca-container').contentcarousel();

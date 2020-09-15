@@ -92,24 +92,31 @@
                             </div>
                             <div class="price">
                                 <div class="gram">
-                                    <p id="lblproprice" runat="server">200 </p>
-                                    / 
-                        <span id="lbldisplayunit" runat="server">250-gram</span>
+                                    <div>
+                                    Weight:<span id="lbldisplayunit" runat="server">250-gram</span><br />
+                                        </div>
+                                    <br />
+                                    <div>
+                                    Price/Qty:<p id="lblproprice" runat="server">200 </p>
+                                        </div>
+                                    <%--/ --%>
+                        <%--<span id="lbldisplayunit" runat="server">250-gram</span>--%>
                                 </div>
+                                
                                 <div class="final-amt">
                                     <p runat="server" id="lbltotprices">₹25.98</p>
                                 </div>
                             </div>
                             <div class="product-qty">
                                 <div class="inline">
-                                    <button type="button" class="minus" runat="server" id="btnminuqty" onclick="PriceMinus()">
+                                    <button type="button" class="minus" runat="server" id="btnminuqty" onclick="PriceMinus()" style="color:white;background-color:#1DA1F2">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                     <div class="qty" style="display: grid;">
                                         <input type="text" id="txtqty" value="1" class="" style="width: 29px; height: 27px;" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="2" onchange="Pricecalculation()" runat="server" />
                                         <a onclick="saveitem(0); return false;">Save</a>
                                     </div>
-                                    <button type="button" runat="server" class="plus" id="btnplus" onclick="Priceplus()">
+                                    <button type="button" runat="server" class="plus" id="btnplus" onclick="Priceplus()" style="color:white;background-color:#1DA1F2">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>

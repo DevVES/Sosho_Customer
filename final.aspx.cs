@@ -209,15 +209,15 @@ public partial class final : System.Web.UI.Page
                         ocode = "/?offercode=" + ccode;
                     }
 
-                    string msg = "Hi! I just bought " + ProductNameinmsg + " at just ₹" + forcust + " " + mrpd + ". Free shipping and Cash on delivery. If you buy it before " + date + ", you can also get the same discount. Your Offer Code Is " + ccode + "";
-                    Label1.Text = msg;
+                    //string msg = "Hi! I just bought " + ProductNameinmsg + " at just ₹" + forcust + " " + mrpd + ". Free shipping and Cash on delivery. If you buy it before " + date + ", you can also get the same discount. Your Offer Code Is " + ccode + "";
+                    //Label1.Text = msg;
 
-                    lblwhatsapp.InnerHtml = "whatsapp://send?text=Hi! I just bought " + ProductNameinmsg + " at just ₹" + forcust + " " + mrpd + ". Free shipping  and Cash on delivery. If you buy it before " + date + ", you can also get the same discount. Just follow this link: http://www.sosho.in";
+                    //lblwhatsapp.InnerHtml = "whatsapp://send?text=Hi! I just bought " + ProductNameinmsg + " at just ₹" + forcust + " " + mrpd + ". Free shipping  and Cash on delivery. If you buy it before " + date + ", you can also get the same discount. Just follow this link: http://www.sosho.in";
 
                     string productdetails = string.Empty;
                     string enddate = string.Empty;
 
-                    string proddetails = "Select TOP 1 FORMAT(EndDate, 'dd MMM yyy htt') AS ProductEndDate, Product.Name + ' at only Rs ' + CONVERT(nvarchar, Product.Mrp) + ' (MRP ' + CONVERT(nvarchar, Product.ProductMrp) + ') for ' + isnull(Unit, '0') + ' ' + isnull((select UnitName from UnitMaster where UnitMaster.Id = Product.UnitId),'Gram') as productdetails from Product inner join OrderItem ON OrderItem.ProductId = Product.Id Where OrderItem.OrderId =" + data + " Order By EndDate Desc";
+                    string proddetails = "Select TOP 1 FORMAT(EndDate, 'dd MMM yyy htt') AS ProductEndDate, Product.Name + ' at only Rs ' + CONVERT(nvarchar, Product.Mrp) + ' (MRP ' + CONVERT(nvarchar, Product.ProductMrp) + ') for ' + isnull(Product.Unit, '0') + ' ' + isnull((select UnitName from UnitMaster where UnitMaster.Id = Product.UnitId),'Gram') as productdetails from Product inner join OrderItem ON OrderItem.ProductId = Product.Id Where OrderItem.OrderId =" + data + " Order By EndDate Desc";
 
                     DataTable dtproductdetail = dbc.GetDataTable(proddetails);
                     if (dtproductdetail.Rows.Count > 0)
@@ -233,11 +233,11 @@ public partial class final : System.Web.UI.Page
                     wphtml += "<a id=\"mo-wa\" target=\"_blank\" href=\"whatsapp://send?text=" + wpmsg + "\"><img  src=\"images/whatsapp.png\"></a>";
                     wphtml += "<span id=\"fb-share-button\" style=\"padding-right:6px;\"><i class=\"fa fa-facebook\" style=\"cursor: pointer; font-size:22px; background:#3b5998; padding:6px; margin-right: 0px; color: #fff; border-radius: 4px;\"></i></span></div></div>";
 
-                    lblwhatsapp.InnerHtml = wphtml;
+                    //lblwhatsapp.InnerHtml = wphtml;
                 }
                 else
                 {
-                    lblwhatsapp.InnerHtml = "";
+                    //lblwhatsapp.InnerHtml = "";
                 }
                 string html = "";
                 html += "<table><thead><th class=\"number\" style=\"padding:6px;text-align:center\">Product Name</th><th class=\"number\" style=\"padding: 6px;\"> Unit</th></thead><tbody>";

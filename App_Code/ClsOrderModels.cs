@@ -174,7 +174,31 @@ public class ClsOrderModels
         public string buywith { get; set; }
         public decimal PaidAmount { get; set; }
     }
+    public class PlaceMultipleOrderNewModel
+    {
+        public string CustomerId { get; set; }
+        public string AddressId { get; set; }
+        public string discountamount { get; set; }
+        public string Redeemeamount { get; set; }
+        public string orderMRP { get; set; }
+        public string totalAmount { get; set; }
+        public string totalQty { get; set; }
+        public string totalWeight { get; set; }
+        public List<ProductListNew> products { get; set; }
+    }
+    public class ProductListNew
+    {
+        public string productid { get; set; }
+        public string couponCode { get; set; }
+        public string refrcode { get; set; }
+        public string Quantity { get; set; }
+        public decimal PaidAmount { get; set; }
+        public string UnitId { get; set; }
+        public string Unit { get; set; }
+        public string Productvariant { get; set; }
+        public string Grpid { get; set; }
 
+    }
     public class ConfirmOrderModel
     {
         public string Productid { get; set; }
@@ -183,6 +207,17 @@ public class ClsOrderModels
         public int Qty { get; set; }
         public int Weight { get; set; }
         public int MrpTotal { get; set; }
+    }
+    public class ConfirmOrderNewModel
+    {
+        public string Productid { get; set; }
+        public string Grpid { get; set; }
+        public int Mrp { get; set; }
+        public int Qty { get; set; }
+        public string Unit { get; set; }
+        public string UnitId { get; set; }
+        public int MrpTotal { get; set; }
+        public string Productvariant { get; set; }
     }
 
     public class OrderSummeryModel

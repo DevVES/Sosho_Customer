@@ -33,7 +33,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                     {
                         if (!Request.CurrentExecutionFilePath.Equals("/verify.aspx"))
                         {
-                            if (!Request.CurrentExecutionFilePath.Equals("/default.aspx"))
+                            if (!Request.CurrentExecutionFilePath.Equals("/default.aspx") && !Request.CurrentExecutionFilePath.Equals("/category.aspx"))
                             {
                                 string Url = Request.Url.ToString();
                                 Session["URL"] = Url;
@@ -96,7 +96,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                     }
                     else
                     {
-                        lbllogout.InnerHtml = "<li><a href='register.aspx'>Login</a></li>";
+                        lbllogout.InnerHtml = "<li><a href='register.aspx' style='color:#1DA1F2;'>Login</a></li>";
                     }
                     //
 

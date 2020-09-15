@@ -119,15 +119,18 @@ public partial class OrderSummery : System.Web.UI.Page
         {
             dbConnection dbc = new dbConnection();
             string html = "";
-            ClsOrderModels.PlaceMultipleOrderModel orderModel;
+            //ClsOrderModels.PlaceMultipleOrderModel orderModel;
+            ClsOrderModels.PlaceMultipleOrderNewModel orderModel;
             if ((HttpContext.Current.Session["ConfirmOrder"] != null))
             {
-                orderModel = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
+                //orderModel = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
+                orderModel = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
 
             }
             else
             {
-                orderModel = new ClsOrderModels.PlaceMultipleOrderModel();
+                //orderModel = new ClsOrderModels.PlaceMultipleOrderModel();
+                orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
             }
 
             if(orderModel != null)
@@ -139,14 +142,44 @@ public partial class OrderSummery : System.Web.UI.Page
                     string Weight = "";
 
                     var MrpTotal = item.PaidAmount * Convert.ToDecimal(item.Quantity);
-                    
+                    string Unit = item.Unit;
+                    string UnitId = item.UnitId;
+                    string imgquery="", querydata="";
+                    DataTable dtimg, dtpathimg;
 
-                    string imgquery = "select ProductImages.ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from ProductImages inner join Product ON Product.Id = ProductImages.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where ProductImages.ProductId =" + item.productid + " and isnull(ProductImages.Isdeleted,0)=0";
-                    DataTable dtimg = dbc.GetDataTable(imgquery);
+                    //string imgquery = "select ProductImages.ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from ProductImages inner join Product ON Product.Id = ProductImages.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where ProductImages.ProductId =" + item.productid + " and isnull(ProductImages.Isdeleted,0)=0";
+                    //DataTable dtimg = dbc.GetDataTable(imgquery);
 
-                    string querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
-                    DataTable dtpathimg = dbc.GetDataTable(querydata);
+                    //string querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
+                    //DataTable dtpathimg = dbc.GetDataTable(querydata);
 
+                    if(item.Productvariant.ToString() == "true")
+                    {
+                        imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.Grpid;
+                        dtimg = dbc.GetDataTable(imgquery);
+
+                        querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
+                        dtpathimg = dbc.GetDataTable(querydata);
+                    }
+                    else
+                    {
+                        if (item.Productvariant.ToString() == "BannerProduct")
+                        {
+                            imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
+                            dtimg = dbc.GetDataTable(imgquery);
+
+                            querydata = "select KeyValue from StringResources where KeyName='TopBannerImageUrl'";
+                            dtpathimg = dbc.GetDataTable(querydata);
+                        }
+                        else
+                        {
+                            imgquery = "select ProductImages.ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from ProductImages inner join Product ON Product.Id = ProductImages.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where ProductImages.ProductId =" + item.productid + " and isnull(ProductImages.Isdeleted,0)=0";
+                            dtimg = dbc.GetDataTable(imgquery);
+
+                            querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
+                            dtpathimg = dbc.GetDataTable(querydata);
+                        }
+                    }
                     string urlpathimg = "";
                     Boolean IsQtyFreeze = false;
                     if (dtpathimg != null && dtpathimg.Rows.Count > 0)
@@ -155,7 +188,8 @@ public partial class OrderSummery : System.Web.UI.Page
                     }
                     if (dtimg != null && dtimg.Rows.Count > 0 )
                     {
-                        Weight = dtimg.Rows[0]["Unit"].ToString() + "-" + dtimg.Rows[0]["UnitName"].ToString();
+                        //Weight = dtimg.Rows[0]["Unit"].ToString() + "-" + dtimg.Rows[0]["UnitName"].ToString();
+                        Weight = Unit + "-" + UnitId;
                         prodname = dtimg.Rows[0]["Name"].ToString();
                         if (!string.IsNullOrEmpty(urlpathimg))
                         {
@@ -171,22 +205,24 @@ public partial class OrderSummery : System.Web.UI.Page
                     html += "<div class=\"single-product\">";
                     html += "<div class=\"single-product left\"><div class=\"product-image\"><img id=\"proimg\" src=\""+imgname+"\"/></div></div>";
                     html += "<div class=\"single-product right\"><div class=\"product-name-order\" id=\"lblpname\"><p>"+prodname+"</p></div>";
-                    html += "<div class=\"price\"><div class=\"gram\"><p id=\"lblproprice\">"+item.PaidAmount + "</p>/<span id=\"lbldisplayunit\">"+ Weight +"</span></div>";
+                    //html += "<div class=\"price\"><div class=\"gram\">Price / Qty :<p id=\"lblproprice\"> " + item.PaidAmount + "</p> <span id=\"lbldisplayunit\"> Weight:"+ Weight +"</span></div>";
+                    html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lbldisplayunit\"> Weight:" + Weight + "</span></div>";
                     html += "<div class=\"final-amt\"><p id=\"lbltotprices\">" + MrpTotal + ".00 </p></div></div>";
+                    html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lbldisplayunit\"> <span>Price / Qty : " + item.PaidAmount + "</span></div></div>";
                     if (IsQtyFreeze)
                     {
-                        html += "<div class=\"product-qty\"><div class=\"inline\"><button type=\"button\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\" disabled><i class=\"fa fa-minus\"></i></button>";
+                        html += "<div class=\"product-qty\"><div class=\"inline\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\" disabled><i class=\"fa fa-minus\"></i></button>";
                         html += "<div class=\"qty\" style=\"display: grid;\"><input readonly=true type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" onclick=\"Priceplus(" + item.productid + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div></div>";
                         html += "<div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
                     }
                     else
                     {
-                        html += "<div class=\"product-qty\"><div class=\"inline\"><button type=\"button\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\"><i class=\"fa fa-minus\"></i></button>";
+                        html += "<div class=\"product-qty\"><div class=\"inline\"><button type=\"button\" class=\"minus\" style=\"color:white;background-color:#1DA1F2\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\"><i class=\"fa fa-minus\"></i></button>";
                         html += "<div class=\"qty\" style=\"display: grid;\"><input type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" onclick=\"Priceplus(" + item.productid + ",this)\"><i class=\"fa fa-plus\"></i></button></div></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\"><i class=\"fa fa-plus\"></i></button></div></div>";
                         html += "<div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
                     }
                     prodcontent.InnerHtml = html;
@@ -651,15 +687,18 @@ public partial class OrderSummery : System.Web.UI.Page
     {
         try
         {
-            ClsOrderModels.PlaceMultipleOrderModel OrderDetail;
+            //ClsOrderModels.PlaceMultipleOrderModel OrderDetail;
+            ClsOrderModels.PlaceMultipleOrderNewModel OrderDetail;
             if ((HttpContext.Current.Session["ConfirmOrder"] != null))
             {
-                OrderDetail = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
+                //OrderDetail = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
+                OrderDetail = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
 
             }
             else
             {
-                OrderDetail = new ClsOrderModels.PlaceMultipleOrderModel();
+                //OrderDetail = new ClsOrderModels.PlaceMultipleOrderModel();
+                OrderDetail = new ClsOrderModels.PlaceMultipleOrderNewModel();
             }
             decimal payableamt = 0;
             decimal.TryParse(OrderDetail.products[0].PaidAmount.ToString(), out payableamt);
@@ -736,7 +775,8 @@ public partial class OrderSummery : System.Web.UI.Page
                 client.Headers["Content-type"] = "application/json";
 
                 var model = JsonConvert.SerializeObject(OrderDetail);
-                var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrder", model);
+                //var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrder", model);
+                var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrderNew", model);
                 //string creaturl = clsCommon.strApiUrl + "/api/CODOrder/CODPlaceOrder?CustomerId=" + CustId + "&PaidAmount=" + PayAmt + "&AddressId=" + addr + "&Quantity=" + qty + "&buywith=" + buyflag + "&discountamount=" + disc + "&Redeemeamount=" + redm + "&couponCode=" + (String.IsNullOrWhiteSpace(CCCode) ? "0" : CCCode) + "&refrcode=" + (String.IsNullOrWhiteSpace(rcode) ? "0" : rcode) + "";
 
                 //string creaturl = clsCommon.strApiUrl + "/api/CODOrder/CODPlaceOrder?CustomerId=" + CustId + "&PaidAmount=" + PayAmt + "&AddressId=" + addr + "&Quantity=" + qty + "&buywith=" + buyflag + "&discountamount=" + disc + "&Redeemeamount=" + redm + "&couponCode=" + (String.IsNullOrWhiteSpace(CCCode) ? "0" : CCCode) + "&refrcode=" + rcode + "";

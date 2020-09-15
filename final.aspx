@@ -211,9 +211,9 @@
                         </div>
                     </div>
 
-                    <div id="lblwhatsapp" runat="server">
+                   <%-- <div id="lblwhatsapp" runat="server">--%>
                         <%--  <a href="#" id="vg" class="wa-btn">Share on whatsapp <i class="fa fa-whatsapp"></i></a>--%>
-                    </div>
+                    <%--</div>--%>
 
                     <asp:Literal ID="ltrerr" runat="server"></asp:Literal>
                 </div>

@@ -88,10 +88,38 @@ public class clsModals
             public string AltText;
             public string DataLink;
         }
+    public class NewBnnerImage
+    {
+        public string response;
+        public string message;
+        public string BannerPosition;
+        public List<IntermediateBannerImage> IntermediateBannerImages { get; set; }
+        public List<IntermediateBannerImage> BannerImageList { get; set; }
+    }
+    public class IntermediateBannerImage
+    {
+        public string Title;
+        public string bannerURL;
+        public string bannerId;
+        public int ActionId;
+        public string action;
+        public string categoryId;
+        public string categoryName;
+        public int ProductId;
+        public string ProductName;
+        public string openUrlLink;
+        public string MaxQty;
+        public string MinQty;
+        public bool IsQtyFreeze;
+        public string MRP;
+        public string Discount;
+        public string SellingPrice;
+        public string Weight;
+    }
 
     //Add Address Sucessfully Message
 
-        public class CustAddress
+    public class CustAddress
         {
             public string Response;
             public string Message;
@@ -130,5 +158,62 @@ public class clsModals
         public string CategoryName { get; set; }
         public string CategoryDescription { get; set; }
         public string CategoryImage { get; set; }
+    }
+
+    //20-08-2020 Developed By :- Hiren
+    public class getNewproduct
+    {
+     
+        public string response;
+        public string message;
+        public string WhatsAppNo;
+        public List<NewProductDataList> ProductList { get; set; }
+    }
+    public class NewProductDataList
+    {
+        public NewProductDataList()
+        {
+            ProductImageList = new List<ProductDataImagelist>();
+            ProductAttributesList = new List<ProductAttributelist>();
+        }
+        public List<ProductDataImagelist> ProductImageList { get; set; }
+        public List<ProductAttributelist> ProductAttributesList { get; set; }
+
+        public string CategoryId;
+        public string CategoryName;
+        public string MRP;
+        public string Discount;
+        public string Name;
+        public string OfferEndDate;
+        public string SellingPrice;
+        public string SoldCount;
+        public string SpecialMessage;
+        public string Weight;
+        public string DisplayOrder;
+        //public string IsProductDetails;
+        public string IsProductVariant;
+        public string IsQtyFreeze;
+        public string SoshoRecommended;
+        public string IsSoshoRecommended;
+        public string IsSpecialMessage;
+        public string MaxQty;
+        public string MinQty;
+        public string IsProductDescription;
+        public string ProductDescription;
+        public string ProductNotes;
+        public string ProductKeyFeatures;
+        public string ProductId;
+    }
+    public class ProductAttributelist
+    {
+        public string Mrp;
+        public string Discount;
+        public string PackingType;
+        public string soshoPrice;
+        public string weight;
+        public string isOutOfStock;
+        public string isSelected;
+        public string packSizeId;
+        public string AImageName;
     }
 }

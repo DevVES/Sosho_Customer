@@ -18,7 +18,9 @@ public class dbConnection
     //string consString = @"Data Source=S97-74-232-233\SQLEXPRESS;Initial Catalog=SalebhaiOnePage;Integrated Security=True;Persist Security Info=False";
     //string consString = @"Data Source=S97-74-232-233\SQLEXPRESS;Initial Catalog=SalebhaiOnePage_Staging;Integrated Security=True;Persist Security Info=False";
     //string consString = @"Data Source=LAPTOP-GI3RT09I\SQLEXPRESS01;Initial Catalog=SalebhaiOnePage;Integrated Security=True;Persist Security Info=False";
-    string consString = @"Data Source=VES-02\SQLEXPRESS;Initial Catalog=SalebhaiOnePageStaging;Integrated Security=True;Persist Security Info=False";
+    //string consString = @"Data Source=VES-02\SQLEXPRESS;Initial Catalog=SalebhaiOnePageStaging;Integrated Security=True;Persist Security Info=False";
+    string consString = @"Data Source=DELL\SQLEXPRESS;Initial Catalog=SalebhaiOnePageStaging;Integrated Security=True;Persist Security Info=False";
+    //string consString = @"Data Source=S97-74-232-233\SQLEXPRESS;Initial Catalog=SalebhaiOnePage_Testing;Integrated Security=True;Persist Security Info=False";
     SqlConnection conn = new SqlConnection();
     string ErrorMsgPrefix = "Error in dbConnection.cs  ";
     public SqlConnection GetConnectionForAdapter()
