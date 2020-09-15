@@ -1470,8 +1470,8 @@
             $('#divPackSize').on('click', 'div', function () {
                 //$(this).parent().removeClass("boldPackSize");
                 var check = $(this);
-                $(this).css({ 'backgroundColor': '#F00', 'color': '#FFF' });    // Change its style.
-
+                //$(this).css({ 'backgroundColor': '#F00', 'color': '#FFF' });    // Change its style.
+                $(this).css({ 'backgroundColor': '#1DA1F2' });
                 var AttrId = $(this).attr("id");
                 var AttrIndex = $(this).attr("id").replace('dvPackSizeModal', '');
                 var AttrProductId = $(this).find("#hdnPackSizeProductId" + AttrIndex).text();
@@ -1648,7 +1648,7 @@
                             var sisSelected = FilterProduct.ProductAttributesList[i].isSelected;
                             var grpid = FilterProduct.ProductAttributesList[i].packSizeId;
                             if (sisSelected == 'true') {
-                                divsize += '<div style="border-radius: 22px; border: solid;background-Color:#F00;" id="dvPackSizeModal' + i + '">';
+                                divsize += '<div style="border-radius: 22px; border: solid;background-Color:#1DA1F2;" id="dvPackSizeModal' + i + '">';
                             }
                             else
                             {
