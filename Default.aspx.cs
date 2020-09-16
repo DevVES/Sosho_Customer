@@ -575,6 +575,9 @@ public partial class Default : System.Web.UI.Page
                                     html += "</div>";
                                 }
                             }
+                            else
+                                html += "<td style='padding-top:5px;width:50%;text-align:center;'>";
+
                             if (objproduct.ProductList[j].ProductImageList != null && objproduct.ProductList[j].ProductImageList.Count > 0)
                             {
 
@@ -612,7 +615,9 @@ public partial class Default : System.Web.UI.Page
                                     }
                                     dSavePrice = (dMrp - dSoshoPrice);
                                     html += "<tr class='AmazonFont'>";
-                                    html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+                                    //html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+                                    //html += "<td style='padding-top:5px;' colspan='3'>";
+                                    html += "<td class='ProductCenter' colspan='3'>";
                                     html += "<span class='ProductName'>" + sProductName + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
@@ -650,24 +655,24 @@ public partial class Default : System.Web.UI.Page
                                     html += "</td>";
                                     html += "</tr>";
 
-                                    html += "<tr id='BtnAdd" + iIndex + "'>";
+                                    html += "<tr id='BtnAdd" + sProductId + "'>";
                                     //html += "<td style='padding-top:15px;padding-left:27px;'>";
                                     html += "<td style='padding-top:6px;padding-left:10px;' colspan='3'>";
-                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sMrp + ",this)'>ADD</button>";
-                                    html += "<input type='hidden' id='hdnProductId" + iIndex + "' value='" + sProductId + "'>";
-                                    html += "<input type='hidden' id='hdnGrpId" + iIndex + "' value='" + sProductId + "'>";
-                                    html += "<input type='hidden' id='hdnCategoryId" + iIndex + "' value='" + sCategoryId + "'>";
-                                    html += "<input type='hidden' id='hdnPName" + iIndex + "' value='" + sProductName + "'>";
+                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sProductId + "," + sMrp + ",this)'>ADD</button>";
+                                    html += "<input type='hidden' id='hdnProductId" + sProductId + "' value='" + sProductId + "'>";
+                                    html += "<input type='hidden' id='hdnGrpId" + sProductId + "' value='" + sProductId + "'>";
+                                    html += "<input type='hidden' id='hdnCategoryId" + sProductId + "' value='" + sCategoryId + "'>";
+                                    html += "<input type='hidden' id='hdnPName" + sProductId + "' value='" + sProductName + "'>";
                                     //html += "<input type='hidden' id='hdnPDescription" + iIndex + "' value='" + sProductDesc + "'>";
-                                    html += "<input type='hidden' id='hdnPKeyFeature" + iIndex + "' value='" + sProductKeyFeatures + "'>";
-                                    html += "<input type='hidden' id='hdnProductVariant" + iIndex + "' value='" + sProductVariant + "'>";
+                                    html += "<input type='hidden' id='hdnPKeyFeature" + sProductId + "' value='" + sProductKeyFeatures + "'>";
+                                    html += "<input type='hidden' id='hdnProductVariant" + sProductId + "' value='" + sProductVariant + "'>";
                                     //html += "</td>";
                                     //html += "<td>";
                                     //html += "&nbsp; <span style='font-family:'Amazon Ember''><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
                                     html += "&nbsp;<span class='SoldCount'> " + objproduct.ProductList[j].SoldCount + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
-                                    html += "<tr id='AddShow" + iIndex + "' style='display:none;'>";
+                                    html += "<tr id='AddShow" + sProductId + "' style='display:none;'>";
                                     html += "<td colspan='3' style='padding-top:15px;padding-left:10px;' class='AmazonFont'>";
                                     html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sProductId + ",this)'><i class='fa fa-minus'></i></button>";
                                     html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
@@ -743,6 +748,9 @@ public partial class Default : System.Web.UI.Page
                                             html += "</div>";
                                         }
                                     }
+                                    else
+                                        html += "<td style='padding-top:5px;width:50%;text-align:center;' id='td" + iIndex + "' >";
+
                                     html += "<div><img src=" + sAImageName + " class='ProductImage'/></div>";
                                     //}
                                     html += "</td>";
@@ -760,7 +768,12 @@ public partial class Default : System.Web.UI.Page
                                     }
 
                                     html += "<tr class='AmazonFont'>";
-                                    html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+
+                                    //html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+                                    //html += "<td style='padding-top:5px;' colspan='3'>";
+
+                                    html += "<td class='ProductCenter' colspan='3'>";
+
                                     html += "<span class='ProductName'>" + sProductName + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
@@ -782,7 +795,7 @@ public partial class Default : System.Web.UI.Page
                                     html += "</tr>";
                                     html += "<tr>";
                                     html += "<td class='ProductDropDown' colspan='2'>";
-                                    html += "<select ID='ddlUnit" + iIndex + "'  runat='server' onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + ",this)\">";
+                                    html += "<select ID='ddlUnit" + sGrpId + "'  runat='server' onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + "," + sGrpId + ",this)\">";
                                     html += "<option Value='" + sWeight + "'>" + sWeight + "</option>";
                                     html += "</select>";
                                     html += "</td>";
@@ -801,23 +814,25 @@ public partial class Default : System.Web.UI.Page
                                     //}
 
 
-                                    html += "<tr id='BtnAdd" + iIndex + "'>";
+                                    //html += "<tr id='BtnAdd" + iIndex + "'>";
+                                    html += "<tr id='BtnAdd" + sGrpId + "'>";
                                     //html += "<td style='padding-top:15px;padding-left:27px;'>";
                                     html += "<td style='padding-top:6px;padding-left:10px;' colspan='3'>";
-                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sMrp + ",this)'>ADD</button>";
-                                    html += "<input type='hidden' id='hdnProductId" + iIndex + "' value='" + sProductId + "'>";
-                                    html += "<input type='hidden' id='hdnGrpId" + iIndex + "' value='" + sGrpId + "'>";
-                                    html += "<input type='hidden' id='hdnCategoryId" + iIndex + "' value='" + sCategoryId + "'>";
-                                    html += "<input type='hidden' id='hdnPName" + iIndex + "' value='" + sProductName + "'>";
+                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sGrpId + "," + sMrp + ",this)'>ADD</button>";
+                                    html += "<input type='hidden' id='hdnProductId" + sGrpId + "' value='" + sProductId + "'>";
+                                    html += "<input type='hidden' id='hdnGrpId" + sGrpId + "' value='" + sGrpId + "'>";
+                                    html += "<input type='hidden' id='hdnCategoryId" + sGrpId + "' value='" + sCategoryId + "'>";
+                                    html += "<input type='hidden' id='hdnPName" + sGrpId + "' value='" + sProductName + "'>";
                                     //html += "<input type='hidden' id='hdnPDescription" + iIndex + "' value='" + sProductDesc + "'>";
-                                    html += "<input type='hidden' id='hdnPKeyFeature" + iIndex + "' value='" + sProductKeyFeatures + "'>";
-                                    html += "<input type='hidden' id='hdnProductVariant" + iIndex + "' value='" + sProductVariant + "'>";
+                                    html += "<input type='hidden' id='hdnPKeyFeature" + sGrpId + "' value='" + sProductKeyFeatures + "'>";
+                                    html += "<input type='hidden' id='hdnProductVariant" + sGrpId + "' value='" + sProductVariant + "'>";
                                     //html += "</td>";
                                     //html += "<td>";
                                     html += "&nbsp;<span class='SoldCount'> " + objproduct.ProductList[j].SoldCount + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
-                                    html += "<tr id='AddShow" + iIndex + "' style='display:none;'>";
+                                    //html += "<tr id='AddShow" + iIndex + "' style='display:none;'>";
+                                    html += "<tr id='AddShow" + sGrpId + "' style='display:none;'>";
                                     html += "<td colspan='3' style='padding-top:15px;padding-left:10px;' class='AmazonFont'>";
                                     html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + ",this)'><i class='fa fa-minus'></i></button>";
                                     html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
@@ -918,14 +933,16 @@ public partial class Default : System.Web.UI.Page
                                     BannerIntermediateHtml += "<img class='img' src='" + objbanner.IntermediateBannerImages[0].bannerURL + "' />";
                                     BannerIntermediateHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
                                     BannerIntermediateHtml += "</div>";
-                                    BannerIntermediateHtml += "<div id='divBannerAdd" + 0 + "'>";
-                                    BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>ADD</button>";
-                                    BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + 0 + "' value='" + sBannerWeight + "'>";
+                                    BannerIntermediateHtml += "<div id='divBannerAdd" + sBannerProductId + "'>";
+                                    BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>ADD</button>";
+                                    BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + sBannerProductId + "' value='" + sBannerWeight + "'>";
                                     BannerIntermediateHtml += "</div>";
-                                    BannerIntermediateHtml += "<div id='divBannerAddShow" + 0 + "' class='AmazonFont' style='display:none;'>";
-                                    BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
-                                    BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                    BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                    BannerIntermediateHtml += "<div id='divBannerAddShow" + sBannerProductId + "' class='AmazonFont BannerAddPostion' style='display:none;'>";
+                                    //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                    BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                    BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                    //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                    BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
                                     BannerIntermediateHtml += "</div>";
                                     BannerIntermediateHtml += "</div>";
                                     BannerIntermediateHtml += "</div>";
@@ -996,14 +1013,16 @@ public partial class Default : System.Web.UI.Page
                                             BannerIntermediateHtml += "<img class='img' src='" + objbanner.IntermediateBannerImages[h].bannerURL + "' />";
                                             BannerIntermediateHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
                                             BannerIntermediateHtml += "</div>";
-                                            BannerIntermediateHtml += "<div id='divBannerAdd" + h + "'>";
-                                            BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText' onclick='BannerAddClick(" + h + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>ADD</button>";
-                                            BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + h + "' value='" + sBannerWeight + "'>";
+                                            BannerIntermediateHtml += "<div id='divBannerAdd" + sBannerProductId + "'>";
+                                            BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + h + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>ADD</button>";
+                                            BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + sBannerProductId + "' value='" + sBannerWeight + "'>";
                                             BannerIntermediateHtml += "</div>";
-                                            BannerIntermediateHtml += "<div id='divBannerAddShow" + h + "' class='AmazonFont' style='display:none;'>";
-                                            BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
-                                            BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                            BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                            BannerIntermediateHtml += "<div id='divBannerAddShow" + sBannerProductId + "' class='AmazonFont BannerAddPostion' style='display:none;'>";
+                                            //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                            BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                            BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                            //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                            BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
                                             BannerIntermediateHtml += "</div>";
                                             if (h == 0)
                                                 BannerIntermediateHtml += "<br />";
@@ -1073,14 +1092,16 @@ public partial class Default : System.Web.UI.Page
                                                 BannerIntermediateHtml += "<img class='img' src='" + objbanner.IntermediateBannerImages[h].bannerURL + "' />";
                                                 BannerIntermediateHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
                                                 BannerIntermediateHtml += "</div>";
-                                                BannerIntermediateHtml += "<div id='divBannerAdd" + h + "'>";
-                                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText' onclick='BannerAddClick(" + h + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>ADD</button>";
-                                                BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + h + "' value='" + sBannerWeight + "'>";
+                                                BannerIntermediateHtml += "<div id='divBannerAdd" + sBannerProductId + "'>";
+                                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + h + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>ADD</button>";
+                                                BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + sBannerProductId + "' value='" + sBannerWeight + "'>";
                                                 BannerIntermediateHtml += "</div>";
-                                                BannerIntermediateHtml += "<div id='divBannerAddShow" + h + "' class='AmazonFont' style='display:none;'>";
-                                                BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
-                                                BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                                BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                                BannerIntermediateHtml += "<div id='divBannerAddShow" + sBannerProductId + "' class='AmazonFont BannerAddPostion' style='display:none;'>";
+                                                //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                                BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                                //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
                                                 BannerIntermediateHtml += "</div>";
                                                 if (h == 0)
                                                     BannerIntermediateHtml += "<br />";

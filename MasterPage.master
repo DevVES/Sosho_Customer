@@ -132,6 +132,7 @@
                                     <span id="count" style="color:#FFFFFF;font-family:'Amazon Ember'"></span>
                                     <span id="cnfrm" class="button hide" onclick="ConfirmOrder()" style="cursor: pointer;text-align:left;"> Confirm Order </span>         
                                     <input type="hidden" id="hdnProductCount" />
+                                    <input type="hidden" id="hdnproductcallcount" />
                                 </div>
                                  </div>
                             <%-- <div class="col-md-3 col-sm-3 col-xs-4 padding">

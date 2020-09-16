@@ -64,7 +64,8 @@
             color: #1A1A1A;
             font-family: 'Amazon Ember';
             font-size: 22px;
-            padding-left: 27px;
+            /*padding-left: 27px;*/
+            padding-left: 10px;
             font-weight: bold;
         }
 
@@ -155,6 +156,16 @@
             color: #FFF;
         }
 
+        .ProductCenter {
+            padding-top: 5px;
+        }
+
+        .BannerAddPostion {
+            position: absolute;
+            left: 85%;
+            transform: translate(1%, -96%);
+        }
+
         @media only screen and (max-width: 600px) {
             /* For mobile phones: */
             .ProductImage {
@@ -211,6 +222,14 @@
 
             .WeightText {
                 width: 72px;
+            }
+
+            .ProductCenter {
+                text-align: -webkit-center;
+            }
+
+            .BannerAddPostion {
+                left: 76%;
             }
         }
         /*@media screen and (max-width: 700px) {
@@ -804,13 +823,16 @@
                 }
             });
         }
-        function AddClick(rowindex, prodid, mrp, el) {
+        function AddClick(rowindex, prodid, grpid, mrp, el) {
 
             //$('#AddShow' + rowindex).css('display', '');
             //$('#BtnAdd' + rowindex).css('display', 'none');
 
-            $('#AddShow' + rowindex).show();
-            $('#BtnAdd' + rowindex).hide();
+            //$('#AddShow' + rowindex).show();
+            //$('#BtnAdd' + rowindex).hide();
+
+            $('#AddShow' + grpid).show();
+            $('#BtnAdd' + grpid).hide();
 
             //$('#count')[0].innerHTML = "";
             //$('#cnfrm').addClass('hide');
@@ -818,11 +840,17 @@
             var $this = $(el);
 
             //var qty = $this.parents('.row').prev().find('input').val();
-            var qty = $('#AddShow' + rowindex).find('input').val();
-            var grpId = $('#hdnGrpId' + rowindex).val();
-            var productvariant = $('#hdnProductVariant' + rowindex).val();
-            var unitId = $('#ddlUnit' + rowindex).val();
-            var unitvalue = $('#ddlUnit' + rowindex).val();
+            //var qty = $('#AddShow' + rowindex).find('input').val();
+            //var grpId = $('#hdnGrpId' + rowindex).val();
+            //var productvariant = $('#hdnProductVariant' + rowindex).val();
+            //var unitId = $('#ddlUnit' + rowindex).val();
+            //var unitvalue = $('#ddlUnit' + rowindex).val();
+
+            var qty = $('#AddShow' + grpid).find('input').val();
+            var grpId = grpid;
+            var productvariant = $('#hdnProductVariant' + grpid).val();
+            var unitId = $('#ddlUnit' + grpid).val();
+            var unitvalue = $('#ddlUnit' + grpid).val();
             var parts = unitvalue.split(' - ');
 
             //$this.css('background-image', 'linear-gradient( #e3e7e6 30%, #e3e7e6)');
@@ -892,13 +920,16 @@
             else if (type == 0) {
                 if (value > 1) {
                     value = value - 1;
-
+                }
+                if (value == 1) {
+                    $('#AddShow' + rowindexval).hide();
+                    $('#BtnAdd' + rowindexval).show();
                 }
             }
             if (products.length > 0) {
                 var product = products.find(x => x.Productid == prodid);
                 if (product != null && product != undefined) {
-                    products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    //products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
                     count = products.length;
                 }
                 if (count == 0) {
@@ -916,23 +947,29 @@
                 $('#cnfrm').addClass('hide');
             }
 
-            $('#AddShow' + rowindexval).hide();
-            $('#BtnAdd' + rowindexval).show();
             var dataval = parent.find('input');
             dataval[0].value = value;
         }
         function BannerAddClick(rowindex, prodid, mrp, el) {
-            $('#divBannerAddShow' + rowindex).show();
-            $('#divBannerAdd' + rowindex).hide();
+            //$('#divBannerAddShow' + rowindex).show();
+            //$('#divBannerAdd' + rowindex).hide();
 
+
+            $('#divBannerAddShow' + prodid).show();
+            $('#divBannerAdd' + prodid).hide();
             var $this = $(el);
 
-            var qty = $('#divBannerAddShow' + rowindex).find('input').val();
+            //var qty = $('#divBannerAddShow' + rowindex).find('input').val();
+            var qty = $('#divBannerAddShow' + prodid).find('input').val();
+
 
             var grpId = prodid;
             var productvariant = "BannerProduct";
-            var unitId = $('#hdnddlUnit' + rowindex).val();
-            var unitvalue = $('#hdnddlUnit' + rowindex).val();
+            //var unitId = $('#hdnddlUnit' + rowindex).val();
+            //var unitvalue = $('#hdnddlUnit' + rowindex).val();
+
+            var unitId = $('#hdnddlUnit' + prodid).val();
+            var unitvalue = $('#hdnddlUnit' + prodid).val();
             var parts = unitvalue.split('-');
             obj = {
                 Productid: prodid,
@@ -951,6 +988,54 @@
                 $('#cnfrm').removeClass('hide');
                 $('#hdnProductCount').val(count);
             }
+        }
+
+        function Bannerplusqty(type, prodid, grpid, el) {
+
+            var $this = $(el);
+            var parent = $this.parent();
+            var value = parent.find('input').val();
+            value = Number(value);
+            //var trid = $this.parent().closest('tr').attr('id'); // table row ID
+            //var rowindexval = trid.replace('divBannerAddShow', '');
+
+            if (type == 1) {
+                value = value + 1;
+            }
+            else if (type == 0) {
+                if (value > 1) {
+                    value = value - 1;
+
+                    if (value == 1) {
+                        $('#divBannerAddShow' + prodid).hide();
+                        $('#divBannerAdd' + prodid).show();
+                    }
+                }
+            }
+            if (products.length > 0) {
+                var product = products.find(x => x.Productid == prodid);
+                if (product != null && product != undefined) {
+                   // products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    count = products.length;
+                }
+                if (count == 0) {
+                    $('#count')[0].innerHTML = "";
+                    $('#cnfrm').addClass('hide');
+                }
+                else {
+                    $('#count')[0].innerHTML = count + " Product Added";
+                    $('#cnfrm').removeClass('hide');
+                    $('#hdnProductCount').val(count);
+                }
+            }
+            else {
+                $('#count')[0].innerHTML = "";
+                $('#cnfrm').addClass('hide');
+            }
+
+
+            var dataval = parent.find('input');
+            dataval[0].value = value;
         }
         function BuyFivewithFriend_Click(prodid, mrp, PWeight, el) {
             $('#count')[0].innerHTML = "";
@@ -1575,6 +1660,7 @@
                                 success: function (response) {
                                     var ProductEndNo = parseInt("5");
                                     $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                                    $('#hdnproductcallcount').val(response.d.productcount);
                                     //var getdata = {
                                     //    data: JSON.parse(response.d.whatsapp),
                                     //}
@@ -1630,10 +1716,15 @@
 
             };
 
-            function myPackSize(rowindex, Discountoffer, prodid, el) {
-                var ddlValue = $('#ddlUnit' + rowindex).val();
+            function myPackSize(rowindex, Discountoffer, prodid, grpid, el) {
+                //var ddlValue = $('#ddlUnit' + rowindex).val();
+                //$('#divPackSize').text('');
+                //$('#PackingProdName').text($('#hdnPName' + rowindex).val());
+                //$('#spanWeight').text(ddlValue);
+
+                var ddlValue = $('#ddlUnit' + grpid).val();
                 $('#divPackSize').text('');
-                $('#PackingProdName').text($('#hdnPName' + rowindex).val());
+                $('#PackingProdName').text($('#hdnPName' + grpid).val());
                 $('#spanWeight').text(ddlValue);
 
                 if (AllProducts.length > 0) {
@@ -1650,8 +1741,7 @@
                             if (sisSelected == 'true') {
                                 divsize += '<div style="border-radius: 22px; border: solid;background-Color:#1DA1F2;" id="dvPackSizeModal' + i + '">';
                             }
-                            else
-                            {
+                            else {
                                 divsize += '<div style="border-radius: 22px; border: solid;" id="dvPackSizeModal' + i + '">';
                             }
 
@@ -1700,9 +1790,63 @@
                 $("#ContentPlaceHolder1_lblpinmsg").text("");
                 $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
             }
-            $(window).scroll(function () {
-                if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-                    //alert("END!");
+            //$(window).scroll(function () {
+            //    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+            //        //alert("END!");
+            //        var JurisdictionId = $("#hdnJurisdictionId").val();
+            //        //var ProductStartNo = parseInt($('#hdnProductEndNo').val()) + 1;
+            //        var ProductStartNo = parseInt($('#hdnProductEndNo').val());
+            //        var ProductEndNo = parseInt(ProductStartNo + 4);
+            //        var bannercount = $("#hdnBannerCount").val();
+
+            //        if (ProductStartNo > 0) {
+            //            $.ajax({
+            //                type: 'POST',
+            //                url: "Default.aspx/GetProductdata",
+            //                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '"}',
+            //                contentType: "application/json",
+            //                dataType: "json",
+            //                success: function (response) {
+            //                    if (response.d.productcount != "") {
+            //                        $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+            //                        //var getdata = {
+            //                        //    data: JSON.parse(response.d.whatsapp),
+            //                        //}
+            //                        //$("#btnsendMessage").text(getdata.data);
+            //                        $("#btnsendMessage").text(response.d.whatsapp);
+            //                        //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
+            //                        //$("#divProductNew").append(response.d.response);
+            //                        var responsenew = response.d.response;
+            //                        responsenew += response.d.intermediateresponse;
+            //                        //$("#divIntermediateBannerImage").after(response.d.response);
+            //                        $("#divIntermediateBannerImage").after(responsenew);
+            //                        //$("#divBannerImage").append(response.d.bannerresponse);
+            //                        //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
+            //                        //$("#divProductNew").after(response.d.intermediateresponse);
+            //                        AllProducts.push(response.d.productdata.ProductList);
+            //                    }
+            //                    else {
+            //                        $('#hdnProductEndNo').val('0');
+            //                    }
+            //                },
+            //                failure: function (response) {
+
+            //                    alert("Something Wrong....");
+
+            //                }
+
+            //            });
+            //        }
+            //    }
+            //});
+
+            $(document.body).on('touchmove', onScroll); // for mobile
+            $(window).on('scroll', onScroll);
+
+            // callback
+            function onScroll() {
+                if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
+                    var ProductCallCount = $('#hdnproductcallcount').val();
                     var JurisdictionId = $("#hdnJurisdictionId").val();
                     //var ProductStartNo = parseInt($('#hdnProductEndNo').val()) + 1;
                     var ProductStartNo = parseInt($('#hdnProductEndNo').val());
@@ -1710,55 +1854,49 @@
                     var bannercount = $("#hdnBannerCount").val();
 
                     if (ProductStartNo > 0) {
-                        $.ajax({
-                            type: 'POST',
-                            url: "Default.aspx/GetProductdata",
-                            data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '"}',
-                            contentType: "application/json",
-                            dataType: "json",
-                            success: function (response) {
-                                if (response.d.productcount != "") {
-                                    $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
-                                    //var getdata = {
-                                    //    data: JSON.parse(response.d.whatsapp),
-                                    //}
-                                    //$("#btnsendMessage").text(getdata.data);
-                                    $("#btnsendMessage").text(response.d.whatsapp);
-                                    //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
-                                    //$("#divProductNew").append(response.d.response);
-                                    var responsenew = response.d.response;
-                                    responsenew += response.d.intermediateresponse;
-                                    //$("#divIntermediateBannerImage").after(response.d.response);
-                                    $("#divIntermediateBannerImage").after(responsenew);
-                                    //$("#divBannerImage").append(response.d.bannerresponse);
-                                    //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
-                                    //$("#divProductNew").after(response.d.intermediateresponse);
-                                    AllProducts.push(response.d.productdata.ProductList);
+                        if (ProductCallCount != "") {
+                            $.ajax({
+                                type: 'POST',
+                                url: "Default.aspx/GetProductdata",
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '"}',
+                                contentType: "application/json",
+                                dataType: "json",
+                                success: function (response) {
+                                    if (response.d.productcount != "") {
+                                        $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                                        $('#hdnproductcallcount').val(response.d.productcount);
+                                        //var getdata = {
+                                        //    data: JSON.parse(response.d.whatsapp),
+                                        //}
+                                        //$("#btnsendMessage").text(getdata.data);
+                                        $("#btnsendMessage").text(response.d.whatsapp);
+                                        //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
+                                        //$("#divProductNew").append(response.d.response);
+                                        var responsenew = response.d.response;
+                                        responsenew += response.d.intermediateresponse;
+                                        //$("#divIntermediateBannerImage").after(response.d.response);
+                                        $("#divIntermediateBannerImage").after(responsenew);
+                                        //$("#divBannerImage").append(response.d.bannerresponse);
+                                        //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
+                                        //$("#divProductNew").after(response.d.intermediateresponse);
+                                        AllProducts.push(response.d.productdata.ProductList);
+                                    }
+                                    else {
+                                        $('#hdnProductEndNo').val('0');
+                                        $('#hdnproductcallcount').val(productcount);
+                                    }
+                                },
+                                failure: function (response) {
+
+                                    alert("Something Wrong....");
+
                                 }
-                                else {
-                                    $('#hdnProductEndNo').val('0');
-                                }
-                            },
-                            failure: function (response) {
 
-                                alert("Something Wrong....");
-
-                            }
-
-                        });
+                            });
+                        }
                     }
                 }
-            });
-
-            //$(document.body).on('touchmove', onScroll); // for mobile
-            //$(window).on('scroll', onScroll);
-
-            //// callback
-            //function onScroll() {
-            //    if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
-
-            //    }
-            //}
+            }
         </script>
     </div>
     <%--<script src="OwlCarousel/docs/assets/vendors/jquery.min.js"></script>--%>

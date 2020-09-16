@@ -585,6 +585,9 @@ public partial class category : System.Web.UI.Page
                                     html += "</div>";
                                 }
                             }
+                            else
+                                html += "<td style='padding-top:5px;width:50%;text-align:center;'>";
+
                             if (objproduct.ProductList[j].ProductImageList != null && objproduct.ProductList[j].ProductImageList.Count > 0)
                             {
 
@@ -622,7 +625,9 @@ public partial class category : System.Web.UI.Page
                                     }
                                     dSavePrice = (dMrp - dSoshoPrice);
                                     html += "<tr class='AmazonFont'>";
-                                    html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+                                    //html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+                                    //html += "<td style='padding-top:5px;' colspan='3'>";
+                                    html += "<td class='ProductCenter' colspan='3'>";
                                     html += "<span class='ProductName'>" + sProductName + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
@@ -660,24 +665,24 @@ public partial class category : System.Web.UI.Page
                                     html += "</td>";
                                     html += "</tr>";
 
-                                    html += "<tr id='BtnAdd" + iIndex + "'>";
+                                    html += "<tr id='BtnAdd" + sProductId + "'>";
                                     //html += "<td style='padding-top:15px;padding-left:27px;'>";
                                     html += "<td style='padding-top:6px;padding-left:10px;' colspan='3'>";
-                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sMrp + ",this)'>ADD</button>";
-                                    html += "<input type='hidden' id='hdnProductId" + iIndex + "' value='" + sProductId + "'>";
-                                    html += "<input type='hidden' id='hdnGrpId" + iIndex + "' value='" + sProductId + "'>";
-                                    html += "<input type='hidden' id='hdnCategoryId" + iIndex + "' value='" + sCategoryId + "'>";
-                                    html += "<input type='hidden' id='hdnPName" + iIndex + "' value='" + sProductName + "'>";
+                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sProductId + "," + sMrp + ",this)'>ADD</button>";
+                                    html += "<input type='hidden' id='hdnProductId" + sProductId + "' value='" + sProductId + "'>";
+                                    html += "<input type='hidden' id='hdnGrpId" + sProductId + "' value='" + sProductId + "'>";
+                                    html += "<input type='hidden' id='hdnCategoryId" + sProductId + "' value='" + sCategoryId + "'>";
+                                    html += "<input type='hidden' id='hdnPName" + sProductId + "' value='" + sProductName + "'>";
                                     //html += "<input type='hidden' id='hdnPDescription" + iIndex + "' value='" + sProductDesc + "'>";
-                                    html += "<input type='hidden' id='hdnPKeyFeature" + iIndex + "' value='" + sProductKeyFeatures + "'>";
-                                    html += "<input type='hidden' id='hdnProductVariant" + iIndex + "' value='" + sProductVariant + "'>";
+                                    html += "<input type='hidden' id='hdnPKeyFeature" + sProductId + "' value='" + sProductKeyFeatures + "'>";
+                                    html += "<input type='hidden' id='hdnProductVariant" + sProductId + "' value='" + sProductVariant + "'>";
                                     //html += "</td>";
                                     //html += "<td>";
                                     //html += "&nbsp; <span style='font-family:'Amazon Ember''><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
-                                    html += "&nbsp;<span class='SoldCount'><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
+                                    html += "&nbsp;<span class='SoldCount'> " + objproduct.ProductList[j].SoldCount + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
-                                    html += "<tr id='AddShow" + iIndex + "' style='display:none;'>";
+                                    html += "<tr id='AddShow" + sProductId + "' style='display:none;'>";
                                     html += "<td colspan='3' style='padding-top:15px;padding-left:10px;' class='AmazonFont'>";
                                     html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sProductId + ",this)'><i class='fa fa-minus'></i></button>";
                                     html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
@@ -688,10 +693,10 @@ public partial class category : System.Web.UI.Page
                                     html += "</td>";
                                     html += "</tr>";
 
-                                    //html += "<tr>";
-                                    //html += "<td> <br/>";
-                                    //html += "</td>";
-                                    //html += "</tr>";
+                                    html += "<tr>";
+                                    html += "<td colspan='5'> <hr class='solid'>";
+                                    html += "</td>";
+                                    html += "</tr>";
                                     //html += "</td>";
                                     //html += "</tr>";
                                     //html += "</table>";
@@ -728,24 +733,24 @@ public partial class category : System.Web.UI.Page
                                     if (!string.IsNullOrEmpty(objproduct.ProductList[j].SpecialMessage))
                                     {
                                         if (sisSelected == "false")
-                                            html += "<tr  id='tr" + iIndex + "' style='display:none;'>";
+                                            html += "<tr  id='tr" + iIndex + "' style='display:none;' class='trGrp" + sGrpId + " trProductId" + sProductId + "'>";
                                         else
-                                            html += "<tr  id='tr" + iIndex + "'>";
+                                            html += "<tr  id='tr" + iIndex + "' class='trGrp" + sGrpId + " trProductId" + sProductId + "'>";
                                         html += "<td colspan='5' class='BlueText' style='padding:7px;padding-top:5px;text-align:center; '>" + objproduct.ProductList[j].SpecialMessage + " </td>";
                                         html += "</tr>";
                                     }
                                     if (sisSelected == "false")
-                                        html += "<tr id='tr" + iIndex + "' style='display:none;'>";
+                                        html += "<tr id='tr" + iIndex + "' style='display:none;' class='trGrp" + sGrpId + " trProductId" + sProductId + "'>";
                                     else
-                                        html += "<tr id='tr" + iIndex + "'>";
+                                        html += "<tr id='tr" + iIndex + "' class='trGrp" + sGrpId + " trProductId" + sProductId + "'>";
 
 
                                     if (!string.IsNullOrEmpty(sDiscount))
                                     {
-                                        if (sisSelected == "false")
-                                            html += "<td style='padding-top:5px;width:50%;text-align:center;' id='td" + iIndex + "' style='display:none;'>";
-                                        else
-                                            html += "<td style='padding-top:5px;width:50%;text-align:center;' id='td" + iIndex + "' >";
+                                        //if (sisSelected == "false")
+                                        //    html += "<td style='padding-top:5px;width:50%;text-align:center;' id='td" + iIndex + "' style='display:none;'>";
+                                        //else
+                                        html += "<td style='padding-top:5px;width:50%;text-align:center;' id='td" + iIndex + "' >";
                                         if (sDiscount.ToString() != "0% Off" && sDiscount.ToString() != "₹ 0 Off")
                                         {
                                             html += "<div   class='DiscountOffer'>";
@@ -753,15 +758,18 @@ public partial class category : System.Web.UI.Page
                                             html += "</div>";
                                         }
                                     }
+                                    else
+                                        html += "<td style='padding-top:5px;width:50%;text-align:center;' id='td" + iIndex + "' >";
+
                                     html += "<div><img src=" + sAImageName + " class='ProductImage'/></div>";
                                     //}
                                     html += "</td>";
                                     html += "<td style='width:50%;'>";
                                     //html += "<table style='width:100%;position:relative;bottom:-6px;right:166px;'>";
-                                    if (sisSelected == "false")
-                                        html += "<table class='tableheader' id='tbl" + iIndex + "' style='display:none;'>";
-                                    else
-                                        html += "<table class='tableheader' id='tbl" + iIndex + "'>";
+                                    //if (sisSelected == "false")
+                                    //    html += "<table class='tableheader' id='tbl" + iIndex + "' style='display:none;'>";
+                                    //else
+                                    html += "<table class='tableheader' id='tbl" + iIndex + "'>";
                                     if (objproduct.ProductList[j].IsSoshoRecommended.ToString() == "true")
                                     {
                                         html += "<tr>";
@@ -770,7 +778,12 @@ public partial class category : System.Web.UI.Page
                                     }
 
                                     html += "<tr class='AmazonFont'>";
-                                    html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+
+                                    //html += "<td style='padding-top:5px;text-align:-webkit-center;' colspan='3'>";
+                                    //html += "<td style='padding-top:5px;' colspan='3'>";
+
+                                    html += "<td class='ProductCenter' colspan='3'>";
+
                                     html += "<span class='ProductName'>" + sProductName + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
@@ -792,7 +805,7 @@ public partial class category : System.Web.UI.Page
                                     html += "</tr>";
                                     html += "<tr>";
                                     html += "<td class='ProductDropDown' colspan='2'>";
-                                    html += "<select ID='ddlUnit" + iIndex + "'  runat='server' onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + ",this)\">";
+                                    html += "<select ID='ddlUnit" + sGrpId + "'  runat='server' onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + "," + sGrpId + ",this)\">";
                                     html += "<option Value='" + sWeight + "'>" + sWeight + "</option>";
                                     html += "</select>";
                                     html += "</td>";
@@ -811,23 +824,25 @@ public partial class category : System.Web.UI.Page
                                     //}
 
 
-                                    html += "<tr id='BtnAdd" + iIndex + "'>";
+                                    //html += "<tr id='BtnAdd" + iIndex + "'>";
+                                    html += "<tr id='BtnAdd" + sGrpId + "'>";
                                     //html += "<td style='padding-top:15px;padding-left:27px;'>";
                                     html += "<td style='padding-top:6px;padding-left:10px;' colspan='3'>";
-                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sMrp + ",this)'>ADD</button>";
-                                    html += "<input type='hidden' id='hdnProductId" + iIndex + "' value='" + sProductId + "'>";
-                                    html += "<input type='hidden' id='hdnGrpId" + iIndex + "' value='" + sGrpId + "'>";
-                                    html += "<input type='hidden' id='hdnCategoryId" + iIndex + "' value='" + sCategoryId + "'>";
-                                    html += "<input type='hidden' id='hdnPName" + iIndex + "' value='" + sProductName + "'>";
+                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sGrpId + "," + sMrp + ",this)'>ADD</button>";
+                                    html += "<input type='hidden' id='hdnProductId" + sGrpId + "' value='" + sProductId + "'>";
+                                    html += "<input type='hidden' id='hdnGrpId" + sGrpId + "' value='" + sGrpId + "'>";
+                                    html += "<input type='hidden' id='hdnCategoryId" + sGrpId + "' value='" + sCategoryId + "'>";
+                                    html += "<input type='hidden' id='hdnPName" + sGrpId + "' value='" + sProductName + "'>";
                                     //html += "<input type='hidden' id='hdnPDescription" + iIndex + "' value='" + sProductDesc + "'>";
-                                    html += "<input type='hidden' id='hdnPKeyFeature" + iIndex + "' value='" + sProductKeyFeatures + "'>";
-                                    html += "<input type='hidden' id='hdnProductVariant" + iIndex + "' value='" + sProductVariant + "'>";
+                                    html += "<input type='hidden' id='hdnPKeyFeature" + sGrpId + "' value='" + sProductKeyFeatures + "'>";
+                                    html += "<input type='hidden' id='hdnProductVariant" + sGrpId + "' value='" + sProductVariant + "'>";
                                     //html += "</td>";
                                     //html += "<td>";
-                                    html += "&nbsp;<span class='SoldCount'><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
+                                    html += "&nbsp;<span class='SoldCount'> " + objproduct.ProductList[j].SoldCount + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
-                                    html += "<tr id='AddShow" + iIndex + "' style='display:none;'>";
+                                    //html += "<tr id='AddShow" + iIndex + "' style='display:none;'>";
+                                    html += "<tr id='AddShow" + sGrpId + "' style='display:none;'>";
                                     html += "<td colspan='3' style='padding-top:15px;padding-left:10px;' class='AmazonFont'>";
                                     html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + ",this)'><i class='fa fa-minus'></i></button>";
                                     html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
@@ -838,10 +853,14 @@ public partial class category : System.Web.UI.Page
                                     html += "</td>";
                                     html += "</tr>";
 
-                                    //html += "<tr>";
-                                    //html += "<td> <br/>";
-                                    //html += "</td>";
-                                    //html += "</tr>";
+
+                                    if (sisSelected == "false")
+                                        html += "<tr style='display:none;' class='trGrp" + sGrpId + " trProductId" + sProductId + "'>";
+                                    else
+                                        html += "<tr class='trGrp" + sGrpId + "'>";
+                                    html += "<td colspan='5'> <hr class='solid'>";
+                                    html += "</td>";
+                                    html += "</tr>";
                                     //html += "</td>";
                                     //html += "</tr>";
                                     //html += "</table>";

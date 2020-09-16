@@ -144,7 +144,25 @@
         .WeightText {
             width: 120px;
         }
+          /* Solid border */
+        hr.solid {
+            border-top: 3px solid #bbb;
+        }
 
+        .boldPackSize {
+            background-Color: #F00;
+            color: #FFF;
+        }
+
+        .ProductCenter {
+            padding-top: 5px;
+        }
+
+        .BannerAddPostion {
+            position: absolute;
+            left: 85%;
+            transform: translate(1%, -96%);
+        }
         @media only screen and (max-width: 600px) {
             /* For mobile phones: */
             .ProductImage {
@@ -201,6 +219,13 @@
 
             .WeightText {
                 width: 72px;
+            }
+             .ProductCenter {
+                text-align: -webkit-center;
+            }
+
+            .BannerAddPostion {
+                left: 76%;
             }
         }
         /*@media screen and (max-width: 700px) {
@@ -777,13 +802,16 @@
                 }
             });
         }
-        function AddClick(rowindex, prodid, mrp, el) {
+          function AddClick(rowindex, prodid, grpid, mrp, el) {
 
             //$('#AddShow' + rowindex).css('display', '');
             //$('#BtnAdd' + rowindex).css('display', 'none');
 
-            $('#AddShow' + rowindex).show();
-            $('#BtnAdd' + rowindex).hide();
+            //$('#AddShow' + rowindex).show();
+            //$('#BtnAdd' + rowindex).hide();
+
+            $('#AddShow' + grpid).show();
+            $('#BtnAdd' + grpid).hide();
 
             //$('#count')[0].innerHTML = "";
             //$('#cnfrm').addClass('hide');
@@ -791,11 +819,17 @@
             var $this = $(el);
 
             //var qty = $this.parents('.row').prev().find('input').val();
-            var qty = $('#AddShow' + rowindex).find('input').val();
-            var grpId = $('#hdnGrpId' + rowindex).val();
-            var productvariant = $('#hdnProductVariant' + rowindex).val();
-            var unitId = $('#ddlUnit' + rowindex).val();
-            var unitvalue = $('#ddlUnit' + rowindex).val();
+            //var qty = $('#AddShow' + rowindex).find('input').val();
+            //var grpId = $('#hdnGrpId' + rowindex).val();
+            //var productvariant = $('#hdnProductVariant' + rowindex).val();
+            //var unitId = $('#ddlUnit' + rowindex).val();
+            //var unitvalue = $('#ddlUnit' + rowindex).val();
+
+            var qty = $('#AddShow' + grpid).find('input').val();
+            var grpId = grpid;
+            var productvariant = $('#hdnProductVariant' + grpid).val();
+            var unitId = $('#ddlUnit' + grpid).val();
+            var unitvalue = $('#ddlUnit' + grpid).val();
             var parts = unitvalue.split(' - ');
 
             //$this.css('background-image', 'linear-gradient( #e3e7e6 30%, #e3e7e6)');
@@ -865,13 +899,16 @@
             else if (type == 0) {
                 if (value > 1) {
                     value = value - 1;
-
+                }
+                if (value == 1) {
+                    $('#AddShow' + rowindexval).hide();
+                    $('#BtnAdd' + rowindexval).show();
                 }
             }
             if (products.length > 0) {
                 var product = products.find(x => x.Productid == prodid);
                 if (product != null && product != undefined) {
-                    products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    //products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
                     count = products.length;
                 }
                 if (count == 0) {
@@ -889,8 +926,6 @@
                 $('#cnfrm').addClass('hide');
             }
 
-            $('#AddShow' + rowindexval).hide();
-            $('#BtnAdd' + rowindexval).show();
             var dataval = parent.find('input');
             dataval[0].value = value;
         }
@@ -1401,6 +1436,7 @@
                         else {
                             var ProductEndNo = parseInt("5");
                             $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                            $('#hdnproductcallcount').val(response.d.productcount);
                             //var getdata = {
                             //    data: JSON.parse(response.d.whatsapp),
                             //}
@@ -1420,7 +1456,25 @@
                 });
 
             });
+             $('#divPackSize').on('click', 'div', function () {
+                //$(this).parent().removeClass("boldPackSize");
+                var check = $(this);
+                //$(this).css({ 'backgroundColor': '#F00', 'color': '#FFF' });    // Change its style.
+                $(this).css({ 'backgroundColor': '#1DA1F2' });
+                var AttrId = $(this).attr("id");
+                var AttrIndex = $(this).attr("id").replace('dvPackSizeModal', '');
+                var AttrProductId = $(this).find("#hdnPackSizeProductId" + AttrIndex).text();
+                var AttrGrpId = $(this).find("#hdnPackSizeGrpId" + AttrIndex).text();
 
+                //Hide Modeal Popup
+                $('#modalProductPackingSize').modal('hide');
+
+                //Hide Product
+                $('.trProductId' + AttrProductId).css('display', 'none');
+
+                //Show Grp Product
+                $('.trGrp' + AttrGrpId).css('display', '');
+            });
             function Newcheckservices() {
 
                 var pincode = $("#txtPinCodeval").val();
@@ -1521,10 +1575,15 @@
 
             };
 
-            function myPackSize(rowindex, Discountoffer, prodid, el) {
-                var ddlValue = $('#ddlUnit' + rowindex).val();
+            function myPackSize(rowindex, Discountoffer, prodid, grpid, el) {
+                //var ddlValue = $('#ddlUnit' + rowindex).val();
+                //$('#divPackSize').text('');
+                //$('#PackingProdName').text($('#hdnPName' + rowindex).val());
+                //$('#spanWeight').text(ddlValue);
+
+                var ddlValue = $('#ddlUnit' + grpid).val();
                 $('#divPackSize').text('');
-                $('#PackingProdName').text($('#hdnPName' + rowindex).val());
+                $('#PackingProdName').text($('#hdnPName' + grpid).val());
                 $('#spanWeight').text(ddlValue);
 
                 if (AllProducts.length > 0) {
@@ -1537,8 +1596,15 @@
                             var sDiscount = FilterProduct.ProductAttributesList[i].Discount;
                             var sWeight = FilterProduct.ProductAttributesList[i].weight;
                             var sisSelected = FilterProduct.ProductAttributesList[i].isSelected;
+                            var grpid = FilterProduct.ProductAttributesList[i].packSizeId;
+                            if (sisSelected == 'true') {
+                                divsize += '<div style="border-radius: 22px; border: solid;background-Color:#1DA1F2;" id="dvPackSizeModal' + i + '">';
+                            }
+                            else {
+                                divsize += '<div style="border-radius: 22px; border: solid;" id="dvPackSizeModal' + i + '">';
+                            }
 
-                            divsize += '<div style="border-radius: 22px; border: solid">';
+                            divsize += '<span id="hdnPackSizeProductId' + i + '" style="display:none;">' + prodid + '</span><span id="hdnPackSizeGrpId' + i + '" style="display:none;">' + grpid + '</span>';
                             divsize += ' <table style="width: 100%; color: black;">';
                             divsize += '<tr>';
                             divsize += '<td style="width: 22%; text-align: center">';
@@ -1556,7 +1622,7 @@
                             divsize += '<tr>';
 
                             divsize += '<td style="width: 22%; text-align: center">Pouch</td>';
-                            divsize += '<td>MRP:<del><span id="spanProductMrp">' + smrp + '</span></del></td>';
+                            divsize += '<td>MRP:<del><span id="spanProductMrp">' + smrp + '</span></del><input type="hidden" id="hdnPackSizeProductId' + i + '" value="' + prodid + '"><input type="hidden" id="hdnPackSizeGrpId' + i + '" value="' + grpid + '"></td>';
                             divsize += '<td></td>';
                             divsize += '<td></td>';
                             divsize += '<td></td>';
@@ -1583,50 +1649,110 @@
                 $("#ContentPlaceHolder1_lblpinmsg").text("");
                 $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
             }
-            $(window).scroll(function () {
-                if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-                    //alert("END!");
+            //$(window).scroll(function () {
+            //    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+            //        //alert("END!");
 
+            //        //var ProductStartNo = parseInt($('#hdnProductEndNo').val()) + 1;
+            //        var ProductStartNo = parseInt($('#hdnProductEndNo').val());
+            //        var ProductEndNo = parseInt(ProductStartNo + 4);
+
+            //        var JurisdictionId = $("#ContentPlaceHolder1_lblJurisdictionId").text();
+            //        var CategoryId = $('#ContentPlaceHolder1_lblCategoryId').text();
+            //        if (ProductStartNo > 0) {
+            //            $.ajax({
+            //                type: 'POST',
+            //                url: "category.aspx/GetCategoryProductdata",
+            //                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",,CategoryId:"' + CategoryId + '"}',
+            //                contentType: "application/json",
+            //                dataType: "json",
+            //                success: function (response) {
+            //                    if (response.d.productcount != "") {
+            //                        $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+            //                        //var getdata = {
+            //                        //    data: JSON.parse(response.d.whatsapp),
+            //                        //}
+            //                        $("#btnsendMessage").text(response.d.whatsapp);
+            //                        //$("#btnsendMessage").text(getdata.data);
+            //                        //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
+            //                        $("#divProductNew").append(response.d.response);
+
+            //                        AllProducts.push(response.d.productdata.ProductList);
+            //                    }
+            //                    else {
+            //                        $('#hdnProductEndNo').val('0');
+            //                    }
+            //                },
+            //                failure: function (response) {
+
+            //                    alert("Something Wrong....");
+
+            //                }
+
+            //            });
+            //        }
+            //    }
+            //});
+
+
+             $(document.body).on('touchmove', onScroll); // for mobile
+            $(window).on('scroll', onScroll);
+
+            // callback
+            function onScroll() {
+                if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
+                    var ProductCallCount = $('#hdnproductcallcount').val();
                     //var ProductStartNo = parseInt($('#hdnProductEndNo').val()) + 1;
                     var ProductStartNo = parseInt($('#hdnProductEndNo').val());
                     var ProductEndNo = parseInt(ProductStartNo + 4);
-
                     var JurisdictionId = $("#ContentPlaceHolder1_lblJurisdictionId").text();
                     var CategoryId = $('#ContentPlaceHolder1_lblCategoryId').text();
+
                     if (ProductStartNo > 0) {
-                        $.ajax({
-                            type: 'POST',
-                            url: "category.aspx/GetCategoryProductdata",
+                        if (ProductCallCount != "") {
+                            $.ajax({
+                                type: 'POST',
+                                url: "category.aspx/GetCategoryProductdata",
                             data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",,CategoryId:"' + CategoryId + '"}',
-                            contentType: "application/json",
-                            dataType: "json",
-                            success: function (response) {
-                                if (response.d.productcount != "") {
-                                    $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
-                                    //var getdata = {
-                                    //    data: JSON.parse(response.d.whatsapp),
-                                    //}
-                                    $("#btnsendMessage").text(response.d.whatsapp);
-                                    //$("#btnsendMessage").text(getdata.data);
-                                    //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
-                                    $("#divProductNew").append(response.d.response);
+                                contentType: "application/json",
+                                dataType: "json",
+                                success: function (response) {
+                                    if (response.d.productcount != "") {
+                                        $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                                        $('#hdnproductcallcount').val(response.d.productcount);
+                                        //var getdata = {
+                                        //    data: JSON.parse(response.d.whatsapp),
+                                        //}
+                                        //$("#btnsendMessage").text(getdata.data);
+                                        $("#btnsendMessage").text(response.d.whatsapp);
+                                        //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
+                                        //$("#divProductNew").append(response.d.response);
+                                        var responsenew = response.d.response;
+                                        responsenew += response.d.intermediateresponse;
+                                        //$("#divIntermediateBannerImage").after(response.d.response);
+                                        $("#divIntermediateBannerImage").after(responsenew);
+                                        //$("#divBannerImage").append(response.d.bannerresponse);
+                                        //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
+                                        //$("#divProductNew").after(response.d.intermediateresponse);
+                                        AllProducts.push(response.d.productdata.ProductList);
+                                    }
+                                    else {
+                                        $('#hdnProductEndNo').val('0');
+                                        $('#hdnproductcallcount').val(productcount);
+                                    }
+                                },
+                                failure: function (response) {
 
-                                    AllProducts.push(response.d.productdata.ProductList);
+                                    alert("Something Wrong....");
+
                                 }
-                                else {
-                                    $('#hdnProductEndNo').val('0');
-                                }
-                            },
-                            failure: function (response) {
 
-                                alert("Something Wrong....");
-
-                            }
-
-                        });
+                            });
+                        }
                     }
                 }
-            });
+            }
+
         </script>
     </div>
     <%--<script src="OwlCarousel/docs/assets/vendors/jquery.min.js"></script>--%>
