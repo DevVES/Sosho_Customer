@@ -6,24 +6,22 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <style>
         #order-summery .ordersummery-address {
-           
-            margin-bottom: 7px!important;
+            margin-bottom: 7px !important;
         }
+
         #shopping-cart .single-product .product-qty .inline .minus {
-  
-    height: 27px!important;
-    width: 29px!important;
-   
-    font-size: 18px!important;
-}
+            height: 27px !important;
+            width: 29px !important;
+            font-size: 18px !important;
+        }
 
         #shopping-cart .single-product .product-qty .inline .plus {
-    width: 29px!important; 
-    height: 27px!important;   
-    font-size: 18px!important;
-}
+            width: 29px !important;
+            height: 27px !important;
+            font-size: 18px !important;
+        }
     </style>
-    <div id="order-summery" >
+    <div id="order-summery">
         <div class="container">
             <div class="ordersummery-address">
                 <div class="row">
@@ -40,8 +38,8 @@
                                     <span id="add2" runat="server">Bharuch, Gujarat, 392001</span>
                                     <span id="add3" runat="server">India</span>
                                 </div>
-                                
-                               
+
+
                             </div>
                         </div>
                     </div>
@@ -52,6 +50,7 @@
                         <asp:Label ID="lbladdrid" runat="server"></asp:Label>
                         <asp:Label ID="lblccode" runat="server"></asp:Label>
                         <asp:Label ID="lblbuyflag" runat="server"></asp:Label>
+                        <asp:Label ID="lblWhatsAppNo" runat="server"></asp:Label>
 
                     </div>
                     <asp:Literal ID="ltrerr" runat="server"></asp:Literal>
@@ -79,62 +78,61 @@
 
                     </div>
                     <div id="prodcontent" runat="server">
-                    <div class="single-product">
-                        <div class="single-product left">
-                            <div class="product-image">
-                                <img  id="proimg" src="/" runat="server" />
+                        <div class="single-product">
+                            <div class="single-product left">
+                                <div class="product-image">
+                                    <img id="proimg" src="/" runat="server" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="single-product right">
+                            <div class="single-product right">
 
-                            <div class="product-name-order" id="lblpname" runat="server">
-                                <p>Duna Burfi</p>
-                            </div>
-                            <div class="price">
-                                <div class="gram">
-                                    <div>
-                                    Weight:<span id="lbldisplayunit" runat="server">250-gram</span><br />
-                                        </div>
-                                    <br />
-                                    <div>
-                                    Price/Qty:<p id="lblproprice" runat="server">200 </p>
-                                        </div>
-                                    <%--/ --%>
-                        <%--<span id="lbldisplayunit" runat="server">250-gram</span>--%>
+                                <div class="product-name-order" id="lblpname" runat="server">
+                                    <p>Duna Burfi</p>
                                 </div>
-                                
-                                <div class="final-amt">
-                                    <p runat="server" id="lbltotprices">₹25.98</p>
-                                </div>
-                            </div>
-                            <div class="product-qty">
-                                <div class="inline">
-                                    <button type="button" class="minus" runat="server" id="btnminuqty" onclick="PriceMinus()" style="color:white;background-color:#1DA1F2">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <div class="qty" style="display: grid;">
-                                        <input type="text" id="txtqty" value="1" class="" style="width: 29px; height: 27px;" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="2" onchange="Pricecalculation()" runat="server" />
-                                        <a onclick="saveitem(0); return false;">Save</a>
+                                <div class="price">
+                                    <div class="gram">
+                                        <div>
+                                            Weight:<span id="lbldisplayunit" runat="server">250-gram</span><br />
+                                        </div>
+                                        <br />
+                                        <div>
+                                            Price/Qty:<p id="lblproprice" runat="server">200 </p>
+                                        </div>
+                                        <%--/ --%>
+                                        <%--<span id="lbldisplayunit" runat="server">250-gram</span>--%>
                                     </div>
-                                    <button type="button" runat="server" class="plus" id="btnplus" onclick="Priceplus()" style="color:white;background-color:#1DA1F2">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+
+                                    <div class="final-amt">
+                                        <p runat="server" id="lbltotprices">₹25.98</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="product-line-price">
-                                <i class="fa fa-trash" onclick="Remove()"></i>
+                                <div class="product-qty">
+                                    <div class="inline">
+                                        <button type="button" class="minus" runat="server" id="btnminuqty" onclick="PriceMinus()" style="color: white; background-color: #1DA1F2">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                        <div class="qty" style="display: grid;">
+                                            <input type="text" id="txtqty" value="1" class="" style="width: 29px; height: 27px;" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="2" onchange="Pricecalculation()" runat="server" />
+                                            <a onclick="saveitem(0); return false;">Save</a>
+                                        </div>
+                                        <button type="button" runat="server" class="plus" id="btnplus" onclick="Priceplus()" style="color: white; background-color: #1DA1F2">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="product-line-price">
+                                    <i class="fa fa-trash" onclick="Remove()"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
-                        </div>
                 </div>
                 <div class="total">
                     <div class="row section">
                         <div class="total-amount">
                             <span>Total Price:₹</span><span id="totwtshipping" runat="server"></span>
-
                         </div>
-                        <div class="saving hide" >
+                        <div class="saving hide">
                             <p id="P1" runat="server">(-) Offer Discount (₹<asp:Label ID="lblofferprice" runat="server" Text="15"></asp:Label>*<asp:Label ID="lblqty" runat="server" Text="2"></asp:Label>) :₹<span id="lbltotofferprice" runat="server">30</span></p>
                         </div>
                         <div class="darshan hide">
@@ -162,11 +160,34 @@
                     </div>
 
                 </div>
-                <div class="coupon-box hide">
+
+                  <div class="cart-footer">
+                    <div class="cart-collaterals">
+                        <div class="deals">
+                            <div id="coupon-box" class="coupon-box">
+                                <div class="sb-inline-block titlebox" style="vertical-align: middle;" id="coupon-box-2017-1">
+                                    <div class="title">
+                                        <strong class="formlabel">Promo Code</strong>
+                                    </div>
+                                </div>
+                                <div class="coupon-code sb-inline-block" id="coupon-box-2017-2">
+                                    <input name="discountcouponcode" id="_discountcouponcode" placeholder="Enter your coupon here" class="text-box" style="width: 185px;" type="text">
+                                    <input type="button" id="_btndiscount" style="width: initial; padding: 10px; font-size: 13px;" name="applydiscountcouponcode" value="Apply" class="btn btn-buy-big continue-button" onclick="Applypromocode()">
+                                </div>
+                                <div id="_redeemerrmsg1" class="hint formlabel" style="color: red; text-transform: none; white-space: inherit;">
+                                </div>
+                                <div id="_redeemmsg1" class="hint formlabel" style="color: green; text-transform: none; white-space: inherit;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="coupon-box">
                     <div id="applyRedeem">
                         <div class="sb-inline-block titlebox" style="vertical-align: middle; padding: 10px 10px 10px 0;">
                             <div class="title">
                                 <strong class="formlabel">Money in your wallet : ₹<span id="reeamt" runat="server"></span></strong>
+                                
                             </div>
                         </div>
                         <div class="coupon-code sb-inline-block">
@@ -207,12 +228,13 @@
                     </div>
                 </div>
                 <div style="text-align: center">
-                    <button class="checkout" id="btnplaceorder" type="button" onclick="Placeorder()">Place Order</button>
+                    <%--<button class="checkout" id="btnplaceorder" type="button" onclick="Placeorder()">Place Order</button>--%>
+                    <button class="checkout" id="btnplaceorder" type="button" onclick="Placeorder()">Confirm</button>
                     <asp:Literal ID="ltrmsg" runat="server"></asp:Literal>
                 </div>
-                <div id="divMainloaderplace" style="text-align:center;display:none;">
-                                Processing...
-                            </div>
+                <div id="divMainloaderplace" style="text-align: center; display: none;">
+                    Processing...
+                </div>
             </div>
         </div>
     </div>
@@ -222,9 +244,9 @@
     <script>
         var products = [];
         $(document).ready(function () {
-           
+
             $('.offer-time').css('display', 'none');
-      
+            $("#btnsendMessage").text($('#lblWhatsAppNo').text());
             //$("#btnplaceorder").click();
 
             var reedamamt = document.getElementById('<%= punchamt.ClientID %>').value;
@@ -243,7 +265,7 @@
         });
 
         //Change Button Click show apply and hide change
-        function Changediv(){
+        function Changediv() {
             $("#applyRedeem").show();
             $("#changeredeem").hide();
         }
@@ -254,7 +276,7 @@
         //Flag 0 Redeem Value after Caluculation
         //SaveButtonClick
 
-        function saveitem(flag){
+        function saveitem(flag) {
 
             if (flag == 0) {
                 $("#ContentPlaceHolder1_lblredeem").html("0");
@@ -276,9 +298,9 @@
             var totship = totship.toFixed(2);
             var totoffer = totoffer.toFixed(2);
             var objqry1 = document.getElementById("<%= lblqty1.ClientID %>");
-           objqry1.innerHTML = qty;
+            objqry1.innerHTML = qty;
 
-           var objqty = document.getElementById("<%= lblqty.ClientID %>");
+            var objqty = document.getElementById("<%= lblqty.ClientID %>");
             objqty.innerHTML = qty;
 
             var objoffertot = document.getElementById("<%= lbltotofferprice.ClientID %>");
@@ -366,10 +388,10 @@
 
         function PriceMinus(prodid, el) {
 
-             $this = $(el);
+            $this = $(el);
             var price = $this.parents('.single-product').find('#lblproprice')[0].innerHTML;
             var proqty = $this.parents('.single-product').find('#txtqty').val();
-             var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
+            var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
             var PWeight = prweight.substr(0, prweight.indexOf('-'));
 
             var qty = Number(proqty);
@@ -445,37 +467,37 @@
 
 
             if (products.length > 0) {
-                 var product = products.find(x => x.Productid == prodid);
-                 if (product != null && product != undefined) {
-                     products.splice(products.findIndex(x => x.Productid == prodid), 1);
+                var product = products.find(x => x.Productid == prodid);
+                if (product != null && product != undefined) {
+                    products.splice(products.findIndex(x => x.Productid == prodid), 1);
 
-                     obj = {
-                         Productid: prodid,
-                         Qty: parseInt(qty),
-                         Weight:parseInt(PWeight)
-                     }
-                     products.push(obj);
-                 }
-                 else {
-                     obj = {
-                         Productid: prodid,
-                         Qty: parseInt(qty),
-                         Weight:parseInt(PWeight)
-                     }
-                     products.push(obj);
-                 }
-             } else {
+                    obj = {
+                        Productid: prodid,
+                        Qty: parseInt(qty),
+                        Weight: parseInt(PWeight)
+                    }
+                    products.push(obj);
+                }
+                else {
+                    obj = {
+                        Productid: prodid,
+                        Qty: parseInt(qty),
+                        Weight: parseInt(PWeight)
+                    }
+                    products.push(obj);
+                }
+            } else {
                 obj = {
-                         Productid: prodid,
-                         Qty: parseInt(qty),
-                         Weight:parseInt(PWeight)
-                     }
-                     products.push(obj);
+                    Productid: prodid,
+                    Qty: parseInt(qty),
+                    Weight: parseInt(PWeight)
+                }
+                products.push(obj);
             }
             console.log(products);
         }
 
-        function Remove(prodid,el) {
+        function Remove(prodid, el) {
             //alert("ProductId: " + prodid);
             var $this = $(el);
             var r = confirm("Are you sure you want to remove this item?");
@@ -498,7 +520,7 @@
 
                         } else if (ResponseData.d == "lastproduct") {
                             //alert("One product is required to complete order. So you can not remove this product.");
-                             window.location = "Default.aspx";
+                            window.location = "Default.aspx";
                         }
                         else {
                             alert("Somthing Wrong");
@@ -575,9 +597,9 @@
                     if (response != "") {
                         //alert(response.d.resultflag + response.resultflag);
                         var bar_data =
-                       {
-                           data: JSON.parse(response.d),
-                       };
+                        {
+                            data: JSON.parse(response.d),
+                        };
 
                         if (reepasamt != "") {
                             var available = bar_data.data.Message;
@@ -640,7 +662,7 @@
             var totalamount = PaidAmt;
 
 
-            if (PaidAmt == "0" || PaidAmt =="0.0" || PaidAmt=="0.00") {
+            if (PaidAmt == "0" || PaidAmt == "0.0" || PaidAmt == "0.00") {
                 $.ajax({
                     type: "POST",
                     url: "OrderSummery.aspx/PlaceOrderAmtZero",
@@ -648,49 +670,46 @@
                     contentType: "application/json",
                     dataType: "json",
 
-                    success: function (response) {                       
-                       // alert(response.d)
+                    success: function (response) {
+                        // alert(response.d)
                         if (response != "") {
 
-                                var Resp=
-                                {
-                                data:JSON.parse(response.d),
-                                };
-                                if (Resp.data.resultflag == 1)
-                                {
-                                     $("#divMainloaderplace").attr("display", "none");
-                                    var Oid = Resp.data.OrderId;
-                                    //alert(Oid);
-                                    window.location = "final.aspx"; 
-                                }
-                                else
-                                {
-                                     $("#divMainloaderplace").attr("display", "none");
-                                    $("#btnplaceorder").attr("disabled", false);
-                                    alert("No Data Found ..");
-                                }
+                            var Resp =
+                            {
+                                data: JSON.parse(response.d),
+                            };
+                            if (Resp.data.resultflag == 1) {
+                                $("#divMainloaderplace").attr("display", "none");
+                                var Oid = Resp.data.OrderId;
+                                //alert(Oid);
+                                window.location = "final.aspx";
+                            }
+                            else {
+                                $("#divMainloaderplace").attr("display", "none");
+                                $("#btnplaceorder").attr("disabled", false);
+                                alert("No Data Found ..");
+                            }
                         }
                         else {
-                             $("#divMainloaderplace").attr("display", "none");
-                              $("#btnplaceorder").attr("disabled", false);
+                            $("#divMainloaderplace").attr("display", "none");
+                            $("#btnplaceorder").attr("disabled", false);
                             alert("Services Not Responding... ");
                         }
                     },
                     failure: function (response) {
-                         $("#divMainloaderplace").attr("display", "none");
-                          $("#btnplaceorder").attr("disabled", false);
+                        $("#divMainloaderplace").attr("display", "none");
+                        $("#btnplaceorder").attr("disabled", false);
                         alert("err");
                     }
                 })
             }
-            else
-            {
+            else {
                 $.ajax({
                     type: "POST",
                     //url: "OrderSummery.aspx/CODPlaceOrder",
                     //data: '{CustId:"' + CustId + '",PayAmt:"' + PaidAmt + '",addr:"' + addrid + '",qty:"' + Qty + '",buyflag:"' + buyflag + '",disc:"' + disct + '",redm:"' + Redamt + '",ccode:"' + Ccode + '",shipcharg:"' + shipcharge + '",rcode:"' + refcode + '"}',
                     url: "OrderSummery.aspx/CODPlaceMultipleOrder",
-                    data: JSON.stringify({summeryModel:products,totalamount}),
+                    data: JSON.stringify({ summeryModel: products, totalamount }),
                     contentType: "application/json",
                     dataType: "json",
 
@@ -698,19 +717,17 @@
                         window.location = "final.aspx";
                         // alert(response.d)
                         if (response != "") {
-                           
-                            var Resp=
+
+                            var Resp =
                             {
-                                data:JSON.parse(response.d),
+                                data: JSON.parse(response.d),
                             };
-                            if (Resp.data.resultflag == 1)
-                            {
+                            if (Resp.data.resultflag == 1) {
                                 var Oid = Resp.data.OrderId;
                                 //alert(Oid);
-                               
+
                             }
-                            else
-                            {
+                            else {
                                 alert("No Data Found ..");
                             }
                         }
@@ -734,7 +751,7 @@
             //        success: function (response) {
             //          //  alert(response.d)
             //            if (response != "") {
-                           
+
             //                var Resp =
             //                {
             //                    data: JSON.parse(response.d),
@@ -763,6 +780,19 @@
 
         }
 
+        function Applypromocode() {
+            var Promocode = $("#_discountcouponcode").val();
+            if (Promocode == "" || Promocode == null) {
+                $("#_redeemerrmsg1").text("Please enter your coupon.");
+                $("#_redeemerrmsg1").removeClass("hide");
+                setTimeout(function () {
+                    $("#_redeemerrmsg1").text("");
+                    $("#_redeemerrmsg1").addClass("hide");
+                }, 5000)
+                return false;
+            }
+        }
+        
     </script>
 
 </asp:Content>

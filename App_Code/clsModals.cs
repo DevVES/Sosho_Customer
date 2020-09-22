@@ -213,7 +213,11 @@ public class clsModals
         public string weight;
         public string isOutOfStock;
         public string isSelected;
-        public string packSizeId;
+        public string isQtyFreeze;
+        public string isBestBuy;
+        public string MinQty;
+        public string MaxQty;
+        public string AttributeId;
         public string AImageName;
     }
 }

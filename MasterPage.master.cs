@@ -85,7 +85,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 {
                     //<i class=\"fa fa-user\"></i>
                     //lbllogout.InnerHtml = "<p><span><a href=\"Logout.aspx\">LogOut</a></span></p>";
-                    lbllogout.InnerHtml = "<li><a href=\"PersonalInfo.aspx\">Personal Information</a></li><li><a href=\"MyWallet.aspx\">My Wallet</a></li>  <li><a href=\"MyOrder.aspx\">My Orders</a></li><li><p><span><a href=\"Logout.aspx\" id=\"logoutiddd\">LogOut</a></span></p></a></li>";
+                    lbllogout.InnerHtml = "<li><a href=\"PersonalInfo.aspx\" style=\"color:#1DA1F2;\">Personal Information</a></li><li><a href=\"MyWallet.aspx\" style=\"color:#1DA1F2;\">My Wallet</a></li>  <li><a href=\"MyOrder.aspx\" style=\"color:#1DA1F2;\">My Orders</a></li><li><p><span><a href=\"Logout.aspx\" id=\"logoutiddd\" style=\"color:#1DA1F2;\">LogOut</a></span></p></a></li>";
                 }
                 else
                 {

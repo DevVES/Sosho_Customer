@@ -111,7 +111,10 @@ public partial class checkout : System.Web.UI.Page
                 //    AddrId = clsCommon.Base64Decode(buyaddren);
                 //    //lbladdrid.Text = AddrId;
                 //}
-
+                if(HttpContext.Current.Session["WhatsAppNo"] != null)
+                {
+                    lblWhatsAppNo.Text = Session["WhatsAppNo"].ToString();
+                }
                 //Buy Quentity
                 if ((HttpContext.Current.Session["buyqty"] != null))
                 {

@@ -196,7 +196,7 @@ public class ClsOrderModels
         public string UnitId { get; set; }
         public string Unit { get; set; }
         public string Productvariant { get; set; }
-        public string Grpid { get; set; }
+        public string AttributeId { get; set; }
 
     }
     public class ConfirmOrderModel

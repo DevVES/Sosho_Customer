@@ -54,7 +54,10 @@ public partial class OrderSummery : System.Web.UI.Page
                     AddrId = clsCommon.Base64Decode(buyaddren);
                     lbladdrid.Text = AddrId;
                 }
-
+                if (HttpContext.Current.Session["WhatsAppNo"] != null)
+                {
+                    lblWhatsAppNo.Text = Session["WhatsAppNo"].ToString();
+                }
                 //Buy Quentity
                 if ((HttpContext.Current.Session["buyqty"] != null))
                 {
@@ -155,7 +158,7 @@ public partial class OrderSummery : System.Web.UI.Page
 
                     if(item.Productvariant.ToString() == "true")
                     {
-                        imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.Grpid;
+                        imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
                         dtimg = dbc.GetDataTable(imgquery);
 
                         querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
@@ -203,6 +206,7 @@ public partial class OrderSummery : System.Web.UI.Page
                        
                     }
                     html += "<div class=\"single-product\">";
+                    html += "<input type=\"hidden\" id=\"hdnCustId\" value=\"" + Custid + "\">";
                     html += "<div class=\"single-product left\"><div class=\"product-image\"><img id=\"proimg\" src=\""+imgname+"\"/></div></div>";
                     html += "<div class=\"single-product right\"><div class=\"product-name-order\" id=\"lblpname\"><p>"+prodname+"</p></div>";
                     //html += "<div class=\"price\"><div class=\"gram\">Price / Qty :<p id=\"lblproprice\"> " + item.PaidAmount + "</p> <span id=\"lbldisplayunit\"> Weight:"+ Weight +"</span></div>";
@@ -233,10 +237,7 @@ public partial class OrderSummery : System.Web.UI.Page
             }
 
             
-
-
-
-
+           
 
 
             //string aa = clsCommon.strApiUrl + "/api/OrderSummery/GetProductDetails?buyflag=" + buyflag + "";
@@ -357,17 +358,24 @@ public partial class OrderSummery : System.Web.UI.Page
         try
         {
             dbConnection dbc = new dbConnection();
-            string aa = clsCommon.strApiUrl + "/api/RedeemWallet/RedeemWallet?CustomerId=" + Custid + "&OrderTotal=" + payableamt + "&Redemeamount=" + reedemamt + "";
-
+            //string aa = clsCommon.strApiUrl + "/api/RedeemWallet/RedeemWallet?CustomerId=" + Custid + "&OrderTotal=" + payableamt + "&Redemeamount=" + reedemamt + "";
+            string aa = clsCommon.strApiUrl + "api/Wallet/GetCustomerOfferDetail?CustomerId=" + Custid;
             string redeem = clsCommon.GET(aa);
             if (!String.IsNullOrEmpty(redeem))
             {
-                ClsOrderModels.RedeemWalletModel objreed = JsonConvert.DeserializeObject<ClsOrderModels.RedeemWalletModel>(redeem);
-                if (objreed.resultflag.Equals("1"))
+                //ClsOrderModels.RedeemWalletModel objreed = JsonConvert.DeserializeObject<ClsOrderModels.RedeemWalletModel>(redeem);
+                WalletModel.RedeemeWallet objreed = JsonConvert.DeserializeObject<WalletModel.RedeemeWallet>(redeem);
+                // if (objreed.resultflag.Equals("1"))
+                //{
+                //    reeamt.InnerHtml = objreed.WalletAmount.ToString();
+
+                //}
+                if (objreed.response.Equals("1"))
                 {
-                    reeamt.InnerHtml = objreed.WalletAmount.ToString();
+                    reeamt.InnerHtml = objreed.RedeemeAmount.ToString();
 
                 }
+                
                 else
                 {
                     reeamt.InnerHtml = "0";
@@ -415,13 +423,19 @@ public partial class OrderSummery : System.Web.UI.Page
         try
         {
             dbConnection dbc = new dbConnection();
-            string aa = clsCommon.strApiUrl + "/api/RedeemWallet/RedeemWallet?CustomerId=" + CustId + "&OrderTotal=" + PayAmt + "&Redemeamount=" + Reeamt + "";
+            //string aa = clsCommon.strApiUrl + "/api/RedeemWallet/RedeemWallet?CustomerId=" + CustId + "&OrderTotal=" + PayAmt + "&Redemeamount=" + Reeamt + "";
+            string aa = clsCommon.strApiUrl + "/api/Wallet/RedeemeWalletFromOrder?CustomerId=" + CustId + "&OrderAmount=" + PayAmt + "&RedeemeAmount=" + Reeamt + "";
 
             string redeem = clsCommon.GET(aa);
             if (!String.IsNullOrEmpty(redeem))
             {
-                ClsOrderModels.RedeemWalletModel objreed = JsonConvert.DeserializeObject<ClsOrderModels.RedeemWalletModel>(redeem);
-                if (objreed.resultflag.Equals("1") || objreed.resultflag.Equals("0"))
+                //ClsOrderModels.RedeemWalletModel objreed = JsonConvert.DeserializeObject<ClsOrderModels.RedeemWalletModel>(redeem);
+                //if (objreed.resultflag.Equals("1") || objreed.resultflag.Equals("0"))
+                //{
+                //    return redeem;
+                //}
+                WalletModel.RedeemeWalletFromOrder objeWalletdt = JsonConvert.DeserializeObject<WalletModel.RedeemeWalletFromOrder>(redeem);
+                if(objeWalletdt.response.Equals("1"))
                 {
                     return redeem;
                 }
@@ -786,7 +800,7 @@ public partial class OrderSummery : System.Web.UI.Page
                 if (!string.IsNullOrWhiteSpace(data))
                 {
                     ClsOrderModels.PlaceOrderModel objplaceorder = JsonConvert.DeserializeObject<ClsOrderModels.PlaceOrderModel>(data);
-
+                    //ClsOrderModels.PlaceMultipleOrderNewModel objplaceorder = JsonConvert.DeserializeObject<ClsOrderModels.PlaceMultipleOrderNewModel>(data);
                     if (objplaceorder.resultflag == "1")
                     {
 

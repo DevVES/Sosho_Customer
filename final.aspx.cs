@@ -38,7 +38,10 @@ public partial class final : System.Web.UI.Page
                     BuyFlag = clsCommon.Base64Decode(buyflagen);
 
                 }
-
+                if (HttpContext.Current.Session["WhatsAppNo"] != null)
+                {
+                    lblWhatsAppNo.Text = Session["WhatsAppNo"].ToString();
+                }
                 string data = "";
                 if (Session["PlaceOrderId"] != null)
                 {

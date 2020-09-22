@@ -156,6 +156,23 @@
 
                                 </div>
                                 <div class="form-group">
+                                    <div class="col-md-6 form-group">
+                                        <strong class="required">Location:</strong>
+                                        <input type="text" name="location" class="form-control" value=""  runat="server" id="txtLocation" placeholder="Location" />
+                                        <i class="fa fa-check complete" aria-hidden="true"></i>
+                                        <small id="alert-location"></small>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <strong class="required">Area:</strong>
+                                        <input type="text" name="area" class="form-control" value=""  id="txtArea" runat="server" placeholder="Area"  />
+                                        <i class="fa fa-check complete" aria-hidden="true"></i>
+                                        <small id="alert-Area"></small>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group">
                                     <div class="col-md-12"><strong class="required">Address:</strong></div>
                                     <div class="col-md-12 form-group ">
                                         <textarea style="width: 100%;" id="txtaddr" class="form-control" runat="server" placeholder="Address"></textarea>
@@ -183,7 +200,7 @@
 
                                     <asp:Label ID="lblCustid1" runat="server"></asp:Label>
                                     <asp:Label ID="lbladdressid" runat="server"></asp:Label>
-
+                                    <asp:Label ID="lblWhatsAppNo" runat="server"></asp:Label>
                                 </div>
                             </div>
                         </div>
@@ -309,7 +326,9 @@
     </div>
     <script>
         $(document).ready(function () {
-          $('.offer-time').css('display','none');
+            $('.offer-time').css('display', 'none');
+            
+            $("#btnsendMessage").text($('#lblWhatsAppNo').text());
       });
         let checkmark = document.getElementsByClassName('complete');
         function alphanumeric(data) {

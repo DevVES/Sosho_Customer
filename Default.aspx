@@ -55,7 +55,7 @@
         .ProudctMRPText {
             font-family: 'Amazon Ember';
             font-size: 15px;
-            /*width: 121px;*/
+            width: 121px;
             /*padding-left: 27px;*/
             padding-left: 10px;
         }
@@ -679,7 +679,7 @@
                             </fieldset>
                         </div>
                         <div style="text-align: center;">
-                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()" id="BtnPinCodeApply">Apply</button>
+                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()" id="BtnPinCodeApply">Confirm</button>
                         </div>
                     </form>
                 </div>
@@ -1224,7 +1224,7 @@
                 type: "POST",
                 url: "Default.aspx/ConfirmOrder",
                 // data: '{model:"' + productstring + '"}',
-                data: JSON.stringify({ model: products }),
+                data: JSON.stringify({ model: products,"WhatsAppNo":$("#btnsendMessage").text() }),
                 contentType: "application/json",
                 dataType: "json",
 
@@ -1737,7 +1737,7 @@
                             var sDiscount = FilterProduct.ProductAttributesList[i].Discount;
                             var sWeight = FilterProduct.ProductAttributesList[i].weight;
                             var sisSelected = FilterProduct.ProductAttributesList[i].isSelected;
-                            var grpid = FilterProduct.ProductAttributesList[i].packSizeId;
+                            var grpid = FilterProduct.ProductAttributesList[i].AttributeId;
                             if (sisSelected == 'true') {
                                 divsize += '<div style="border-radius: 22px; border: solid;background-Color:#1DA1F2;" id="dvPackSizeModal' + i + '">';
                             }

@@ -330,7 +330,7 @@ public partial class Default : System.Web.UI.Page
     }
     [System.Web.Services.WebMethod]
     //public static string ConfirmOrder(List<ClsOrderModels.ConfirmOrderModel> model)
-    public static string ConfirmOrder(List<ClsOrderModels.ConfirmOrderNewModel> model)
+    public static string ConfirmOrder(List<ClsOrderModels.ConfirmOrderNewModel> model,string WhatsAppNo)
     {
         ClsOrderModels.PlaceMultipleOrderNewModel orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
         List<ClsOrderModels.ProductListNew> products = new List<ClsOrderModels.ProductListNew>();
@@ -345,7 +345,7 @@ public partial class Default : System.Web.UI.Page
                 UnitId = item.UnitId.ToString(),
                 Unit = item.Unit.ToString(),
                 Productvariant = item.Productvariant,
-                Grpid = item.Grpid,
+                AttributeId = item.Grpid,
                 //UnitId = "Gram",
                 //Unit = "500",
                 couponCode = "0",
@@ -381,7 +381,7 @@ public partial class Default : System.Web.UI.Page
         HttpContext.Current.Session["ConfirmOrder"] = orderModel;
 
         HttpContext.Current.Session["IsCheckOut"] = "true";
-
+        HttpContext.Current.Session["WhatsAppNo"] = WhatsAppNo;
         return "Success";
     }
     //protected void BuyOne_Click(object sender, EventArgs e)
@@ -704,7 +704,7 @@ public partial class Default : System.Web.UI.Page
 
                                 for (int h = 0; h < objproduct.ProductList[j].ProductAttributesList.Count; h++)
                                 {
-                                    sGrpId = objproduct.ProductList[j].ProductAttributesList[h].packSizeId;
+                                    sGrpId = objproduct.ProductList[j].ProductAttributesList[h].AttributeId;
                                     sDiscount = objproduct.ProductList[j].ProductAttributesList[h].Discount;
                                     sMrp = objproduct.ProductList[j].ProductAttributesList[h].soshoPrice;
                                     sSoshoPrice = objproduct.ProductList[j].ProductAttributesList[h].Mrp;

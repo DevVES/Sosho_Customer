@@ -355,7 +355,7 @@ public partial class category : System.Web.UI.Page
                 UnitId = item.UnitId.ToString(),
                 Unit = item.Unit.ToString(),
                 Productvariant = item.Productvariant,
-                Grpid = item.Grpid,
+                AttributeId = item.Grpid,
                 //UnitId = "Gram",
                 //Unit = "500",
                 couponCode = "0",
@@ -714,7 +714,7 @@ public partial class category : System.Web.UI.Page
 
                                 for (int h = 0; h < objproduct.ProductList[j].ProductAttributesList.Count; h++)
                                 {
-                                    sGrpId = objproduct.ProductList[j].ProductAttributesList[h].packSizeId;
+                                    sGrpId = objproduct.ProductList[j].ProductAttributesList[h].AttributeId;
                                     sDiscount = objproduct.ProductList[j].ProductAttributesList[h].Discount;
                                     sMrp = objproduct.ProductList[j].ProductAttributesList[h].soshoPrice;
                                     sSoshoPrice = objproduct.ProductList[j].ProductAttributesList[h].Mrp;
