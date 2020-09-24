@@ -246,7 +246,7 @@
         $(document).ready(function () {
 
             $('.offer-time').css('display', 'none');
-            $("#btnsendMessage").text($('#lblWhatsAppNo').text());
+            $("#btnsendMessage").text($('#ContentPlaceHolder1_lblWhatsAppNo').text());
             //$("#btnplaceorder").click();
 
             var reedamamt = document.getElementById('<%= punchamt.ClientID %>').value;

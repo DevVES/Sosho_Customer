@@ -201,6 +201,7 @@
                                     <asp:Label ID="lblCustid1" runat="server"></asp:Label>
                                     <asp:Label ID="lbladdressid" runat="server"></asp:Label>
                                     <asp:Label ID="lblWhatsAppNo" runat="server"></asp:Label>
+                                    <asp:Label ID="lblPinCode" runat="server"></asp:Label>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +329,7 @@
         $(document).ready(function () {
             $('.offer-time').css('display', 'none');
             
-            $("#btnsendMessage").text($('#lblWhatsAppNo').text());
+            $("#btnsendMessage").text($('#ContentPlaceHolder1_lblWhatsAppNo').text());
       });
         let checkmark = document.getElementsByClassName('complete');
         function alphanumeric(data) {
@@ -1033,34 +1034,40 @@
              return false;
          }
 
-         function Deliverydone(addrid) {
+         function Deliverydone(addrid,pincode) {
              //alert(addrid);
              var addresssid = addrid;
              var addr = Number(addresssid);
+             var Deliverypincode = pincode;
+             var Pincodecheck = $('#ContentPlaceHolder1_lblPinCode').html();
+             if (Deliverypincode == Pincodecheck) {
+                 $.ajax({
 
-             $.ajax({
+                     type: "POST",
+                     url: "checkout.aspx/passaddressid",
+                     data: '{AddressIdd:"' + addr + '"}',
+                     contentType: "application/json;charset=utf-8",
+                     datatype: "json",
+                     success: function (ResponseData) {
+                         //alert(ResponseData.d);
+                         if (ResponseData.d == "1") {
+                             window.location = "OrderSummery.aspx";
+                         }
+                         else {
+                             alert("Data Not Found");
+                         }
 
-                 type: "POST",
-                 url: "checkout.aspx/passaddressid",
-                 data: '{AddressIdd:"' + addr + '"}',
-                 contentType: "application/json;charset=utf-8",
-                 datatype: "json",
-                 success: function (ResponseData) {
-                     //alert(ResponseData.d);
-                     if (ResponseData.d == "1") {
-                         window.location = "OrderSummery.aspx";
+                     },
+                     failure: function (ResponseData) {
+                         alert("Somthing Wrong");
                      }
-                     else {
-                         alert("Data Not Found");
-                     }
-
-                 },
-                 failure: function (ResponseData) {
-                     alert("Somthing Wrong");
-                 }
-             });
-             return false;
-
+                 });
+                 return false;
+             }
+             else {
+                 alert('Pincode is differet as you have selected.Please select same pincode which you have selected at home page else add new address');
+                 return false;
+             }
          }
 
 

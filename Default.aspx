@@ -1224,7 +1224,7 @@
                 type: "POST",
                 url: "Default.aspx/ConfirmOrder",
                 // data: '{model:"' + productstring + '"}',
-                data: JSON.stringify({ model: products,"WhatsAppNo":$("#btnsendMessage").text() }),
+                data: JSON.stringify({ model: products,"WhatsAppNo":$("#btnsendMessage").text(),"PinCode": $("#spanpincode").html() }),
                 contentType: "application/json",
                 dataType: "json",
 
@@ -1872,10 +1872,13 @@
                                         $("#btnsendMessage").text(response.d.whatsapp);
                                         //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
                                         //$("#divProductNew").append(response.d.response);
-                                        var responsenew = response.d.response;
+                                        var responsenew = '';
+                                       
+                                        responsenew = response.d.response;
                                         responsenew += response.d.intermediateresponse;
                                         //$("#divIntermediateBannerImage").after(response.d.response);
                                         $("#divIntermediateBannerImage").after(responsenew);
+                                        //$("#divProductNew").append(responsenew);
                                         //$("#divBannerImage").append(response.d.bannerresponse);
                                         //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
                                         //$("#divProductNew").after(response.d.intermediateresponse);
