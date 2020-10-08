@@ -1560,8 +1560,8 @@ height:19px;
 }
 
 #checkout .deliver-btn {
-    background: #ff5722;
-    border: 2px solid #ff5722;
+    background: #1da1f2;
+    border: 2px solid #1da1f2;
     font-size: 15px;
     font-weight: 600;
     text-transform: uppercase;
@@ -2143,7 +2143,7 @@ hr {
 
 .coupon-box .titlebox .title strong {
     font-size: 18px !important;
-    color: #ff5722;
+    color: #1DA1F2;
     line-height: 18px !important;
     text-align: left;
     vertical-align: middle;
@@ -2365,7 +2365,7 @@ select, -box input {
     border: 0;
     margin-top: 0px;
     padding: 6px 25px;
-    background-color: #6b6;
+    background-color: #1da1f2;
     color: #fff;
     font-size: 25px;
     border-radius: 3px;
@@ -2373,7 +2373,7 @@ select, -box input {
 }
 
     #shopping-cart .checkout:hover {
-        background-color: #494;
+        background-color: #1da1f2;
     }
 /*address-diary css start*/
 #address-diary {

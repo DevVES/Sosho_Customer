@@ -38,7 +38,7 @@ public partial class OrderSummery : System.Web.UI.Page
                 string Buyqty = "";
                 string BuyFlag ="";
                 string reffcode = "";
-
+                HttpContext.Current.Session["WalletHistory"] = null;
                 //ccode
                 if ((HttpContext.Current.Session["ReferCode"] != null) && (HttpContext.Current.Session["ReferCode"] != ""))
                 {
@@ -156,16 +156,16 @@ public partial class OrderSummery : System.Web.UI.Page
                     //string querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
                     //DataTable dtpathimg = dbc.GetDataTable(querydata);
 
-                    if(item.Productvariant.ToString() == "true")
-                    {
-                        imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
-                        dtimg = dbc.GetDataTable(imgquery);
+                    //if(item.Productvariant.ToString() == "true")
+                    //{
+                    //    imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
+                    //    dtimg = dbc.GetDataTable(imgquery);
 
-                        querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
-                        dtpathimg = dbc.GetDataTable(querydata);
-                    }
-                    else
-                    {
+                    //    querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
+                    //    dtpathimg = dbc.GetDataTable(querydata);
+                    //}
+                    //else
+                    //{
                         if (item.Productvariant.ToString() == "BannerProduct")
                         {
                             imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
@@ -176,13 +176,19 @@ public partial class OrderSummery : System.Web.UI.Page
                         }
                         else
                         {
-                            imgquery = "select ProductImages.ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from ProductImages inner join Product ON Product.Id = ProductImages.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where ProductImages.ProductId =" + item.productid + " and isnull(ProductImages.Isdeleted,0)=0";
+                            //imgquery = "select ProductImages.ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from ProductImages inner join Product ON Product.Id = ProductImages.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where ProductImages.ProductId =" + item.productid + " and isnull(ProductImages.Isdeleted,0)=0";
+                            //dtimg = dbc.GetDataTable(imgquery);
+
+                            //querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
+                            //dtpathimg = dbc.GetDataTable(querydata);
+
+                            imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
                             dtimg = dbc.GetDataTable(imgquery);
 
-                            querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
+                            querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
                             dtpathimg = dbc.GetDataTable(querydata);
                         }
-                    }
+                    //}
                     string urlpathimg = "";
                     Boolean IsQtyFreeze = false;
                     if (dtpathimg != null && dtpathimg.Rows.Count > 0)
@@ -212,7 +218,7 @@ public partial class OrderSummery : System.Web.UI.Page
                     //html += "<div class=\"price\"><div class=\"gram\">Price / Qty :<p id=\"lblproprice\"> " + item.PaidAmount + "</p> <span id=\"lbldisplayunit\"> Weight:"+ Weight +"</span></div>";
                     html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lbldisplayunit\"> Weight:" + Weight + "</span></div>";
                     html += "<div class=\"final-amt\"><p id=\"lbltotprices\">" + MrpTotal + ".00 </p></div></div>";
-                    html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lbldisplayunit\"> <span>Price / Qty : " + item.PaidAmount + "</span></div></div>";
+                    html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lblproprice\"> <span>Price / Qty : " + item.PaidAmount + "</span></div></div>";
                     if (IsQtyFreeze)
                     {
                         html += "<div class=\"product-qty\"><div class=\"inline\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\" disabled><i class=\"fa fa-minus\"></i></button>";
@@ -361,6 +367,7 @@ public partial class OrderSummery : System.Web.UI.Page
             //string aa = clsCommon.strApiUrl + "/api/RedeemWallet/RedeemWallet?CustomerId=" + Custid + "&OrderTotal=" + payableamt + "&Redemeamount=" + reedemamt + "";
             string aa = clsCommon.strApiUrl + "api/Wallet/GetCustomerOfferDetail?CustomerId=" + Custid;
             string redeem = clsCommon.GET(aa);
+            string html = string.Empty;
             if (!String.IsNullOrEmpty(redeem))
             {
                 //ClsOrderModels.RedeemWalletModel objreed = JsonConvert.DeserializeObject<ClsOrderModels.RedeemWalletModel>(redeem);
@@ -373,6 +380,19 @@ public partial class OrderSummery : System.Web.UI.Page
                 if (objreed.response.Equals("1"))
                 {
                     reeamt.InnerHtml = objreed.RedeemeAmount.ToString();
+                    if (objreed.PromoCodeList != null && objreed.PromoCodeList.Count > 0)
+                    {
+                        foreach (var item in objreed.PromoCodeList)
+                        {
+                            item.terms = item.terms.Replace("\r\n","<br/>");
+                            html += "<div class=\"row\"><div class=\"col-md-12\"><div class=\"col-md-6\">";
+                            html += "<label class=\"control-label\"><strong>" + item.PromoCode  +"</strong></label>";
+                            html += "<label class=\"control-label\" style=\"text-align:left; font-weight:200;\">"+item.terms+ "</label></div>";
+                            html += "<div class=\"col-md-6\" style=\"text-align:end;\"><input type=\"button\" style=\"font-size: 13px; background: #fff;border-color:  rgb(29, 161, 242);font-size:13px;color: rgb(29, 161, 242);\" name =\"applydiscountcouponcode\" value=\"Apply\" class=\"btn btn-primary\" onclick=\"Applypromocode('"+item.PromoCode+"')\" /></div></div></div><hr />";
+
+                        }
+                        promolist.InnerHtml = html;
+                    }
 
                 }
                 
@@ -435,11 +455,44 @@ public partial class OrderSummery : System.Web.UI.Page
                 //    return redeem;
                 //}
                 WalletModel.RedeemeWalletFromOrder objeWalletdt = JsonConvert.DeserializeObject<WalletModel.RedeemeWalletFromOrder>(redeem);
-                if(objeWalletdt.response.Equals("1"))
-                {
-                    return redeem;
-                }
+                //if(objeWalletdt.response.Equals("1"))
+                //{
+                //    return redeem;
+                //}
+                //return "";
+
+                HttpContext.Current.Session["WalletHistory"] = objeWalletdt;
+                return redeem;
+            }
+            else
+            {
                 return "";
+            }
+        }
+
+        catch (Exception ee)
+        {
+            return "";
+
+        }
+
+    }
+
+    //Redeem Wallet Information 
+    [System.Web.Services.WebMethod]
+    public static string RedeemePromoCodeFromOrder(string promocode, String CustId, string PayAmt)
+    {
+        try
+        {
+            dbConnection dbc = new dbConnection();
+            string aa = clsCommon.strApiUrl + "/api/Wallet/RedeemePromoCodeFromOrder?CustomerId=" + CustId + "&OrderAmount=" + PayAmt + "&PromoCode=" + promocode;
+
+            string promo = clsCommon.GET(aa);
+            if (!String.IsNullOrEmpty(promo))
+            {
+                WalletModel.RedeemePromoCodeFromOrder objeWalletdt = JsonConvert.DeserializeObject<WalletModel.RedeemePromoCodeFromOrder>(promo);
+                HttpContext.Current.Session["PromoHistory"] = objeWalletdt;
+                return promo;
             }
             else
             {
@@ -697,12 +750,14 @@ public partial class OrderSummery : System.Web.UI.Page
 
     }
     [System.Web.Services.WebMethod]
-    public static object CODPlaceMultipleOrder(List<ClsOrderModels.OrderSummeryModel> summeryModel,string totalamount)
+    public static object CODPlaceMultipleOrder(List<ClsOrderModels.OrderSummeryModel> summeryModel,string totalamount,string redeemamount, string PromoAmount)
     {
         try
         {
             //ClsOrderModels.PlaceMultipleOrderModel OrderDetail;
             ClsOrderModels.PlaceMultipleOrderNewModel OrderDetail;
+            WalletModel.RedeemeWalletFromOrder walletHistory;
+            WalletModel.RedeemePromoCodeFromOrder PromoHistory;
             if ((HttpContext.Current.Session["ConfirmOrder"] != null))
             {
                 //OrderDetail = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
@@ -714,6 +769,47 @@ public partial class OrderSummery : System.Web.UI.Page
                 //OrderDetail = new ClsOrderModels.PlaceMultipleOrderModel();
                 OrderDetail = new ClsOrderModels.PlaceMultipleOrderNewModel();
             }
+
+            if ((HttpContext.Current.Session["WalletHistory"] != null))
+            {
+                walletHistory = (WalletModel.RedeemeWalletFromOrder)HttpContext.Current.Session["WalletHistory"];
+
+            }
+            else
+            {
+                walletHistory = new WalletModel.RedeemeWalletFromOrder();
+            }
+
+            if ((HttpContext.Current.Session["PromoHistory"] != null))
+            {
+                PromoHistory = (WalletModel.RedeemePromoCodeFromOrder)HttpContext.Current.Session["PromoHistory"];
+
+            }
+            else
+            {
+                PromoHistory = new WalletModel.RedeemePromoCodeFromOrder();
+            }
+
+            OrderDetail.WalletId = walletHistory.WalletId;
+            OrderDetail.WalletLinkId = walletHistory.WalletLinkId;
+            OrderDetail.WalletType = walletHistory.WalletType;
+            OrderDetail.Walletbalance = walletHistory.balance;
+            OrderDetail.WalletCrAmount = walletHistory.CrAmount;
+            OrderDetail.WalletCrDate = walletHistory.CrDate;
+            OrderDetail.WalletCrDescription = walletHistory.CrDescription;
+
+            OrderDetail.PromoCodeamount = PromoAmount;
+            OrderDetail.PromoCodebalance = PromoHistory.PromoCodebalance;
+            OrderDetail.PromoCodeCrAmount = PromoHistory.PromoCodeCrAmount;
+            OrderDetail.PromoCodeCrDate = PromoHistory.PromoCodeCrDate;
+            OrderDetail.PromoCodeCrDescription = PromoHistory.PromoCodeCrDescription;
+            OrderDetail.PromoCodeId = PromoHistory.PromoCodeId;
+            OrderDetail.PromoCodeLinkId = PromoHistory.PromoCodeLinkId;
+            OrderDetail.PromoCodetype = PromoHistory.PromoCodetype;
+
+
+
+
             decimal payableamt = 0;
             decimal.TryParse(OrderDetail.products[0].PaidAmount.ToString(), out payableamt);
             if (payableamt > 0)
@@ -728,6 +824,13 @@ public partial class OrderSummery : System.Web.UI.Page
                 {
                     refercode = HttpContext.Current.Session["ReferCode"].ToString();
                 }
+
+
+                if ((HttpContext.Current.Session["JurisdictionId"] != null) && (HttpContext.Current.Session["JurisdictionId"].ToString() != ""))
+                {
+                    OrderDetail.JurisdictionID = HttpContext.Current.Session["JurisdictionId"].ToString();
+                }
+
 
                 if (refercode == "")
                 {
@@ -754,6 +857,7 @@ public partial class OrderSummery : System.Web.UI.Page
                
                 OrderDetail.AddressId = addressid;
                 OrderDetail.CustomerId = clsCommon.getCurrentCustomer().id;
+                OrderDetail.Redeemeamount = redeemamount;
 
                 foreach (var item in OrderDetail.products)
                 {
@@ -787,6 +891,7 @@ public partial class OrderSummery : System.Web.UI.Page
                 WebClient client = new WebClient();
                 client.Encoding = Encoding.UTF8;
                 client.Headers["Content-type"] = "application/json";
+                client.Headers["DeviceType"] = "Web";
 
                 var model = JsonConvert.SerializeObject(OrderDetail);
                 //var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrder", model);
@@ -854,22 +959,22 @@ public partial class OrderSummery : System.Web.UI.Page
     [System.Web.Services.WebMethod]
     public static string Remove(string productid)
     {
-        ClsOrderModels.PlaceMultipleOrderModel orderModel;
+        ClsOrderModels.PlaceMultipleOrderNewModel orderModel;
         if ((HttpContext.Current.Session["ConfirmOrder"] != null))
         {
-            orderModel = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
+            orderModel = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
 
         }
         else
         {
-            orderModel = new ClsOrderModels.PlaceMultipleOrderModel();
+            orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
         }
 
         if (orderModel != null)
         {
             if (orderModel.products.Count > 1)
             {
-                ClsOrderModels.ProductList product = orderModel.products.Where(x => x.productid == productid).FirstOrDefault();
+                ClsOrderModels.ProductListNew product = orderModel.products.Where(x => x.productid == productid).FirstOrDefault();
                 orderModel.products.Remove(product);
 
                 HttpContext.Current.Session["ConfirmOrder"] = orderModel;

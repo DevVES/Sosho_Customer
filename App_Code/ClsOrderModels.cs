@@ -178,12 +178,33 @@ public class ClsOrderModels
     {
         public string CustomerId { get; set; }
         public string AddressId { get; set; }
+        public string JurisdictionID { get; set; }
         public string discountamount { get; set; }
         public string Redeemeamount { get; set; }
         public string orderMRP { get; set; }
         public string totalAmount { get; set; }
         public string totalQty { get; set; }
         public string totalWeight { get; set; }
+
+        public string PromoCodeamount { get; set; }
+
+        public string WalletId;
+        public string WalletLinkId;
+        public string WalletType;
+        public string WalletCrAmount;
+        public string WalletCrDate;
+        public string WalletCrDescription;
+        public string Walletbalance;
+
+
+        public string PromoCodeId;
+        public string PromoCodeLinkId;
+        public string PromoCodetype;
+        public string PromoCodeCrAmount;
+        public string PromoCodeCrDate;
+        public string PromoCodeCrDescription;
+        public string PromoCodebalance;
+
         public List<ProductListNew> products { get; set; }
     }
     public class ProductListNew

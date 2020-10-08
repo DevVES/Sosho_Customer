@@ -153,6 +153,10 @@
                             <p id="lblredeemtext" runat="server">(-) Redeem Amount: ₹<span id="lblredeem" runat="server">0</span></p>
 
                         </div>
+                        <div class="redeem hide" id="divPromo">
+                            <p id="P2" runat="server">Promo Code Amount: ₹<span id="spnpromo">0</span></p>
+                        </div>
+
                         <div class="payable-amount">
                             <p id="lblpayableamt" runat="server">Payable Amount: ₹<span id="lbltotpayamt" runat="server">8552</span></p>
                         </div>
@@ -167,17 +171,17 @@
                             <div id="coupon-box" class="coupon-box">
                                 <div class="sb-inline-block titlebox" style="vertical-align: middle;" id="coupon-box-2017-1">
                                     <div class="title">
-                                        <strong class="formlabel">Promo Code</strong>
+                                        <a href="javascript:void(0);" onclick="OpenModal()"  ><strong class="formlabel">Have a promocode?</strong></a>
                                     </div>
                                 </div>
-                                <div class="coupon-code sb-inline-block" id="coupon-box-2017-2">
-                                    <input name="discountcouponcode" id="_discountcouponcode" placeholder="Enter your coupon here" class="text-box" style="width: 185px;" type="text">
-                                    <input type="button" id="_btndiscount" style="width: initial; padding: 10px; font-size: 13px;" name="applydiscountcouponcode" value="Apply" class="btn btn-buy-big continue-button" onclick="Applypromocode()">
+                                <div class="coupon-code sb-inline-block hide" id="coupon-box-2017-2">
+                                    <%--<input name="discountcouponcode" id="_discountcouponcode" placeholder="Enter your coupon here" class="text-box" style="width: 185px;" type="text"/>--%>
+                                    <%--<input type="button" id="_btndiscount" style="font-size: 13px; background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" name="applydiscountcouponcode" value="Apply" class="btn btn-primary" onclick="Applypromocode()"/>--%>
                                 </div>
-                                <div id="_redeemerrmsg1" class="hint formlabel" style="color: red; text-transform: none; white-space: inherit;">
-                                </div>
-                                <div id="_redeemmsg1" class="hint formlabel" style="color: green; text-transform: none; white-space: inherit;">
-                                </div>
+                                <%--<div id="_redeemerrmsg1" class="hint formlabel" style="color: red; text-transform: none; white-space: inherit;">
+                                </div>--%>
+                                <%--<div id="_redeemmsg1" class="hint formlabel" style="color: green; text-transform: none; white-space: inherit;">
+                                </div>--%>
                             </div>
                         </div>
                     </div>
@@ -190,10 +194,10 @@
                                 
                             </div>
                         </div>
-                        <div class="coupon-code sb-inline-block">
+                        <div class="coupon-code sb-inline-block" id="rdmamnt">
                             <input name="discountreferralcode" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" placeholder="Enter Amount To Redeem" id="punchamt" runat="server" class="text-box" style="width: initial; font-size: 13px; text-align: center; font-weight: 500;" type="text" />
-                            <input type="button" id="btnredem" style="width: initial; padding: 0 10px; font-size: 16px;" name="applyreferralcode" value="Redeem" class="btn btn-buy-big continue-button" onclick='reedemwallet(1)' runat="server" />
-                            <input type="button" id="cancel_redeemamount" style="width: initial; padding: 10px; font-size: 15px;" name="cancelreferralcode" value="Cancel" class="btn btn-buy-big continue-button hide" /><span class="please-wait hide" id="reedemplswait">Please Wait</span>
+                            <input type="button" id="btnredem" style="width: initial; padding: 0 10px; font-size: 16px;background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" name="applyreferralcode" value="Redeem" class="btn btn-primary" onclick='reedemwallet(1)' />
+                            <input type="button" id="cancel_redeemamount" style="width: initial;font-size: 15px;background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" name="cancelreferralcode" value="Cancel" onclick="saveitem(0)" class="btn btn-primary" /><span class="please-wait hide" id="reedemplswait">Please Wait</span>
 
                         </div>
                     </div>
@@ -203,7 +207,7 @@
                         <div id="_redeemmsg" class="hint formlabel" style="color: green; text-transform: none; white-space: inherit;"></div>
                         <p style="color: #239423; font-size: 13px; font-family: verdana; font-weight: 700;" id="lblshowmsgwallet" runat="server"></p>
 
-                        <input type="button" id="Button1" style="width: initial; padding: 0 10px; font-size: 16px;" name="applyreferralcode" value="Change" class="btn btn-buy-big continue-button" onclick="saveitem(0); return false;" runat="server" />
+                        <input type="button" id="Button1" style="width: initial; padding: 0 10px; font-size: 16px;background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" name="applyreferralcode" value="Change" class="btn btn-primary" onclick="saveitem(0); return false;" runat="server" />
 
                     </div>
                 </div>
@@ -239,37 +243,84 @@
         </div>
     </div>
 
+        <div id="myPromoCodeModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+            <button type="button" class="close" onclick="CloseModal()" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" style="color: #1da1f2;font-weight: 600;">Enter Promocode</h4>
+        </div>
+                <div class="modal-body">
+           <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <input name="discountcouponcode" id="_discountcouponcode" placeholder="Have a promocode? Enter here" class="text-box form-control" style="width: 233px;" type="text"/>
+                                             <div id="_redeemerrmsg1" class="hint formlabel" style="color: red; text-transform: none; white-space: inherit;">
+                                </div>
+                                        </div>
+                                        
+                                    <div class="col-md-6">
+                                        <input type="button" id="_btndiscount" style="font-size: 13px; background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" name="applydiscountcouponcode" value="Apply" class="btn btn-primary" onclick="Applypromocode(0)"/>
+                                    </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div id="_redeemmsg1" class="hint formlabel" style="color: green; text-transform: none; white-space: inherit;">
+                                </div>
+                                <br />
+                                <div id="promolist" runat="server">
+
+                               
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <label class="control-label"><strong>FLAT50</strong></label>
+                                            <label class="control-label" style="text-align:left;font-weight:200;">Users get flat 5% cashback on purchasing products from Paytm Mall. Use code RECH2MALL On Recharges Or Bill Payments to avail this offer.</label>
+                                        </div>
+                                        
+                                    <div class="col-md-6" style="text-align:end;">
+                                        <input type="button" style="font-size: 13px; background: #fff;border-color:  rgb(29, 161, 242);font-size:13px;color: rgb(29, 161, 242);" name="applydiscountcouponcode" value="Apply" class="btn btn-primary" onclick="Applypromocode(0)" />
+                                    </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                     </div>
+                            </div>
+                             
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
 
 
     <script>
         var products = [];
         $(document).ready(function () {
-
+            $("#cancel_redeemamount").hide();
             $('.offer-time').css('display', 'none');
             $("#btnsendMessage").text($('#ContentPlaceHolder1_lblWhatsAppNo').text());
             //$("#btnplaceorder").click();
-
+            var walletavlamnt = document.getElementById('<%= reeamt.ClientID %>').innerHTML;
             var reedamamt = document.getElementById('<%= punchamt.ClientID %>').value;
-
-            if (reedamamt == "" || reedamamt == "0" || reedamamt == "0.00") {
-                $("#divRedeem").hide();
-                $("#applyRedeem").show();
-                $("#changeredeem").hide();
+            if (walletavlamnt == "0" || walletavlamnt == "") {
+                $("#rdmamnt").hide();
             }
-            else {
-                $("#divRedeem").show();
-                $("#changeredeem").show();
-                $("#applyRedeem").hide();
-
-            }
+            $("#divRedeem").hide();
+            $("#ContentPlaceHolder1_Button1").hide();
+            //$('#myPromoCodeModal').modal({ backdrop: true});
         });
-
-        //Change Button Click show apply and hide change
-        function Changediv() {
-            $("#applyRedeem").show();
-            $("#changeredeem").hide();
+        function OpenModal() {
+            $('#myPromoCodeModal').show();
         }
-
+        function CloseModal() {
+            $('#myPromoCodeModal').hide();
+        }
 
 
         //Flag 1 Redeem Value Directly Calculation
@@ -277,73 +328,72 @@
         //SaveButtonClick
 
         function saveitem(flag) {
-
+            debugger;
             if (flag == 0) {
-                $("#ContentPlaceHolder1_lblredeem").html("0");
-                $("#ContentPlaceHolder1_punchamt").val('');
-            }
 
-            var ptotprice = $('#ContentPlaceHolder1_lbltotprices').html();
-            var labelObj = document.getElementById("<%=totwtshipping.ClientID %>");
-            labelObj.innerHTML = ptotprice;
-            var qty5 = document.getElementById('<%= txtqty.ClientID %>').value;
-            var qty = Number(qty5);
+                 var ptotprice = $('#ContentPlaceHolder1_lbltotpayamt').html();
 
-            var offer = $('#ContentPlaceHolder1_lblofferprice').html();
-
-            var shiping = $('#ContentPlaceHolder1_lblshipping1').html();
-
-            var totship = qty * shiping;
-            var totoffer = offer * qty;
-            var totship = totship.toFixed(2);
-            var totoffer = totoffer.toFixed(2);
-            var objqry1 = document.getElementById("<%= lblqty1.ClientID %>");
-            objqry1.innerHTML = qty;
-
-            var objqty = document.getElementById("<%= lblqty.ClientID %>");
-            objqty.innerHTML = qty;
-
-            var objoffertot = document.getElementById("<%= lbltotofferprice.ClientID %>");
-
-            var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+                  var reedam = $('#ContentPlaceHolder1_lblredeem').html();
             reedam = Number(reedam);
 
-            objoffertot.innerHTML = totoffer;
             ptotprice = Number(ptotprice);
-            totoffer = Number(totoffer);
-            totship = Number(totship);
 
 
-            var fprice = ptotprice - totoffer + totship;
 
             if (reedam == "") {
                 reedam = "0";
             }
 
-            finalprice = fprice - reedam;
 
-            var finalprice = finalprice.toFixed(2);
+            var finalprice = ptotprice + reedam;
+               finalprice= finalprice.toFixed(2);
 
-            $('#ContentPlaceHolder1_lbltemp').html(fprice);
 
 
             var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
             objpay.innerHTML = finalprice;
 
-            var objpay = document.getElementById("<%= lbltotshipping.ClientID %>");
-            objpay.innerHTML = totship;
-
             finalprice = 0;
 
-            if (flag == 0) {
-                reedemwallet(0);
+
+                $("#ContentPlaceHolder1_lblredeem").html("0");
+                $("#ContentPlaceHolder1_punchamt").val('');
+
+                  //reedemwallet(0);
                 $("#ContentPlaceHolder1_lblredeemtext").hide();
                 $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
                 $("#divRedeem").hide();
-                $("#applyRedeem").show();
-                $("#changeredeem").hide();
+                $("#btnredem").show();
+                $("#cancel_redeemamount").hide();
 
+               
+                return;
             }
+
+            var ptotprice = $('#ContentPlaceHolder1_totwtshipping').html();
+         
+
+            var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+            reedam = Number(reedam);
+
+            ptotprice = Number(ptotprice);
+
+
+
+            if (reedam == "") {
+                reedam = "0";
+            }
+
+
+            var finalprice = ptotprice - reedam;
+               finalprice= finalprice.toFixed(2);
+
+
+
+            var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
+            objpay.innerHTML = finalprice;
+
+            finalprice = 0;
 
         }
 
@@ -389,10 +439,13 @@
         function PriceMinus(prodid, el) {
 
             $this = $(el);
-            var price = $this.parents('.single-product').find('#lblproprice')[0].innerHTML;
+            var elprice = $this.parents('.single-product').find('#lblproprice');
+            var price = elprice[0].firstElementChild.innerText.substring(elprice[0].firstElementChild.innerText.indexOf(":") + 2);
+            //var price = $this.parents('.single-product').find('#lblproprice')[0].innerHTML;
             var proqty = $this.parents('.single-product').find('#txtqty').val();
             var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
-            var PWeight = prweight.substr(0, prweight.indexOf('-'));
+            //var PWeight = prweight.substr(0, prweight.indexOf('-'));
+            var PWeight = prweight.substring(prweight.indexOf(':')+1,prweight.indexOf('-'));
 
             var qty = Number(proqty);
             if (qty > 1) {
@@ -405,9 +458,17 @@
 
                 $this.parents('.single-product').find('#txtqty').val(qty);
 
+                var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+                
+
+                if (reedam == "") {
+                    reedam = "0";
+                }
+                reedam = Number(reedam);
+
                 var prtotalamunt = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
                 document.getElementById("<%=totwtshipping.ClientID %>").innerHTML = (prtotalamunt - Number(price));
-                document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
+                document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML) - reedam;
 
                 if (products.length > 0) {
                     var product = products.find(x => x.Productid == prodid);
@@ -446,10 +507,12 @@
 
         function Priceplus(prodid, el) {
             $this = $(el);
-            var price = $this.parents('.single-product').find('#lblproprice')[0].innerHTML;
+            var elprice = $this.parents('.single-product').find('#lblproprice');
+            var price = elprice[0].firstElementChild.innerText.substring(elprice[0].firstElementChild.innerText.indexOf(":") + 2);
             var proqty = $this.parents('.single-product').find('#txtqty').val();
             var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
-            var PWeight = prweight.substr(0, prweight.indexOf('-'));
+            //var PWeight = prweight.substr(0, prweight.indexOf('-'));
+            var PWeight = prweight.substring(prweight.indexOf(':')+1,prweight.indexOf('-'));
 
             var qty = Number(proqty);
             qty = qty + 1;
@@ -461,9 +524,17 @@
 
             $this.parents('.single-product').find('#txtqty').val(qty);
 
+            var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+                
+
+            if (reedam == "") {
+                reedam = "0";
+            }
+            reedam = Number(reedam);
+
             var prtotalamunt = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
             document.getElementById("<%=totwtshipping.ClientID %>").innerHTML = (prtotalamunt + Number(price));
-            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
+            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML)-reedam;
 
 
             if (products.length > 0) {
@@ -515,7 +586,17 @@
                             var price = $this.parents('.single-product').find('#lbltotprices')[0].innerHTML;
                             var prtotalamunt = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
                             document.getElementById("<%=totwtshipping.ClientID %>").innerHTML = (prtotalamunt - Number(price));
-                            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
+
+                            var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+                
+
+                            if (reedam == "") {
+                                reedam = "0";
+                            }
+                            reedam = Number(reedam);
+
+
+                            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML) - reedam ;
                             $this.parents('.single-product')[1].remove();
 
                         } else if (ResponseData.d == "lastproduct") {
@@ -560,12 +641,8 @@
         //Directly Apply Redeem pass amt 1
         //Save Button Click and Call Redeem amt 0 and pass value payamt 0 
         function reedemwallet(amt) {
-
-            if (amt == "1") {
-                $("#changeredeem").show();
-                $("#applyRedeem").hide();
-            }
-
+            debugger
+          
             $("#ContentPlaceHolder1_lblredeemtext").show();
             $('#ContentPlaceHolder1_lblshowmsgwallet').show();
             var reedamamt = document.getElementById('<%= punchamt.ClientID %>').value;
@@ -573,17 +650,19 @@
             //Redeem Amount Section Hide Show amount and Change
             if (reedamamt == "" || reedamamt == "0" || reedamamt == "0.00") {
                 $("#divRedeem").hide();
+                $('#ContentPlaceHolder1_lblshowmsgwallet').html("Please enter amount to redeem.");
+                $('#ContentPlaceHolder1_lblshowmsgwallet').css('color', 'red');
+                return;
             }
             else {
-                $("#divRedeem").show();
+               $("#divRedeem").show();
+                $('#ContentPlaceHolder1_lblshowmsgwallet').css('color',' #239423');
             }
             var custid = $('#<%=lblCustid.ClientID%>').html();
-            var payamt = $('#<%=lbltemp.ClientID%>').html();
+            //var payamt = $('#<%=lbltemp.ClientID%>').html();
+            var payamt = $("#ContentPlaceHolder1_lbltotpayamt").html();
 
-            if (reedamamt == "") {
-                reedamamt = "0";
-                $("#ContentPlaceHolder1_punchamt").val('0');
-            }
+           
 
             $.ajax({
                 type: "POST",
@@ -594,32 +673,32 @@
                 dataType: "json",
 
                 success: function (response) {
-                    if (response != "") {
+                    if (response.d != "") {
                         //alert(response.d.resultflag + response.resultflag);
                         var bar_data =
                         {
                             data: JSON.parse(response.d),
                         };
-
-                        if (reepasamt != "") {
-                            var available = bar_data.data.Message;
-                            $('#ContentPlaceHolder1_lblshowmsgwallet').html(available);
-                        }
+                        console.log(bar_data);
 
                         //Flag 1 Only Calculation 
-                        if (bar_data.data.resultflag != 0) {
-                            var wallamt = bar_data.data.WalletAmount;
-                            $("#ContentPlaceHolder1_reeamt").html(wallamt);
+                        if (bar_data.data.response != 0) {
+                            //var wallamt = bar_data.data.balance;
+                            //$("#ContentPlaceHolder1_reeamt").html(wallamt);
 
                             var reepasamt = document.getElementById('<%= punchamt.ClientID %>').value;
                             $("#ContentPlaceHolder1_lblredeem").html(reepasamt);
+                            $("#btnredem").hide();
+                            $("#cancel_redeemamount").show();
+                            $('#ContentPlaceHolder1_lblshowmsgwallet').html(bar_data.data.ValidationMessage);
                             saveitem(1);
                         }
 
                         //Not Valid Amount  flag 0 No Data found
-                        if (bar_data.data.resultflag == 0) {
+                        if (bar_data.data.response == 0) {
                             $("#ContentPlaceHolder1_punchamt").val('');
                             $("#divRedeem").hide();
+                            $('#ContentPlaceHolder1_lblshowmsgwallet').html(bar_data.data.ValidationMessage);
 
                         }
 
@@ -639,7 +718,7 @@
                 failure: function (response) {
                     alert("err");
                 }
-            })
+            });
         }
 
 
@@ -653,20 +732,21 @@
             var PaidAmt = $("#ContentPlaceHolder1_lbltotpayamt").html();
             var Qty = $("#ContentPlaceHolder1_txtqty").val();
             var disct = $("#ContentPlaceHolder1_lbltotofferprice").html();
-            var Redamt = $("#ContentPlaceHolder1_lblredeem").html();
+            var redeemamount = $("#ContentPlaceHolder1_lblredeem").html();
             var addrid = $("#ContentPlaceHolder1_lbladdrid").html();
             var refcode = $("#ContentPlaceHolder1_lblccode").html();
             var buyflag = $("#ContentPlaceHolder1_lblbuyflag").html();
             var shipcharge = $("#ContentPlaceHolder1_lbltotshipping").html();
             var Ccode = 0;
             var totalamount = PaidAmt;
+            var PromoAmount = $("#spnpromo").html();
 
 
             if (PaidAmt == "0" || PaidAmt == "0.0" || PaidAmt == "0.00") {
                 $.ajax({
                     type: "POST",
                     url: "OrderSummery.aspx/PlaceOrderAmtZero",
-                    data: '{CustId:"' + CustId + '",PayAmt:"' + PaidAmt + '",addr:"' + addrid + '",qty:"' + Qty + '",buyflag:"' + buyflag + '",disc:"' + disct + '",redm:"' + Redamt + '",ccode:"' + Ccode + '",shipcharg:"' + shipcharge + '"}',
+                    data: '{CustId:"' + CustId + '",PayAmt:"' + PaidAmt + '",addr:"' + addrid + '",qty:"' + Qty + '",buyflag:"' + buyflag + '",disc:"' + disct + '",redm:"' + redeemamount + '",ccode:"' + Ccode + '",shipcharg:"' + shipcharge + '"}',
                     contentType: "application/json",
                     dataType: "json",
 
@@ -709,7 +789,7 @@
                     //url: "OrderSummery.aspx/CODPlaceOrder",
                     //data: '{CustId:"' + CustId + '",PayAmt:"' + PaidAmt + '",addr:"' + addrid + '",qty:"' + Qty + '",buyflag:"' + buyflag + '",disc:"' + disct + '",redm:"' + Redamt + '",ccode:"' + Ccode + '",shipcharg:"' + shipcharge + '",rcode:"' + refcode + '"}',
                     url: "OrderSummery.aspx/CODPlaceMultipleOrder",
-                    data: JSON.stringify({ summeryModel: products, totalamount }),
+                    data: JSON.stringify({ summeryModel: products, totalamount,redeemamount,PromoAmount }),
                     contentType: "application/json",
                     dataType: "json",
 
@@ -780,17 +860,68 @@
 
         }
 
-        function Applypromocode() {
-            var Promocode = $("#_discountcouponcode").val();
-            if (Promocode == "" || Promocode == null) {
-                $("#_redeemerrmsg1").text("Please enter your coupon.");
-                $("#_redeemerrmsg1").removeClass("hide");
-                setTimeout(function () {
-                    $("#_redeemerrmsg1").text("");
-                    $("#_redeemerrmsg1").addClass("hide");
-                }, 5000)
-                return false;
+        function Applypromocode(promocode) {
+            $("#divPromo").addClass('hide');
+            if (promocode == 0) {
+                var Promocode = $("#_discountcouponcode").val();
+                if (Promocode == "" || Promocode == null) {
+                    $("#_redeemerrmsg1").text("Please enter your coupon.");
+                    $("#_redeemerrmsg1").removeClass("hide");
+                    setTimeout(function () {
+                        $("#_redeemerrmsg1").text("");
+                        $("#_redeemerrmsg1").addClass("hide");
+                    }, 5000)
+                    return false;
+                } else {
+                    promocode = Promocode;
+                }
             }
+
+                var custid = $('#<%=lblCustid.ClientID%>').html();
+                var payamt = $("#ContentPlaceHolder1_lbltotpayamt").html();
+
+                $.ajax({
+                    type: "POST",
+                    url: "OrderSummery.aspx/RedeemePromoCodeFromOrder",
+                    data: '{promocode:"' + promocode + '",CustId:"' + custid + '",PayAmt:"' + payamt + '"}',
+                    contentType: "application/json",
+                    dataType: "json",
+
+                    success: function (response) {
+                        if (response.d != "") {
+                            var bar_data =
+                            {
+                                data: JSON.parse(response.d),
+                            };
+                            console.log(bar_data);
+
+                            //Flag 1 Only Calculation 
+                            if (bar_data.data.response == 1) {
+
+                                 $("#divPromo").removeClass('hide');
+                                $("#spnpromo").html(bar_data.data.PromoCodeCalcAmount);
+                                $('#myPromoCodeModal').hide();
+
+                            }
+
+                            //Not Valid Amount  flag 0 No Data found
+                            if (bar_data.data.response == 0) {
+                                $('#_redeemmsg1').text(bar_data.data.ValidationMessage);
+
+                            }
+                        }
+                        else {
+                            alert("Error");
+                        }
+                    },
+                    failure: function (response) {
+                        alert("err");
+                    }
+                });
+            
+
+
+           
         }
         
     </script>

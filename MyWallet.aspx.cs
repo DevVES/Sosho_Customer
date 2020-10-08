@@ -17,7 +17,8 @@ public partial class MyWallet : System.Web.UI.Page
             {
                 string CustomerId = clsCommon.getCurrentCustomer().id;
 
-                DataTable dtWallet = dbc.GetDataTable("select CustomerId,(sum(Cr_Amount)-sum(Dr_Amount)) as avlbal,SUM(Dr_Amount)as Usedamt from Customer_Wallet_History where CustomerId=" + CustomerId + "  group by customerid");
+                //DataTable dtWallet = dbc.GetDataTable("select CustomerId,(sum(Cr_Amount)-sum(Dr_Amount)) as avlbal,SUM(Dr_Amount)as Usedamt from Customer_Wallet_History where CustomerId=" + CustomerId + "  group by customerid");
+                DataTable dtWallet = dbc.GetDataTable("select Customer_Id,(sum(Cr_Amount)-sum(Dr_Amount)) as avlbal,SUM(Dr_Amount)as Usedamt from tblWalletCustomerHistory where Customer_Id=" + CustomerId + "  group by Customer_Id");
                 if (dtWallet.Rows.Count > 0)
                 {
                     lblusedbal.InnerHtml = dtWallet.Rows[0]["Usedamt"].ToString();

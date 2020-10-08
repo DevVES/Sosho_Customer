@@ -8,7 +8,7 @@
     <link href="OwlCarousel/dist/assets/owl.theme.default.min.css" rel="stylesheet" />
     <link href="css/CircularContentCarousel/style.css" rel="stylesheet" />
     <link href="css/CircularContentCarousel/jquery.jscrollpane.css" rel="stylesheet" />
-
+    <link href="css/completeCss.css" rel="stylesheet" />
     <style>
         #mo-wa {
             display: none;
@@ -232,6 +232,21 @@
                 left: 76%;
             }
         }
+        .SubCat {
+            border: 1px solid;
+            padding: 1px 7px 1px 7px;
+            border-radius: 4px;
+            border-color: #1da1f2;
+            color: #1da1f2;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .SubCatMain {
+            height: auto;
+            margin: auto auto 20px;
+            display: block;
+            text-align: center;
+        }
         /*@media screen and (max-width: 700px) {
            
             #mo-wa {
@@ -423,8 +438,258 @@
     <%--</div>--%>
 
 
+    <%--<div id="product-carousel-homepage" class="item-grid owl-carousel homepbox owl-theme" style="opacity: 1; display: block;">
+        <div class="owl-wrapper-outer">
+            <div class="owl-wrapper" style="width: 4260px; left: 0px; display: block;">
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15114">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/chandravilas-namkeen-papad-loiye-800-g" title="ChandraVilas Namkeen Papad Loiye - 800 g">
+                                <img style="width: 100%" alt="ChandraVilas Namkeen Papad Loiye - 800 g" title="ChandraVilas Namkeen Papad Loiye - 800 g" src="https://www.salebhai.com/content/images/thumbs/0039424_chandravilas-namkeen-papad-loiye-800-g_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="ChandraVilas Namkeen Papad Loiye - 800 g" href="http://localhost:15536/chandravilas-namkeen-papad-loiye-800-g">ChandraVilas Namkeen Papad Loiye - 800 g</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>392</span><span class="price actual-price"><i class="icon-rupee"></i>392</span><span class="sb-gray sb-font-12 sb-gram">(800gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/63806/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15113">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/chandravilas-namkeen-fali-mathri" title="ChandraVilas Namkeen Fali Mathri - 800 g">
+                                <img style="width: 100%" alt="ChandraVilas Namkeen Fali Mathri - 800 g" title="ChandraVilas Namkeen Fali Mathri - 800 g" src="https://www.salebhai.com/content/images/thumbs/0039422_chandravilas-namkeen-fali-mathri-800-g_300.jpeg" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="ChandraVilas Namkeen Fali Mathri - 800 g" href="http://localhost:15536/chandravilas-namkeen-fali-mathri">ChandraVilas Namkeen Fali Mathri - 800 g</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>386</span><span class="price actual-price"><i class="icon-rupee"></i>386</span><span class="sb-gray sb-font-12 sb-gram">(800gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/63805/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15112">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/chandravilas-namkeen-mixture" title="ChandraVilas Namkeen Mixture - 800 g">
+                                <img style="width: 100%" alt="ChandraVilas Namkeen Mixture - 800 g" title="ChandraVilas Namkeen Mixture - 800 g" src="https://www.salebhai.com/content/images/thumbs/0039423_chandravilas-namkeen-mixture-800-g_300.jpeg" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="ChandraVilas Namkeen Mixture - 800 g" href="http://localhost:15536/chandravilas-namkeen-mixture">ChandraVilas Namkeen Mixture - 800 g</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>386</span><span class="price actual-price"><i class="icon-rupee"></i>386</span><span class="sb-gray sb-font-12 sb-gram">(800gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/63804/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15087">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/a2-organics-shatadhauta-ghrita" title="A2 Organics Shatadhauta Ghrita">
+                                <img style="width: 100%" alt="A2 Organics Shatadhauta Ghrita" title="A2 Organics Shatadhauta Ghrita" src="https://www.salebhai.com/content/images/thumbs/0039249_a2-organics-shatadhauta-ghrita_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="A2 Organics Shatadhauta Ghrita" href="http://localhost:15536/a2-organics-shatadhauta-ghrita">A2 Organics Shatadhauta Ghrita</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>441</span><span class="price actual-price"><i class="icon-rupee"></i>441</span><span class="sb-gray sb-font-12 sb-gram">(50gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/62327/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15086">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/a2-organics-siddha-tel" title="A2 Organics Siddha Tel">
+                                <img style="width: 100%" alt="A2 Organics Siddha Tel" title="A2 Organics Siddha Tel" src="https://www.salebhai.com/content/images/thumbs/0039244_a2-organics-siddha-tel_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="A2 Organics Siddha Tel" href="http://localhost:15536/a2-organics-siddha-tel">A2 Organics Siddha Tel</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>401</span><span class="price actual-price"><i class="icon-rupee"></i>401</span><span class="sb-gray sb-font-12 sb-gram">(200gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/62326/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15084">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/a2-organics-bilona-ghee" title="A2 Organics Bilona Ghee">
+                                <img style="width: 100%" alt="A2 Organics Bilona Ghee" title="A2 Organics Bilona Ghee" src="https://www.salebhai.com/content/images/thumbs/0039239_a2-organics-bilona-ghee_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="A2 Organics Bilona Ghee" href="http://localhost:15536/a2-organics-bilona-ghee">A2 Organics Bilona Ghee</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>711</span><span class="price actual-price"><i class="icon-rupee"></i>711</span><span class="sb-gray sb-font-12 sb-gram">(250gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/62324/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15083">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/camel-leather-small-sling-bag-light-brown" title="Camel Leather Small Sling Bag (Light Brown)">
+                                <img style="width: 100%" alt="Camel Leather Small Sling Bag (Light Brown)" title="Camel Leather Small Sling Bag (Light Brown)" src="https://www.salebhai.com/content/images/thumbs/0039210_camel-leather-small-sling-bag-light-brown_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="Camel Leather Small Sling Bag (Light Brown)" href="http://localhost:15536/camel-leather-small-sling-bag-light-brown">Camel Leather Small Sling Bag (Light Brown)</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>1189</span><span class="price actual-price"><i class="icon-rupee"></i>599</span><span class="sb-gray sb-font-12 sb-gram">(400gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/62248/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15082">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/camel-leather-small-sling-bag-dark-brown" title="Camel Leather Small Sling Bag (Dark Brown)">
+                                <img style="width: 100%" alt="Camel Leather Small Sling Bag (Dark Brown)" title="Camel Leather Small Sling Bag (Dark Brown)" src="https://www.salebhai.com/content/images/thumbs/0039206_camel-leather-small-sling-bag-dark-brown_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="Camel Leather Small Sling Bag (Dark Brown)" href="http://localhost:15536/camel-leather-small-sling-bag-dark-brown">Camel Leather Small Sling Bag (Dark Brown)</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>1189</span><span class="price actual-price"><i class="icon-rupee"></i>599</span><span class="sb-gray sb-font-12 sb-gram">(400gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/62247/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15081">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/coconut-husk-flower-vase" title="Coconut Husk Flower Vase">
+                                <img style="width: 100%" alt="Coconut Husk Flower Vase" title="Coconut Husk Flower Vase" src="https://www.salebhai.com/content/images/thumbs/0039215_coconut-husk-flower-vase_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="Coconut Husk Flower Vase" href="http://localhost:15536/coconut-husk-flower-vase">Coconut Husk Flower Vase</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>789</span><span class="price actual-price"><i class="icon-rupee"></i>399</span><span class="sb-gray sb-font-12 sb-gram">(150gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/62246/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-item" style="width: 213px;">
+                    <div class="item-box">
+                        <div class="product-item" data-productid="15080">
+                            <div class="picture onScrlWrap"><a href="http://localhost:15536/coconut-husk-human-face-sculpture" title="Coconut Husk Human Face Sculpture">
+                                <img style="width: 100%" alt="Coconut Husk Human Face Sculpture" title="Coconut Husk Human Face Sculpture" src="https://www.salebhai.com/content/images/thumbs/0039216_coconut-husk-human-face-sculpture_300.png" class="onScrl"></a></div>
+                            <div class="details">
+                                <div class="product-title"><a title="Coconut Husk Human Face Sculpture" href="http://localhost:15536/coconut-husk-human-face-sculpture">Coconut Husk Human Face Sculpture</a></div>
+                                <div class="product-rating-box hide" title="0 review(s)">
+                                    <div class="rating">
+                                        <div style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="description"></div>
+                                <div class="add-info">
+                                    <div class="prices"><span class="price old-price"><i class="icon-rupee"></i>1989</span><span class="price actual-price"><i class="icon-rupee"></i>999</span><span class="sb-gray sb-font-12 sb-gram">(250gm)</span><div><span class="sb-green sb-font-12">Shipping Included</span></div>
+                                    </div>
+                                    <div class="buttons">
+                                        <input type="button" value="Add to cart" class="button-2 product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/62245/1/1'); return false;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owl-controls clickable">
+            <div class="owl-buttons">
+                <div class="owl-prev disabled">prev</div>
+                <div class="owl-next">next</div>
+            </div>
+        </div>
+    </div>--%>
+
+
 
     <div id="divCategory" class="ca-new-container" runat="server">
+    </div>
+
+    <div id="divSubCat" class="ca-new-container SubCatMain"  runat="server">
+        <label class="control-label SubCat"> Besan </label>
+        <label class="control-label SubCat"> Maida </label>
+        <label class="control-label SubCat"> Other Floors </label>
     </div>
 
     <div id="divBannerImage">
@@ -671,15 +936,15 @@
                         <div class="form-group">
                             <fieldset style="border: 1px groove #ddd !important; padding: 0 1.4em 1.4em 1.4em !important; margin: 0 0 1.5em 0 !important; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
                                 <legend style="font-size: 1.2em !important; font-weight: bold !important; text-align: left !important; width: auto; padding: 0 10px; border-bottom: none;">Pin code</legend>
-                                <i class="fa fa-map-marker" style="font-size: 25px; color: red"></i>
-                                <input type="text" id="txtPinCodeval" placeholder="Pin Code" maxlength="6" style="padding-left: 0; padding-right: 0; border-radius: 0; border: none; border-radius: 0; box-shadow: none; border-bottom: 1px solid #d7dde4; height: 27px; width: 67px; border-color: #FF4444;" />
+                                <i class="fa fa-map-marker" style="font-size: 25px; color: rgb(29, 161, 242)"></i>
+                                <input type="text" id="txtPinCodeval" placeholder="Pin Code" maxlength="6" style="padding-left: 0; padding-right: 0; border-radius: 0; border: none; border-radius: 0; box-shadow: none; border-bottom: 1px solid #d7dde4; height: 27px; width: 67px; border-color: rgb(29, 161, 242);" />
 
                                 <span id="lblpinmsg" runat="server" style="height: 16px; color: green; align-content: center; font: bold; /* size: 37px; */font-size: 14px; margin: 0"></span>
                                 <span id="lblpinnotmsg" runat="server" style="height: 16px; color: red; align-content: center; font: bold; /* size: 37px; */font-size: 14px; margin: 4px"></span>
                             </fieldset>
                         </div>
                         <div style="text-align: center;">
-                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()" id="BtnPinCodeApply">Confirm</button>
+                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()" style="background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" id="BtnPinCodeApply">Confirm</button>
                         </div>
                     </form>
                 </div>
@@ -824,7 +1089,7 @@
             });
         }
         function AddClick(rowindex, prodid, grpid, mrp, el) {
-
+            debugger
             //$('#AddShow' + rowindex).css('display', '');
             //$('#BtnAdd' + rowindex).css('display', 'none');
 
@@ -905,7 +1170,14 @@
                 $('#hdnProductCount').val(count);
             }
         }
-        function plusqty(type, prodid, grpid, el) {
+        function plusqty(type, prodid, grpid,mrp, el) {
+            var grpId = grpid;
+            var productvariant = $('#hdnProductVariant' + grpid).val();
+            var unitId = $('#ddlUnit' + grpid).val();
+            var unitvalue = $('#ddlUnit' + grpid).val();
+            var parts = unitvalue.split(' - ');
+
+
 
             var $this = $(el);
             var parent = $this.parent();
@@ -916,14 +1188,57 @@
 
             if (type == 1) {
                 value = value + 1;
+
+                var product = products.find(x => x.Productid == prodid);
+                    if (product != null && product != undefined) {
+                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    }
+
+                obj = {
+                Productid: prodid,
+                Grpid: grpId,
+                    Mrp: parseInt(mrp),
+                    Qty: value,
+                Unit: parts[0],
+                UnitId: parts[1],
+                Productvariant: productvariant
+
+            }
+            products.push(obj);
             }
             else if (type == 0) {
-                if (value > 1) {
-                    value = value - 1;
-                }
-                if (value == 1) {
+                //if (value > 1) {
+                //    value = value - 1;
+                //}
+                value = value - 1;
+
+
+                if (value == 0) {
                     $('#AddShow' + rowindexval).hide();
                     $('#BtnAdd' + rowindexval).show();
+
+                    var product = products.find(x => x.Productid == prodid);
+                    if (product != null && product != undefined) {
+                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                        count = products.length;
+                    }
+                } else {
+                    var product = products.find(x => x.Productid == prodid);
+                    if (product != null && product != undefined) {
+                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    }
+
+                obj = {
+                Productid: prodid,
+                Grpid: grpId,
+                    Mrp: parseInt(mrp),
+                    Qty: value,
+                Unit: parts[0],
+                UnitId: parts[1],
+                Productvariant: productvariant
+
+            }
+            products.push(obj);
                 }
             }
             if (products.length > 0) {
@@ -946,9 +1261,11 @@
                 $('#count')[0].innerHTML = "";
                 $('#cnfrm').addClass('hide');
             }
-
-            var dataval = parent.find('input');
+            if (value != 0) {
+                var dataval = parent.find('input');
             dataval[0].value = value;
+            }
+            
         }
         function BannerAddClick(rowindex, prodid, mrp, el) {
             //$('#divBannerAddShow' + rowindex).show();
@@ -1015,7 +1332,7 @@
             if (products.length > 0) {
                 var product = products.find(x => x.Productid == prodid);
                 if (product != null && product != undefined) {
-                   // products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    // products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
                     count = products.length;
                 }
                 if (count == 0) {
@@ -1247,8 +1564,77 @@
             });
         }
         function Categoryimage(categoryId, categoryName, el) {
+            debugger
             var JurisdictionId = $("#hdnJurisdictionId").val();
-            window.location = "category.aspx?categoryId=" + categoryId + "&JurisdictionId=" + JurisdictionId + "&CatgoryName=" + categoryName + "";
+            $("#hdnCategory").val(categoryId);
+            $.ajax({
+
+                type: "POST",
+                url: "Default.aspx/GetSubCategory",
+                data: '{categoryid:"' + categoryId + '"}',
+                contentType: "application/json",
+                dataType: "json",
+
+                success: function (response) {
+                    $("#ContentPlaceHolder1_divSubCat").html(response.d);
+                    $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
+                    $.ajax({
+                        type: 'POST',
+                        url: "Default.aspx/GetProductdata",
+                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryId+',SubCategoryId:-1}',
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            var ProductEndNo = parseInt("5");
+                            $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                            $('#hdnproductcallcount').val(response.d.productcount);
+                            $("#divProductNew").html(response.d.response);
+                            $("#divBannerImage").html(response.d.bannerresponse);
+                            $("#divIntermediateBannerImage").html(response.d.intermediateresponse);
+                            AllProducts.push(response.d.productdata.ProductList);
+                        },
+                        failure: function (response) {
+
+                            alert("Something Wrong....");
+
+                        }
+                    });
+                    //alert(response.d);
+                },
+                failure: function (response) {
+                    alert("Something Wrong....");
+                }
+            });
+            //window.location = "category.aspx?categoryId=" + categoryId + "&JurisdictionId=" + JurisdictionId + "&CatgoryName=" + categoryName + "";
+        }
+
+        function GetProduct(subcatid, catid,el) {
+            var JurisdictionId = $("#hdnJurisdictionId").val();
+            $("#hdnSubCat").val(subcatid);
+            $.ajax({
+                type: 'POST',
+                url: "Default.aspx/GetProductdata",
+                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:'+subcatid+'}',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    var $this = $(el);
+                    $this.css("background", "#1da1f2").css("color", "#ffff");
+                    $this.siblings().css("background", "#ffff").css("color", "#1da1f2");
+                    var ProductEndNo = parseInt("5");
+                    $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                    $('#hdnproductcallcount').val(response.d.productcount);
+                    $("#divProductNew").html(response.d.response);
+                    $("#divBannerImage").html(response.d.bannerresponse);
+                    $("#divIntermediateBannerImage").html(response.d.intermediateresponse);
+                    AllProducts.push(response.d.productdata.ProductList);
+                },
+                failure: function (response) {
+
+                    alert("Something Wrong....");
+
+                }
+            });
         }
         function image(rowindex, prodid, el) {
             $('#divPDescription').text('');
@@ -1533,9 +1919,10 @@
                 $('.mobile-number').hide();
                 $('.offer-time').hide();
                 $('#ContentPlaceHolder1_divCategory').hide();
+                $('#ContentPlaceHolder1_divSubCat').hide();
                 $('#lbllogout').hide();
                 $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
-
+                $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
                 //$(document).on('click', '#dvPackSizeModal0', function () {
                 //    alert("H111led.");
                 //});
@@ -1577,7 +1964,8 @@
 
             //});
             function Newcheckservices() {
-
+                 $("#lblpinmsg").hide();
+                $("#lblpinnotmsg").hide();
                 var pincode = $("#txtPinCodeval").val();
                 var msg1 = "<%=clsCommon.Pincodemaxlen6erromsg%>";
                 var strlen = pincode.length;
@@ -1594,7 +1982,6 @@
                     dataType: "json",
 
                     success: function (response) {
-
                         var getdata = {
                             data: JSON.parse(response.d),
                         }
@@ -1603,7 +1990,7 @@
                         var JurisdictionId = getdata.data.JurisdictionID;
                         //alert(resultflag);
                         if (resultflag == "1") {
-                            $("#lblpinnotmsg").hide();
+                            //$("#lblpinnotmsg").hide();
                             $("#lblpinmsg").show();
                             var labelObj = document.getElementById("<%=lblpinmsg.ClientID %>");
                             labelObj.innerHTML = message;
@@ -1650,11 +2037,11 @@
                             $("#divProductNew").html('');
                             $("#divIntermediateBannerImage").html('');
                             $('#OtherBanner').html('');
-
+                            var categoryid = $("#hdnCategory").val();
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1"}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryid+',SubCategoryId:-1}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -1669,6 +2056,7 @@
                                     $('.mobile-number').show();
                                     $('.offer-time').show();
                                     $('#ContentPlaceHolder1_divCategory').show();
+                                    $('#ContentPlaceHolder1_divSubCat').show();
                                     $('#lbllogout').show();
                                     $("#btnsendMessage").text(response.d.whatsapp);
                                     //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
@@ -1695,11 +2083,12 @@
 
                         }
                         else {
-                            $("#lblpinmsg").hide();
+                            //$("#lblpinmsg").hide();
                             $("#lblpinnotmsg").show();
                             var labelObj = document.getElementById("<%=lblpinnotmsg.ClientID %>");
                             labelObj.innerHTML = message;
                             $("#lblpinnotmsg").val(message);
+                            $("#BtnPinCodeApply").attr("disabled", false);
                         }
                     },
                     failure: function (response) {
@@ -1786,10 +2175,15 @@
                 $('#modalProductPackingSize').modal('show');
             }
             function CallPinCodePopup() {
+                 $("#lblpinmsg").hide();
+                $("#lblpinnotmsg").hide();
                 $('#txtPinCodeval').val('');
                 $("#ContentPlaceHolder1_lblpinmsg").text("");
+                $("#ContentPlaceHolder1_lblpinnotmsg").text("");
                 $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
             }
+
+           
             //$(window).scroll(function () {
             //    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
             //        //alert("END!");
@@ -1852,13 +2246,15 @@
                     var ProductStartNo = parseInt($('#hdnProductEndNo').val());
                     var ProductEndNo = parseInt(ProductStartNo + 4);
                     var bannercount = $("#hdnBannerCount").val();
-
+                    var hdnProdId = $("#hdnProdId").val();
+                    var categoryid = $("#hdnCategory").val();
+                    var subcategoryid = $("#hdnSubCat").val();
                     if (ProductStartNo > 0) {
                         if (ProductCallCount != "") {
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '"}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '"}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
