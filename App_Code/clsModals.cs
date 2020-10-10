@@ -308,6 +308,8 @@ public class clsModals
         public int ActionId;
         public string action;
         public string openUrlLink;
+        public string ActionCategoryId;
+        public string ActionCategoryName;
 
     }
     public class ProductAttributelist

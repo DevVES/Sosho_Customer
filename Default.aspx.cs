@@ -517,18 +517,18 @@ public partial class Default : System.Web.UI.Page
         }
     }
     [System.Web.Services.WebMethod]
-    public static object GetProductdata(string JurisdictionId, string StartNo, string EndNo, string BannerCount, string ProductId = "", int CategoryId = -1,int SubCategoryId = -1)
+    public static object GetProductdata(string JurisdictionId, string StartNo, string EndNo, string BannerCount, string ProductId = "", int CategoryId = -1,int SubCategoryId = -1,string InterBannerid = "")
     {
         try
         {
             dbConnection dbc = new dbConnection();
-            string html = "", sWhatsAppNo = "", BannerHtml = "", BannerIntermediateHtml = "", sProductCount = "";
+            string html = "", sWhatsAppNo = "", BannerHtml = "", BannerIntermediateHtml = "", sProductCount = "", sInterBannerId = "", sBannerPosition = "";
 
             //string aa = clsCommon.strApiUrl + "/api/Product/GetProductDetails";
             //string Homebanner = clsCommon.strApiUrl + "/api/Banner/getbannerimag";
             //string data = clsCommon.GET(aa);
 
-            string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionId + "&CategoryId=" + CategoryId + "&SubCategoryId=" + SubCategoryId + "&ProductId=" + ProductId + "&StartNo=" + StartNo + "&EndNo=" + EndNo;
+            string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionId + "&CategoryId=" + CategoryId + "&SubCategoryId=" + SubCategoryId + "&ProductId=" + ProductId + "&StartNo=" + StartNo + "&EndNo=" + EndNo + "&InterBannerid=" + InterBannerid;
             string Homebanner = clsCommon.strApiUrl + "/api/Banner/GetDashBoardBannerImag?JurisdictionId=" + JurisdictionId;
             string data = clsCommon.GET(dashboadapi);
 
@@ -545,10 +545,10 @@ public partial class Default : System.Web.UI.Page
                     string sProductId = "", sGrpId = "", sCategoryId = "";
                     string sisSelected = "", sProductName = "", sProductDesc = "", sProductKeyFeatures = "";
                     int iIndex = 0;
-                    string sBannerPosition = "", sBannerActionId = "", sOpenUrlLink = "", sBannerCategoryId = "", sCategoryName = "";
+                    string  sBannerActionId = "", sOpenUrlLink = "", sBannerCategoryId = "", sCategoryName = "";
                     string sBannerProductId = "", sBannerProductMrp = "", sBannerWeight = "";
 
-                    sProductCount = objproduct.ProductList.Count.ToString();
+                    sProductCount = objproduct.ProductList.Where(x=>x.ItemType == "1").Count().ToString();
                     //if (StartNo == "1")
                     //    iBannerCount = 1;
                     //else
@@ -913,10 +913,10 @@ public partial class Default : System.Web.UI.Page
                             }
                             else if (sBannerActionId == "2") // Action Id =2 (Navigate To Category)
                             {
-                                sBannerCategoryId = objproduct.ProductList[j].CategoryId.ToString();
-                                sCategoryName = objproduct.ProductList[j].CategoryName.ToString();
+                                sBannerCategoryId = objproduct.ProductList[j].ActionCategoryId.ToString();
+                                sCategoryName = objproduct.ProductList[j].ActionCategoryName.ToString();
 
-                                BannerIntermediateHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' onclick='Categoryimage(" + sBannerCategoryId + ",'" + sCategoryName + "',this)' />";
+                                BannerIntermediateHtml += "<img class='img' style='cursor:pointer;' src='" + objproduct.ProductList[j].bannerURL + "' onclick='Categoryimage(" + sBannerCategoryId + ",this)'/>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
                             }
@@ -924,8 +924,9 @@ public partial class Default : System.Web.UI.Page
                             {
                                 sBannerProductId = objproduct.ProductList[j].ProductId.ToString();
 
-                                sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
+                                sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
                                 sBannerWeight = objproduct.ProductList[j].ProductAttributesList[0].weight.ToString();
+                                sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
                                 //sBannerProductMrp = objbanner.IntermediateBannerImages[0].MRP.ToString();
                                 //sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
 
@@ -934,15 +935,15 @@ public partial class Default : System.Web.UI.Page
                                 BannerIntermediateHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "<div id='divBannerAdd" + sBannerProductId + "'>";
-                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>ADD</button>";
+                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>Buy Now</button>";
                                 BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + sBannerProductId + "' value='" + sBannerWeight + "'>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "<div id='divBannerAddShow" + sBannerProductId + "' class='AmazonFont BannerAddPostion' style='display:none;'>";
                                 //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
-                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + ",this)'><i class='fa fa-minus'></i></button>";
                                 BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
                                 //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
-                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + ",this)'><i class='fa fa-plus'></i></button>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
@@ -954,6 +955,7 @@ public partial class Default : System.Web.UI.Page
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
                             }
+                            sInterBannerId = objproduct.ProductList[j].bannerId;
                             BannerIntermediateHtml += "</div>";
 
                         }
@@ -963,12 +965,13 @@ public partial class Default : System.Web.UI.Page
                             var hdnProdId = objproduct.ProductList.Where(x => x.ItemType == "1").FirstOrDefault().ProductId;
                             html += "<input type='hidden' id='hdnProdId' value='"+ hdnProdId + "'/>";
                         }
+                        
                     }
 
                     html += "</table>";
                     BannerHtml += "</div>";
 
-
+                    sBannerPosition = objproduct.BannerPosition;
                 }
 
             }
@@ -1242,8 +1245,8 @@ public partial class Default : System.Web.UI.Page
 
 
             //return html;
-
-            return new { productcount = sProductCount, response = html, whatsapp = sWhatsAppNo, bannerresponse = BannerHtml, intermediateresponse = BannerIntermediateHtml, productdata = JsonConvert.DeserializeObject<clsModals.getNewproduct>(data) };
+           
+            return new { productcount = sProductCount, response = html, whatsapp = sWhatsAppNo, bannerresponse = BannerHtml, intermediateresponse = BannerIntermediateHtml, productdata = JsonConvert.DeserializeObject<clsModals.getNewproduct>(data), InterBannerId = sInterBannerId };
         }
         catch (Exception ee)
         {
@@ -1907,8 +1910,8 @@ public partial class Default : System.Web.UI.Page
                     {
                         html += "<div class='ca-item' style=' left: 0px;cursor:pointer;'>";
                         html += "<div>";
-                        html += "<img src='" + objcategory.CategoryList[i].CategoryImage + "' class='CategoryImagecenter'  onclick=\"Categoryimage(" + objcategory.CategoryList[i].Id + ",'" + HttpUtility.UrlEncode(objcategory.CategoryList[i].CategoryName) + "',this)\" />";
-                        html += "<span class='CategoryText'>" + objcategory.CategoryList[i].CategoryName + "</span>";
+                        html += "<img src='" + objcategory.CategoryList[i].CategoryImage + "' class='CategoryImagecenter' id=\"img"+ objcategory.CategoryList[i].Id + "\" onclick=\"Categoryimage(" + objcategory.CategoryList[i].Id + ",this,'category')\" />";
+                        html += "<span class='CategoryText' id=\"text" + objcategory.CategoryList[i].Id + "\" >" + objcategory.CategoryList[i].CategoryName + "</span>";
                         html += "</div>";
                         html += "</div>";
                     }
@@ -2189,6 +2192,8 @@ public partial class Default : System.Web.UI.Page
                 if (objcategory.response.Equals("1"))
                 {
                     var SubCatList = objcategory.CategoryList.Where(x => x.Id == categoryid).FirstOrDefault().SubCategoryList;
+                    html += "<input type='hidden' id='hdnCategory' value='" + categoryid + "'/>";
+                    html += "<input type='hidden' id='hdnSubCat' value='-1'/>";
                     html += "<label class='control-label SubCat' onclick='GetProduct(-1," + categoryid + ",this)'  >All</label>";
                     for (int i = 0; i < SubCatList.Count; i++)
                     {

@@ -685,12 +685,12 @@
 
     <div id="divCategory" class="ca-new-container" runat="server">
     </div>
-
     <div id="divSubCat" class="ca-new-container SubCatMain"  runat="server">
-        <label class="control-label SubCat"> Besan </label>
-        <label class="control-label SubCat"> Maida </label>
-        <label class="control-label SubCat"> Other Floors </label>
+                <label class="control-label SubCat"> Besan </label>
+                <label class="control-label SubCat"> Maida </label>
+                <label class="control-label SubCat"> Other Floors </label>
     </div>
+    
 
     <div id="divBannerImage">
     </div>
@@ -926,7 +926,9 @@
     </div>
 
     <div id="divIntermediateBannerImage">
+         
     </div>
+    <input type="hidden" id="hdnInterBannerId" />
     <%--Pincode Modal Popup--%>
     <div id="myPinCodeModal" class="modalcenter fade">
         <div class="modal-dialog">
@@ -1307,7 +1309,61 @@
             }
         }
 
-        function Bannerplusqty(type, prodid, grpid, el) {
+        //function Bannerplusqty(type, prodid, grpid, el) {
+
+        //    var $this = $(el);
+        //    var parent = $this.parent();
+        //    var value = parent.find('input').val();
+        //    value = Number(value);
+        //    //var trid = $this.parent().closest('tr').attr('id'); // table row ID
+        //    //var rowindexval = trid.replace('divBannerAddShow', '');
+
+        //    if (type == 1) {
+        //        value = value + 1;
+        //    }
+        //    else if (type == 0) {
+        //        if (value > 1) {
+        //            value = value - 1;
+
+        //            if (value == 1) {
+        //                $('#divBannerAddShow' + prodid).hide();
+        //                $('#divBannerAdd' + prodid).show();
+        //            }
+        //        }
+        //    }
+        //    if (products.length > 0) {
+        //        var product = products.find(x => x.Productid == prodid);
+        //        if (product != null && product != undefined) {
+        //            // products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+        //            count = products.length;
+        //        }
+        //        if (count == 0) {
+        //            $('#count')[0].innerHTML = "";
+        //            $('#cnfrm').addClass('hide');
+        //        }
+        //        else {
+        //            $('#count')[0].innerHTML = count + " Product Added";
+        //            $('#cnfrm').removeClass('hide');
+        //            $('#hdnProductCount').val(count);
+        //        }
+        //    }
+        //    else {
+        //        $('#count')[0].innerHTML = "";
+        //        $('#cnfrm').addClass('hide');
+        //    }
+
+
+        //    var dataval = parent.find('input');
+        //    dataval[0].value = value;
+        //}
+
+        
+        function Bannerplusqty(type, prodid, grpid,mrp, el) {
+            var grpId = grpid;
+            var productvariant = "BannerProduct";
+           var unitId = $('#hdnddlUnit' + prodid).val();
+            var unitvalue = $('#hdnddlUnit' + prodid).val();
+            var parts = unitvalue.split(' - ');
 
             var $this = $(el);
             var parent = $this.parent();
@@ -1318,15 +1374,55 @@
 
             if (type == 1) {
                 value = value + 1;
+
+                var product = products.find(x => x.Productid == prodid);
+                    if (product != null && product != undefined) {
+                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    }
+
+                obj = {
+                Productid: prodid,
+                Grpid: grpId,
+                    Mrp: parseInt(mrp),
+                    Qty: value,
+                Unit: parts[0],
+                UnitId: parts[1],
+                Productvariant: productvariant
+
+            }
+            products.push(obj);
             }
             else if (type == 0) {
-                if (value > 1) {
-                    value = value - 1;
+                //if (value > 1) {
+                //    value = value - 1;
+                //}
+                value = value - 1;
 
-                    if (value == 1) {
+                    if (value == 0) {
                         $('#divBannerAddShow' + prodid).hide();
                         $('#divBannerAdd' + prodid).show();
+                        var product = products.find(x => x.Productid == prodid);
+                    if (product != null && product != undefined) {
+                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                        count = products.length;
                     }
+                } else {
+                    var product = products.find(x => x.Productid == prodid);
+                    if (product != null && product != undefined) {
+                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                    }
+
+                obj = {
+                Productid: prodid,
+                Grpid: grpId,
+                    Mrp: parseInt(mrp),
+                    Qty: value,
+                Unit: parts[0],
+                UnitId: parts[1],
+                Productvariant: productvariant
+
+            }
+            products.push(obj);
                 }
             }
             if (products.length > 0) {
@@ -1349,11 +1445,13 @@
                 $('#count')[0].innerHTML = "";
                 $('#cnfrm').addClass('hide');
             }
-
-
-            var dataval = parent.find('input');
+            if (value != 0) {
+                var dataval = parent.find('input');
             dataval[0].value = value;
+            }
+            
         }
+
         function BuyFivewithFriend_Click(prodid, mrp, PWeight, el) {
             $('#count')[0].innerHTML = "";
             $('#cnfrm').addClass('hide');
@@ -1563,10 +1661,20 @@
                 }
             });
         }
-        function Categoryimage(categoryId, categoryName, el) {
+        function Categoryimage(categoryId, el,type) {
             debugger
             var JurisdictionId = $("#hdnJurisdictionId").val();
-            $("#hdnCategory").val(categoryId);
+            $('.CategoryText').css({ 'color': '#1A1A1A' }); 
+             $('.CategoryImagecenter').css({ 'border': 'none' });
+            if (type == 'category') {
+                var $this = $(el);
+                $this.css({ 'border': '2px solid #1da1f2' });
+                $this.next().css({ 'color': '#1da1f2' });
+            } else {
+                $("#text" + categoryId).css({ 'color': '#1da1f2' });
+                 $("#img"+categoryId).css({ 'border': '2px solid #1da1f2' });
+            }
+            
             $.ajax({
 
                 type: "POST",
@@ -1581,17 +1689,20 @@
                     $.ajax({
                         type: 'POST',
                         url: "Default.aspx/GetProductdata",
-                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryId+',SubCategoryId:-1}',
+                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryId+',SubCategoryId:-1,InterBannerid:""}',
                         contentType: "application/json",
                         dataType: "json",
                         success: function (response) {
-                            var ProductEndNo = parseInt("5");
+                            var ProductEndNo = parseInt(response.d.productcount);
                             $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                            $("#hdnInterBannerId").val(response.d.InterBannerId);
                             $('#hdnproductcallcount').val(response.d.productcount);
                             $("#divProductNew").html(response.d.response);
                             $("#divBannerImage").html(response.d.bannerresponse);
-                            $("#divIntermediateBannerImage").html(response.d.intermediateresponse);
-                            AllProducts.push(response.d.productdata.ProductList);
+                            //$("#divIntermediateBannerImage").html(response.d.intermediateresponse);
+                            $("#divProductNew").append(response.d.intermediateresponse);
+                            AllProducts.push(...response.d.productdata.ProductList);
+                            document.documentElement.scrollTop = 0;
                         },
                         failure: function (response) {
 
@@ -1614,20 +1725,22 @@
             $.ajax({
                 type: 'POST',
                 url: "Default.aspx/GetProductdata",
-                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:'+subcatid+'}',
+                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:'+subcatid+',InterBannerid:""}',
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
                     var $this = $(el);
                     $this.css("background", "#1da1f2").css("color", "#ffff");
                     $this.siblings().css("background", "#ffff").css("color", "#1da1f2");
-                    var ProductEndNo = parseInt("5");
+                    var ProductEndNo = parseInt(response.d.productcount);
                     $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                     $("#hdnInterBannerId").val(response.d.InterBannerId);
                     $('#hdnproductcallcount').val(response.d.productcount);
                     $("#divProductNew").html(response.d.response);
                     $("#divBannerImage").html(response.d.bannerresponse);
-                    $("#divIntermediateBannerImage").html(response.d.intermediateresponse);
-                    AllProducts.push(response.d.productdata.ProductList);
+                    //$("#divIntermediateBannerImage").html(response.d.intermediateresponse);
+                    $("#divProductNew").append(response.d.intermediateresponse);
+                    AllProducts.push(...response.d.productdata.ProductList);
                 },
                 failure: function (response) {
 
@@ -1643,7 +1756,7 @@
             $('#ProdName').text($('#hdnPName' + rowindex).val());
 
             if (AllProducts.length > 0) {
-                var FilterProduct = AllProducts[0].find(x => x.ProductId == prodid);
+                var FilterProduct = AllProducts.find(x => x.ProductId == prodid && x.ItemType == "1");
                 if (FilterProduct != null && FilterProduct != undefined) {
                     var sDesc = FilterProduct.ProductDescription;
                     var sKeyfeature = FilterProduct.ProductKeyFeatures;
@@ -1923,6 +2036,8 @@
                 $('#lbllogout').hide();
                 $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
                 $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
+                $("#text" + $('#hdnCategory').val()).css({ 'color': '#1da1f2' });
+                $("#img" + $('#hdnCategory').val()).css({ 'border': '2px solid #1da1f2' });
                 //$(document).on('click', '#dvPackSizeModal0', function () {
                 //    alert("H111led.");
                 //});
@@ -2037,17 +2152,18 @@
                             $("#divProductNew").html('');
                             $("#divIntermediateBannerImage").html('');
                             $('#OtherBanner').html('');
-                            var categoryid = $("#hdnCategory").val();
+                            var categoryid = $('#hdnCategory').val();
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryid+',SubCategoryId:-1}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryid+',SubCategoryId:-1,InterBannerid:""}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
-                                    var ProductEndNo = parseInt("5");
+                                    var ProductEndNo = parseInt(response.d.productcount);
                                     $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
                                     $('#hdnproductcallcount').val(response.d.productcount);
+                                    $("#hdnInterBannerId").val(response.d.InterBannerId);
                                     //var getdata = {
                                     //    data: JSON.parse(response.d.whatsapp),
                                     //}
@@ -2062,8 +2178,10 @@
                                     //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
                                     $("#divProductNew").append(response.d.response);
                                     $("#divBannerImage").append(response.d.bannerresponse);
-                                    $("#divIntermediateBannerImage").append(response.d.intermediateresponse);
-                                    AllProducts.push(response.d.productdata.ProductList);
+
+                                    //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
+                                    $("#divProductNew").append(response.d.intermediateresponse);
+                                    AllProducts.push(...response.d.productdata.ProductList);
                                     $("#hdnBannerCount").val(parseInt("1"));
                                 },
                                 failure: function (response) {
@@ -2117,7 +2235,8 @@
                 $('#spanWeight').text(ddlValue);
 
                 if (AllProducts.length > 0) {
-                    var FilterProduct = AllProducts[0].find(x => x.ProductId == prodid);
+                    //var FilterProduct = AllProducts[0].find(x => x.ProductId == prodid);
+                    var FilterProduct = AllProducts.find(x => x.ProductId == prodid && x.ItemType == "1");
                     if (FilterProduct != null && FilterProduct != undefined) {
                         var divsize = '';
                         for (var i = 0; i < FilterProduct.ProductAttributesList.length; i++) {
@@ -2239,7 +2358,9 @@
 
             // callback
             function onScroll() {
-                if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
+               
+                //if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
+                if ($(window).scrollTop() >= ($(document).height() - $(window).height())) {
                     var ProductCallCount = $('#hdnproductcallcount').val();
                     var JurisdictionId = $("#hdnJurisdictionId").val();
                     //var ProductStartNo = parseInt($('#hdnProductEndNo').val()) + 1;
@@ -2247,20 +2368,23 @@
                     var ProductEndNo = parseInt(ProductStartNo + 4);
                     var bannercount = $("#hdnBannerCount").val();
                     var hdnProdId = $("#hdnProdId").val();
-                    var categoryid = $("#hdnCategory").val();
+                    var categoryid = $('#hdnCategory').val();
                     var subcategoryid = $("#hdnSubCat").val();
+                    var interBannerId = $("#hdnInterBannerId").val();
                     if (ProductStartNo > 0) {
                         if (ProductCallCount != "") {
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '"}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '"}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
+                                    debugger;
                                     if (response.d.productcount != "") {
-                                        $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                                        $('#hdnProductEndNo').val(parseInt(ProductStartNo + parseInt(response.d.productdata.BannerPosition)));
                                         $('#hdnproductcallcount').val(response.d.productcount);
+                                        $("#hdnInterBannerId").val(interBannerId +"," +response.d.InterBannerId);
                                         //var getdata = {
                                         //    data: JSON.parse(response.d.whatsapp),
                                         //}
@@ -2269,16 +2393,16 @@
                                         //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
                                         //$("#divProductNew").append(response.d.response);
                                         var responsenew = '';
-                                       
+
                                         responsenew = response.d.response;
                                         responsenew += response.d.intermediateresponse;
                                         //$("#divIntermediateBannerImage").after(response.d.response);
-                                        $("#divIntermediateBannerImage").after(responsenew);
-                                        //$("#divProductNew").append(responsenew);
+                                        //$("#divIntermediateBannerImage").after(responsenew);
+                                        $("#divProductNew").append(responsenew);
                                         //$("#divBannerImage").append(response.d.bannerresponse);
                                         //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
                                         //$("#divProductNew").after(response.d.intermediateresponse);
-                                        AllProducts.push(response.d.productdata.ProductList);
+                                        AllProducts.push(...response.d.productdata.ProductList);
                                     }
                                     else {
                                         $('#hdnProductEndNo').val('0');
