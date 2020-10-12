@@ -10,6 +10,185 @@
     <link href="css/CircularContentCarousel/jquery.jscrollpane.css" rel="stylesheet" />
     <link href="css/completeCss.css" rel="stylesheet" />
     <style>
+        #header-content1 {
+            width: 940px;
+            margin: 0 auto;
+            min-height: 60px
+        }
+        /*#header_topbar {
+            position: relative;
+            z-index: 1;
+            padding: 10px 0;
+            background-color: #fff
+        }
+
+        #header-content {
+            width: 940px;
+            margin: 0 auto;
+            min-height: 60px
+        }
+
+        .unit_right {
+            width: 100%
+        }
+
+        .main-unit {
+            width: 82%
+        }
+
+        .search-bar-wrap .search-bar-text {
+            padding-left: 0 !important
+        }
+
+        .topheaderlink {
+            padding: 13px 0;
+            transition: all 300ms linear 0s
+        }
+
+        .header-bottom .cartsection {
+            float: right
+        }
+
+        .header-bottom .search-bar-text {
+            width: 100%;
+            height: 36px
+        }
+
+        .header-bottom .search-bar-submit-wrap .search-bar-text {
+            padding: 5px 12px 5px 5px !important;
+            height: auto
+        }
+
+        .sb-searchbar {
+            width: 100%;
+            background: #333;
+            padding: 10px;
+            position: absolute;
+            top: 40px;
+            left: 0
+        }
+
+        .unit_left {
+            width: 50% !important
+        }
+
+        .search-bar-wrap .searchtext, .search-bar-wrap .search-bar-icon {
+            display: none !important
+        }
+
+        .search-bar-wrap .icon-search {
+            display: block;
+            font-size: 18px
+        }
+
+        .search-bar {
+            padding-right: 14px
+        }
+
+        .search-results {
+            padding-top: 10px;
+        }
+
+        .search-bar {
+            padding-right: 14px
+        }
+
+        search-bar-text-wrap {
+            position: relative;
+            width: 83.3333%;
+            float: left
+        }
+
+        .icon-search:before {
+            content: ''
+        }
+
+        .search-bar-icon {
+            position: absolute;
+            width: 19px;
+            height: 22px;
+            top: 6px;
+            left: 8px;
+            font-size: 19px
+        }
+
+        .search-bar-text {
+            border: 0 none;
+            outline: 0 none;
+            height: 15px;
+            width: 100%;
+            border-radius: 2px 0 0 2px;
+            padding: 10px 0 9px 0
+        }
+
+            .search-bar-text .search-bar-text {
+                padding-left: 35px
+            }
+
+        .instantSearch {
+            overflow: hidden;
+            padding: 10px !important;
+            height: auto !important;
+            border-radius: 0 0 4px 4px;
+            background: #fff;
+            box-shadow: 2px 2px 2px 0 rgba(0,0,0,.3);
+            overflow: visible;
+            display: none;
+            position: absolute;
+            z-index: 10002
+        }
+        .hide{display:none}
+        .instant-search-item {
+            padding: .25em;
+            color: #5c5b5b;
+            font-family: arial;
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .instant-search-item1 {
+            padding: .25em;
+            color: #5c5b5b;
+            font-family: arial;
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .instant-search-item:hover, .instant-search-item:focus, .instant-search-item.focus {
+            background: #f2f2f2
+        }
+
+        .instant-search-item.header:hover, .instant-search-item.header:focus, .instant-search-item.header.focus {
+            background-color: #fff
+        }
+
+        .instant-search-item .hghlght {
+            font-weight: 700
+        }
+
+        .instant-search-item.header {
+            border-top: 1px solid #ccc;
+            margin-top: 12px;
+            overflow: visible;
+            height: 5px
+        }
+
+            .instant-search-item.header .text {
+                top: -11px;
+                display: inline-block;
+                position: relative;
+                background: #fff;
+                padding: 0 5px;
+                font-size: 13px;
+                color: #6d6d6d
+            }
+
+        .columns {
+            float: left;
+            width: 23.3%;
+        }*/
+        /* Search */
+
         #mo-wa {
             display: none;
         }
@@ -166,7 +345,19 @@
             transform: translate(1%, -96%);
         }
 
+        .SearchBarTextBox {
+            font-family: 'Amazon Ember';
+            width: 30%;
+        }
+
         @media only screen and (max-width: 600px) {
+            #header-content1 {
+                width: 328px;
+            }
+
+            .SearchBarTextBox {
+                width: 30%;
+            }
             /* For mobile phones: */
             .ProductImage {
                 height: 150px;
@@ -232,6 +423,7 @@
                 left: 76%;
             }
         }
+
         .SubCat {
             border: 1px solid;
             padding: 1px 7px 1px 7px;
@@ -241,6 +433,7 @@
             cursor: pointer;
             margin-left: 10px;
         }
+
         .SubCatMain {
             height: auto;
             margin: auto auto 20px;
@@ -680,17 +873,65 @@
             </div>
         </div>
     </div>--%>
+    <%-- <div id="header_topbar">
+        <div id="header-content">
+            <div class="unit_right main-unit topheaderlink">
+                <div class="header-bottom">
+                    <div class="sb-searchbar unit_left">
+                        <div class="search-bar-wrap">
+                            <div class="search-bar">
+                                <div class="search-bar-text-wrap">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        <input style="font-family: 'Amazon Ember';" type="text" id="small-searchterms" autocomplete="off" name="q" placeholder="Discover the Origin here" maxlength="200" />
+                                    </div>--%>
+    <%--<input style="padding-left: 35px;font-family:'Amazon Ember';" type="text" id="small-searchterms" autocomplete="off" name="q" placeholder="Discover the Origin here" maxlength="200" />--%>
+    <%-- </div>
+                            </div>
+                        </div>
+                        <ul id="output" class="instantSearch" style="margin-top: 36px"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>--%>
+
+
+    <div id="header_topbar1" style="padding-top: 10px;">
+        <div id="header-content1">
+            <div class="unit_right1 main-unit1 topheaderlink1">
+                <div class="header-bottom1">
+                    <div class="sb-searchbar1 unit_left1">
+                        <div class="search-bar-wrap">
+                            <div class="search-bar">
+                                <div class="search-bar-text-wrap">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        <input type="text" id="small-searchterms" autocomplete="off" name="q" placeholder="Discover the Origin here" maxlength="200" class="SearchBarTextBox" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-primary" onclick="ClearFilter()" style="background: rgb(29, 161, 242); border-color: rgb(29, 161, 242);" id="BtnClear">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                        <ul id="output" class="instantSearch"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
     <div id="divCategory" class="ca-new-container" runat="server">
     </div>
-    <div id="divSubCat" class="ca-new-container SubCatMain"  runat="server">
-                <label class="control-label SubCat"> Besan </label>
-                <label class="control-label SubCat"> Maida </label>
-                <label class="control-label SubCat"> Other Floors </label>
+    <div id="divSubCat" class="ca-new-container SubCatMain" runat="server">
+        <label class="control-label SubCat">Besan </label>
+        <label class="control-label SubCat">Maida </label>
+        <label class="control-label SubCat">Other Floors </label>
     </div>
-    
+
 
     <div id="divBannerImage">
     </div>
@@ -926,7 +1167,6 @@
     </div>
 
     <div id="divIntermediateBannerImage">
-         
     </div>
     <input type="hidden" id="hdnInterBannerId" />
     <%--Pincode Modal Popup--%>
@@ -946,7 +1186,7 @@
                             </fieldset>
                         </div>
                         <div style="text-align: center;">
-                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()" style="background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" id="BtnPinCodeApply">Confirm</button>
+                            <button type="button" class="btn btn-primary" onclick="Newcheckservices()" style="background: rgb(29, 161, 242); border-color: rgb(29, 161, 242);" id="BtnPinCodeApply">Confirm</button>
                         </div>
                     </form>
                 </div>
@@ -1172,7 +1412,7 @@
                 $('#hdnProductCount').val(count);
             }
         }
-        function plusqty(type, prodid, grpid,mrp, el) {
+        function plusqty(type, prodid, grpid, mrp, el) {
             var grpId = grpid;
             var productvariant = $('#hdnProductVariant' + grpid).val();
             var unitId = $('#ddlUnit' + grpid).val();
@@ -1192,21 +1432,21 @@
                 value = value + 1;
 
                 var product = products.find(x => x.Productid == prodid);
-                    if (product != null && product != undefined) {
-                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
-                    }
+                if (product != null && product != undefined) {
+                    products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                }
 
                 obj = {
-                Productid: prodid,
-                Grpid: grpId,
+                    Productid: prodid,
+                    Grpid: grpId,
                     Mrp: parseInt(mrp),
                     Qty: value,
-                Unit: parts[0],
-                UnitId: parts[1],
-                Productvariant: productvariant
+                    Unit: parts[0],
+                    UnitId: parts[1],
+                    Productvariant: productvariant
 
-            }
-            products.push(obj);
+                }
+                products.push(obj);
             }
             else if (type == 0) {
                 //if (value > 1) {
@@ -1230,17 +1470,17 @@
                         products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
                     }
 
-                obj = {
-                Productid: prodid,
-                Grpid: grpId,
-                    Mrp: parseInt(mrp),
-                    Qty: value,
-                Unit: parts[0],
-                UnitId: parts[1],
-                Productvariant: productvariant
+                    obj = {
+                        Productid: prodid,
+                        Grpid: grpId,
+                        Mrp: parseInt(mrp),
+                        Qty: value,
+                        Unit: parts[0],
+                        UnitId: parts[1],
+                        Productvariant: productvariant
 
-            }
-            products.push(obj);
+                    }
+                    products.push(obj);
                 }
             }
             if (products.length > 0) {
@@ -1265,9 +1505,9 @@
             }
             if (value != 0) {
                 var dataval = parent.find('input');
-            dataval[0].value = value;
+                dataval[0].value = value;
             }
-            
+
         }
         function BannerAddClick(rowindex, prodid, mrp, el) {
             //$('#divBannerAddShow' + rowindex).show();
@@ -1357,11 +1597,11 @@
         //    dataval[0].value = value;
         //}
 
-        
-        function Bannerplusqty(type, prodid, grpid,mrp, el) {
+
+        function Bannerplusqty(type, prodid, grpid, mrp, el) {
             var grpId = grpid;
             var productvariant = "BannerProduct";
-           var unitId = $('#hdnddlUnit' + prodid).val();
+            var unitId = $('#hdnddlUnit' + prodid).val();
             var unitvalue = $('#hdnddlUnit' + prodid).val();
             var parts = unitvalue.split(' - ');
 
@@ -1376,21 +1616,21 @@
                 value = value + 1;
 
                 var product = products.find(x => x.Productid == prodid);
-                    if (product != null && product != undefined) {
-                        products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
-                    }
+                if (product != null && product != undefined) {
+                    products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
+                }
 
                 obj = {
-                Productid: prodid,
-                Grpid: grpId,
+                    Productid: prodid,
+                    Grpid: grpId,
                     Mrp: parseInt(mrp),
                     Qty: value,
-                Unit: parts[0],
-                UnitId: parts[1],
-                Productvariant: productvariant
+                    Unit: parts[0],
+                    UnitId: parts[1],
+                    Productvariant: productvariant
 
-            }
-            products.push(obj);
+                }
+                products.push(obj);
             }
             else if (type == 0) {
                 //if (value > 1) {
@@ -1398,10 +1638,10 @@
                 //}
                 value = value - 1;
 
-                    if (value == 0) {
-                        $('#divBannerAddShow' + prodid).hide();
-                        $('#divBannerAdd' + prodid).show();
-                        var product = products.find(x => x.Productid == prodid);
+                if (value == 0) {
+                    $('#divBannerAddShow' + prodid).hide();
+                    $('#divBannerAdd' + prodid).show();
+                    var product = products.find(x => x.Productid == prodid);
                     if (product != null && product != undefined) {
                         products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
                         count = products.length;
@@ -1412,17 +1652,17 @@
                         products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
                     }
 
-                obj = {
-                Productid: prodid,
-                Grpid: grpId,
-                    Mrp: parseInt(mrp),
-                    Qty: value,
-                Unit: parts[0],
-                UnitId: parts[1],
-                Productvariant: productvariant
+                    obj = {
+                        Productid: prodid,
+                        Grpid: grpId,
+                        Mrp: parseInt(mrp),
+                        Qty: value,
+                        Unit: parts[0],
+                        UnitId: parts[1],
+                        Productvariant: productvariant
 
-            }
-            products.push(obj);
+                    }
+                    products.push(obj);
                 }
             }
             if (products.length > 0) {
@@ -1447,9 +1687,9 @@
             }
             if (value != 0) {
                 var dataval = parent.find('input');
-            dataval[0].value = value;
+                dataval[0].value = value;
             }
-            
+
         }
 
         function BuyFivewithFriend_Click(prodid, mrp, PWeight, el) {
@@ -1639,7 +1879,7 @@
                 type: "POST",
                 url: "Default.aspx/ConfirmOrder",
                 // data: '{model:"' + productstring + '"}',
-                data: JSON.stringify({ model: products,"WhatsAppNo":$("#btnsendMessage").text(),"PinCode": $("#spanpincode").html() }),
+                data: JSON.stringify({ model: products, "WhatsAppNo": $("#btnsendMessage").text(), "PinCode": $("#spanpincode").html() }),
                 contentType: "application/json",
                 dataType: "json",
 
@@ -1661,20 +1901,24 @@
                 }
             });
         }
-        function Categoryimage(categoryId, el,type) {
+        function SearchCategoryimage(categoryId, el, type) {
+            $("#output").hide();
+            Categoryimage(categoryId, el, type);
+        }
+        function Categoryimage(categoryId, el, type) {
             debugger
             var JurisdictionId = $("#hdnJurisdictionId").val();
-            $('.CategoryText').css({ 'color': '#1A1A1A' }); 
-             $('.CategoryImagecenter').css({ 'border': 'none' });
+            $('.CategoryText').css({ 'color': '#1A1A1A' });
+            $('.CategoryImagecenter').css({ 'border': 'none' });
             if (type == 'category') {
                 var $this = $(el);
                 $this.css({ 'border': '2px solid #1da1f2' });
                 $this.next().css({ 'color': '#1da1f2' });
             } else {
                 $("#text" + categoryId).css({ 'color': '#1da1f2' });
-                 $("#img"+categoryId).css({ 'border': '2px solid #1da1f2' });
+                $("#img" + categoryId).css({ 'border': '2px solid #1da1f2' });
             }
-            
+
             $.ajax({
 
                 type: "POST",
@@ -1689,7 +1933,7 @@
                     $.ajax({
                         type: 'POST',
                         url: "Default.aspx/GetProductdata",
-                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryId+',SubCategoryId:-1,InterBannerid:""}',
+                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:-1,InterBannerid:"",SearchProductId:-1}',
                         contentType: "application/json",
                         dataType: "json",
                         success: function (response) {
@@ -1718,23 +1962,32 @@
             });
             //window.location = "category.aspx?categoryId=" + categoryId + "&JurisdictionId=" + JurisdictionId + "&CatgoryName=" + categoryName + "";
         }
+        function SearchGetProduct(subcatid, catid, el) {
+            $("#output").hide();
+            Categoryimage(catid, el, '');
+            GetProduct(subcatid, catid, el);
+            // $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
 
-        function GetProduct(subcatid, catid,el) {
+        }
+        function GetProduct(subcatid, catid, el) {
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $("#hdnSubCat").val(subcatid);
+            $("#hdnSubCategoryId").val(subcatid);
             $.ajax({
                 type: 'POST',
                 url: "Default.aspx/GetProductdata",
-                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:'+subcatid+',InterBannerid:""}',
+                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:' + subcatid + ',InterBannerid:"",SearchProductId:-1}',
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
                     var $this = $(el);
-                    $this.css("background", "#1da1f2").css("color", "#ffff");
-                    $this.siblings().css("background", "#ffff").css("color", "#1da1f2");
+                    //$this.css("background", "#1da1f2").css("color", "#ffff");
+                    //$this.siblings().css("background", "#ffff").css("color", "#1da1f2");
+                    $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
+                    $("#SubCat" + subcatid).siblings().css("background", "#ffff").css("color", "#1da1f2");
                     var ProductEndNo = parseInt(response.d.productcount);
                     $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
-                     $("#hdnInterBannerId").val(response.d.InterBannerId);
+                    $("#hdnInterBannerId").val(response.d.InterBannerId);
                     $('#hdnproductcallcount').val(response.d.productcount);
                     $("#divProductNew").html(response.d.response);
                     $("#divBannerImage").html(response.d.bannerresponse);
@@ -1819,7 +2072,67 @@
                         //}
 
                     }--%>
-</script>
+
+        function SearchFilterGetProduct(prodid, catid, subcatid, el) {
+            $("#output").hide();
+            FilterCategoryimage(prodid, catid, subcatid, el, '');
+        }
+        function FilterCategoryimage(prodid, categoryId, subcatid, el, type) {
+            debugger
+            var JurisdictionId = $("#hdnJurisdictionId").val();
+            $('.CategoryText').css({ 'color': '#1A1A1A' });
+            $('.CategoryImagecenter').css({ 'border': 'none' });
+
+            $("#text" + categoryId).css({ 'color': '#1da1f2' });
+            $("#img" + categoryId).css({ 'border': '2px solid #1da1f2' });
+
+
+
+            $.ajax({
+
+                type: "POST",
+                url: "Default.aspx/GetSubCategory",
+                data: '{categoryid:"' + categoryId + '"}',
+                contentType: "application/json",
+                dataType: "json",
+
+                success: function (response) {
+                    $("#ContentPlaceHolder1_divSubCat").html(response.d);
+                    $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
+                    //$("#SubCat" + subcatid).css("background", "#ffff").css("color", "#1da1f2");
+                    //$($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
+                    $.ajax({
+                        type: 'POST',
+                        url: "Default.aspx/GetProductdata",
+                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:' + subcatid + ',InterBannerid:"",SearchProductId:' + prodid + '}',
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            var ProductEndNo = parseInt(response.d.productcount);
+                            $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                            $("#hdnInterBannerId").val(response.d.InterBannerId);
+                            $('#hdnproductcallcount').val(response.d.productcount);
+                            $("#divProductNew").html(response.d.response);
+                            $("#divBannerImage").html(response.d.bannerresponse);
+                            $("#divProductNew").append(response.d.intermediateresponse);
+                            AllProducts.push(...response.d.productdata.ProductList);
+                            document.documentElement.scrollTop = 0;
+                        },
+                        failure: function (response) {
+
+                            alert("Something Wrong....");
+
+                        }
+                    });
+                    //alert(response.d);
+                },
+                failure: function (response) {
+                    alert("Something Wrong....");
+                }
+            });
+            //window.location = "category.aspx?categoryId=" + categoryId + "&JurisdictionId=" + JurisdictionId + "&CatgoryName=" + categoryName + "";
+        }
+    </script>
 
 
     <div class="row">
@@ -2034,6 +2347,7 @@
                 $('#ContentPlaceHolder1_divCategory').hide();
                 $('#ContentPlaceHolder1_divSubCat').hide();
                 $('#lbllogout').hide();
+                $('#header_topbar1').hide();
                 $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
                 $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
                 $("#text" + $('#hdnCategory').val()).css({ 'color': '#1da1f2' });
@@ -2048,7 +2362,122 @@
                 //    lbllogout.InnerHtml = "<li><p><span><a href=\"register.aspx\">Login</a></span></p><li>";
                 //}
 
+                //Search API Call 08-10-2020
+                $("#small-searchterms").keyup(function (e) {
+                    var textwidth = $(".search-bar-text-wrap").width();
+                    var valThis = $(this).val();
+                    if (e.keyCode != 40 && e.keyCode != 38) {
+                        var JurisdictionId = $("#hdnJurisdictionId").val();
+                        var obj = { Searchname1: valThis, JurisdictionId: JurisdictionId };
+                        var param = JSON.stringify(obj);
 
+                        $.ajax({
+                            type: 'POST',
+                            url: "Default.aspx/GetResultsBySearch",
+                            data: param,
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            async: true,
+                            success: function (response) {
+                                varresponse = response;
+                                var count = 0;
+                                var res = varresponse.d;
+                                var allstr = "";
+                                var allstrlink = "";
+                                var catcount = 1;
+                                var subcatcount = 1;
+                                var sellercount = 1;
+                                var procount = 1;
+                                for (var i = 0; i < res.length; i++) {
+                                    var data1 = res[i].split("#TM#TM#TM#TM");
+                                    var productname = data1[0];
+                                    //productname = productname.toLowerCase();
+                                    productname = productname;
+                                    var productname1 = productname.replace(valThis, "<span class='hghlght'>" + valThis + "</span>");
+                                    var link = data1[1];
+                                    var iscategory = data1[2];
+                                    var categoryid = data1[3];
+                                    if (iscategory == 1) {
+                                        if (sellercount == 1) {
+                                            allstr += "<li class='instant-search-item header'><span class='text'>Category</span></li>"
+                                        }
+                                        allstr += "<li class='instant-search-item'><span class='singleline pname'>" + productname + "</span></li>";
+                                        sellercount++;
+                                    }
+                                    if (iscategory == 2) {
+                                        if (catcount == 1) {
+                                            allstr += "<li class='instant-search-item header'><span class='text'>Category</span></li>"
+                                        }
+                                        allstr += "<li class='instant-search-item'><a class='singleline pname' title='" + productname + "' href='#' onClick = SearchCategoryimage(" + categoryid + ",this,'');>" + productname1 + "</a></li>";
+                                        catcount++;
+                                    }
+                                    if (iscategory == 4) {
+                                        if (subcatcount == 1) {
+                                            allstr += "<li class='instant-search-item header'><span class='text'>Sub Category</span></li>"
+                                        }
+                                        allstr += "<li class='instant-search-item'><a class='singleline pname' title='" + productname + "' href='#' onClick=SearchGetProduct(" + categoryid + "," + link + ",this);>" + productname1 + "</a></li>";
+                                        subcatcount++;
+                                    }
+                                    if (iscategory == 3) {
+                                        if (procount == 1) {
+                                            var productid = data1[4];
+                                            allstr += "<li class='instant-search-item header'><span class='text'>Product</span></li>"
+                                        }
+                                        allstr += "<li class='instant-search-item'><a class='singleline pname' title='" + productname + "' href='#' onClick=SearchFilterGetProduct(" + productid + "," + categoryid + "," + link + ",this);>" + productname1 + "</a></li>";
+                                        procount++;
+                                    }
+
+                                    if (allstr.length > 0) {
+                                        document.getElementById("output").innerHTML = allstr;
+                                        var isShowSearch = $("#isShowSearch").val();
+                                        if (isShowSearch == "1") {
+                                            $("#output").hide();
+                                        }
+                                        else {
+                                            $("#output").show();
+
+                                        }
+                                        $("#output").width(textwidth - 20);
+                                    }
+                                    else {
+                                        $("#output").hide();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    if (e.keyCode == 40) {
+                        if ($("#output li.focus").length == 0) {
+                            $("#output li:first-child").addClass("focus");
+                        }
+                        else {
+                            $("#output li.focus").next().addClass("instant-search-item focus");
+                            $("#output li.focus").prev().removeClass("focus");
+                        }
+                    }
+                    if (e.keyCode == 38) {
+                        $("#output li.focus").prev().addClass("instant-search-item focus");
+                        $("#output li.focus").next().removeClass("focus");
+                    }
+                });
+
+                $("#small-searchterms").focus(function () {
+                    if ($("#output").text().length == 0) {
+                        $("#output").hide();
+                    }
+                    else {
+                        $("#output").show();
+                    }
+                });
+
+                //for Search output tooltip
+                $("body").mousedown(function (e) {
+                    var subject = $("#output");
+                    var lgn = $("#small-searchterms");
+                    if (e.target.id != subject.attr('id') && e.target.id != lgn.attr('id') && !subject.has(e.target).length) {
+                        $('#output').hide();
+                    }
+                });
             });
             //$(document).on('click', '#dvPackSizeModal0', function () {
             //    alert("H111led.");
@@ -2079,7 +2508,7 @@
 
             //});
             function Newcheckservices() {
-                 $("#lblpinmsg").hide();
+                $("#lblpinmsg").hide();
                 $("#lblpinnotmsg").hide();
                 var pincode = $("#txtPinCodeval").val();
                 var msg1 = "<%=clsCommon.Pincodemaxlen6erromsg%>";
@@ -2107,6 +2536,7 @@
                         if (resultflag == "1") {
                             //$("#lblpinnotmsg").hide();
                             $("#lblpinmsg").show();
+                            $('#header_topbar1').show();
                             var labelObj = document.getElementById("<%=lblpinmsg.ClientID %>");
                             labelObj.innerHTML = message;
                             $("#lblpinmsg").val(message);
@@ -2156,7 +2586,7 @@
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryid+',SubCategoryId:-1,InterBannerid:""}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",SearchProductId:-1}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -2294,7 +2724,7 @@
                 $('#modalProductPackingSize').modal('show');
             }
             function CallPinCodePopup() {
-                 $("#lblpinmsg").hide();
+                $("#lblpinmsg").hide();
                 $("#lblpinnotmsg").hide();
                 $('#txtPinCodeval').val('');
                 $("#ContentPlaceHolder1_lblpinmsg").text("");
@@ -2302,7 +2732,7 @@
                 $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
             }
 
-           
+
             //$(window).scroll(function () {
             //    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
             //        //alert("END!");
@@ -2358,7 +2788,7 @@
 
             // callback
             function onScroll() {
-               
+
                 //if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
                 if ($(window).scrollTop() >= ($(document).height() - $(window).height())) {
                     var ProductCallCount = $('#hdnproductcallcount').val();
@@ -2369,14 +2799,15 @@
                     var bannercount = $("#hdnBannerCount").val();
                     var hdnProdId = $("#hdnProdId").val();
                     var categoryid = $('#hdnCategory').val();
-                    var subcategoryid = $("#hdnSubCat").val();
+                    //var subcategoryid = $("#hdnSubCat").val();
+                    var subcategoryid = $('#hdnSubCategoryId').val();
                     var interBannerId = $("#hdnInterBannerId").val();
                     if (ProductStartNo > 0) {
                         if (ProductCallCount != "") {
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '"}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '",SearchProductId:-1}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -2384,7 +2815,7 @@
                                     if (response.d.productcount != "") {
                                         $('#hdnProductEndNo').val(parseInt(ProductStartNo + parseInt(response.d.productdata.BannerPosition)));
                                         $('#hdnproductcallcount').val(response.d.productcount);
-                                        $("#hdnInterBannerId").val(interBannerId +"," +response.d.InterBannerId);
+                                        $("#hdnInterBannerId").val(interBannerId + "," + response.d.InterBannerId);
                                         //var getdata = {
                                         //    data: JSON.parse(response.d.whatsapp),
                                         //}
@@ -2419,6 +2850,51 @@
                         }
                     }
                 }
+            }
+
+            function ClearFilter() {
+                $('#small-searchterms').val('');
+                $('#divBannerImage').html('');
+                $("#divProductNew").html('');
+                $("#divIntermediateBannerImage").html('');
+                $('#OtherBanner').html('');
+                var JurisdictionId = $("#hdnJurisdictionId").val();
+                var categoryid = $('#hdnCategory').val();
+                $.ajax({
+                    type: 'POST',
+                    url: "Default.aspx/GetProductdata",
+                    data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",SearchProductId:-1}',
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        var ProductEndNo = parseInt(response.d.productcount);
+                        $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                        $('#hdnproductcallcount').val(response.d.productcount);
+                        $("#hdnInterBannerId").val(response.d.InterBannerId);
+                        $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
+                        $($('.SubCat')[0]).siblings().css("background", "#ffff").css("color", "#1da1f2");
+
+                        $('.mobile-number').show();
+                        $('.offer-time').show();
+                        $('#ContentPlaceHolder1_divCategory').show();
+                        $('#ContentPlaceHolder1_divSubCat').show();
+                        $('#lbllogout').show();
+                        $("#btnsendMessage").text(response.d.whatsapp);
+                        //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
+                        $("#divProductNew").append(response.d.response);
+                        $("#divBannerImage").append(response.d.bannerresponse);
+
+                        //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
+                        $("#divProductNew").append(response.d.intermediateresponse);
+                        AllProducts.push(...response.d.productdata.ProductList);
+                        $("#hdnBannerCount").val(parseInt("1"));
+                    },
+                    failure: function (response) {
+
+                        alert("Something Wrong....");
+
+                    }
+                });
             }
         </script>
     </div>

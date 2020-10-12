@@ -328,4 +328,11 @@ public class clsModals
         public string AttributeId;
         public string AImageName;
     }
+    //12-10-2020 Developed By :- Hiren
+    public class getSearchproduct
+    {
+        public string response;
+        public string[] message;
+    }
+
 }

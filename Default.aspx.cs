@@ -210,7 +210,7 @@ public partial class Default : System.Web.UI.Page
                     }
 
                     //html.
-                   // lblproductdec.InnerHtml = objproduct.ProductList[0].pdec;
+                    // lblproductdec.InnerHtml = objproduct.ProductList[0].pdec;
                     //lblprodkeyfeature.InnerHtml = objproduct.ProductList[0].pkey;
                     //lblprodnote.InnerHtml = objproduct.ProductList[0].pnote;
                     //lblpricemain.InnerHtml = clsCommon.rssymbol + buy1.ToString();
@@ -280,7 +280,7 @@ public partial class Default : System.Web.UI.Page
                 HttpContext.Current.Session["JurisdictionId"] = objpin.JurisdictionID;
                 return res;
 
-                
+
                 //}
                 //else
                 //{
@@ -339,7 +339,7 @@ public partial class Default : System.Web.UI.Page
     }
     [System.Web.Services.WebMethod]
     //public static string ConfirmOrder(List<ClsOrderModels.ConfirmOrderModel> model)
-    public static string ConfirmOrder(List<ClsOrderModels.ConfirmOrderNewModel> model,string WhatsAppNo,string PinCode)
+    public static string ConfirmOrder(List<ClsOrderModels.ConfirmOrderNewModel> model, string WhatsAppNo, string PinCode)
     {
         ClsOrderModels.PlaceMultipleOrderNewModel orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
         List<ClsOrderModels.ProductListNew> products = new List<ClsOrderModels.ProductListNew>();
@@ -517,7 +517,7 @@ public partial class Default : System.Web.UI.Page
         }
     }
     [System.Web.Services.WebMethod]
-    public static object GetProductdata(string JurisdictionId, string StartNo, string EndNo, string BannerCount, string ProductId = "", int CategoryId = -1,int SubCategoryId = -1,string InterBannerid = "")
+    public static object GetProductdata(string JurisdictionId, string StartNo, string EndNo, string BannerCount, string ProductId = "", int CategoryId = -1,int SubCategoryId = -1,string InterBannerid = "",int SearchProductId = -1)
     {
         try
         {
@@ -528,7 +528,7 @@ public partial class Default : System.Web.UI.Page
             //string Homebanner = clsCommon.strApiUrl + "/api/Banner/getbannerimag";
             //string data = clsCommon.GET(aa);
 
-            string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionId + "&CategoryId=" + CategoryId + "&SubCategoryId=" + SubCategoryId + "&ProductId=" + ProductId + "&StartNo=" + StartNo + "&EndNo=" + EndNo + "&InterBannerid=" + InterBannerid;
+            string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionId + "&CategoryId=" + CategoryId + "&SubCategoryId=" + SubCategoryId + "&ProductId=" + ProductId + "&StartNo=" + StartNo + "&EndNo=" + EndNo + "&InterBannerid=" + InterBannerid + "&SearchProductId=" + SearchProductId;
             string Homebanner = clsCommon.strApiUrl + "/api/Banner/GetDashBoardBannerImag?JurisdictionId=" + JurisdictionId;
             string data = clsCommon.GET(dashboadapi);
 
@@ -960,10 +960,10 @@ public partial class Default : System.Web.UI.Page
 
                         }
 
-                        if(objproduct.ProductList.Count == (j+1))
+                        if (objproduct.ProductList.Count == (j + 1))
                         {
                             var hdnProdId = objproduct.ProductList.Where(x => x.ItemType == "1").FirstOrDefault().ProductId;
-                            html += "<input type='hidden' id='hdnProdId' value='"+ hdnProdId + "'/>";
+                            html += "<input type='hidden' id='hdnProdId' value='" + hdnProdId + "'/>";
                         }
                         
                     }
@@ -1928,12 +1928,12 @@ public partial class Default : System.Web.UI.Page
             {
                 if (objcategory.response.Equals("1"))
                 {
-                    html += "<input type='hidden' id='hdnCategory' value='"+ objcategory.CategoryList[0].Id + "'/>";
+                    html += "<input type='hidden' id='hdnCategory' value='" + objcategory.CategoryList[0].Id + "'/>";
                     html += "<input type='hidden' id='hdnSubCat' value='-1'/>";
                     html += "<label class='control-label SubCat'  onclick='GetProduct(-1," + objcategory.CategoryList[0].Id + ",this)'   >All</label>";
                     for (int i = 0; i < objcategory.CategoryList[0].SubCategoryList.Count; i++)
                     {
-                        html += "<label class='control-label SubCat' onclick='GetProduct(" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "," + objcategory.CategoryList[0].SubCategoryList[i].CategoryId + ",this)'>" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryName + "</label>";
+                        html += "<label class='control-label SubCat' id='SubCat" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "' onclick='GetProduct(" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "," + objcategory.CategoryList[0].SubCategoryList[i].CategoryId + ",this)'>" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryName + "</label>";
                     }
 
                 }
@@ -2197,7 +2197,7 @@ public partial class Default : System.Web.UI.Page
                     html += "<label class='control-label SubCat' onclick='GetProduct(-1," + categoryid + ",this)'  >All</label>";
                     for (int i = 0; i < SubCatList.Count; i++)
                     {
-                        html += "<label class='control-label SubCat' onclick='GetProduct("+ SubCatList[i].SubCategoryId+","+ SubCatList[i].CategoryId+",this)'>" + SubCatList[i].SubCategoryName + "</label>";
+                        html += "<label class='control-label SubCat' id='SubCat" + SubCatList[i].SubCategoryId  + "'  onclick ='GetProduct(" + SubCatList[i].SubCategoryId + "," + SubCatList[i].CategoryId + ",this)'>" + SubCatList[i].SubCategoryName + "</label>";
                     }
 
                 }
@@ -2205,10 +2205,32 @@ public partial class Default : System.Web.UI.Page
             return html;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return ex.ToString();
         }
 
+    }
+    [System.Web.Services.WebMethod]
+    public static object GetResultsBySearch(string Searchname1,string JurisdictionId)
+    {
+        if (!string.IsNullOrEmpty(Searchname1))
+        {
+            string Search = clsCommon.strApiUrl + "/api/Search/GetResultsBySearch?Searchname1=" + Searchname1 + "&JurisdictionId=" + JurisdictionId;;
+            string databanner = clsCommon.GET(Search);
+            var obj = JsonConvert.DeserializeObject(databanner);
+            clsModals.getSearchproduct objsearchproduct = JsonConvert.DeserializeObject<clsModals.getSearchproduct>(databanner);
+            string[] html = null;
+            if (!String.IsNullOrEmpty(databanner))
+            {
+                if (objsearchproduct.response.Equals("1"))
+                {
+                    html = objsearchproduct.message;
+                }
+            }
+            return html;
+        }
+        else
+            return 0;
     }
 }
