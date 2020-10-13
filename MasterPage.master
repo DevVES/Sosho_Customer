@@ -97,7 +97,8 @@
                                 <input type="hidden" id="hdnJurisdictionId" />
                                 <input type="hidden" id="hdnProductEndNo"/>
                                 <input type="hidden" id="hdnBannerCount" />
-                                <input type="hidden" id="hdnSubCategoryId" />
+                                <input type="hidden" id="hdnSubCategoryId" value="-1" />
+                                <input type="hidden" id="hdnSearchProductId" value="-1"/>
                             </p>
                         </div>
                         <div id="lblshow" runat="server">

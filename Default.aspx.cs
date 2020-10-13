@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 public partial class Default : System.Web.UI.Page
 {
     dbConnection dbc = new dbConnection();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -517,7 +518,7 @@ public partial class Default : System.Web.UI.Page
         }
     }
     [System.Web.Services.WebMethod]
-    public static object GetProductdata(string JurisdictionId, string StartNo, string EndNo, string BannerCount, string ProductId = "", int CategoryId = -1,int SubCategoryId = -1,string InterBannerid = "",int SearchProductId = -1)
+    public static object GetProductdata(string JurisdictionId, string StartNo, string EndNo, string BannerCount, string ProductId = "", int CategoryId = -1,int SubCategoryId = -1,string InterBannerid = "", int Filter = 1, int SearchProductId = -1)
     {
         try
         {
@@ -528,7 +529,7 @@ public partial class Default : System.Web.UI.Page
             //string Homebanner = clsCommon.strApiUrl + "/api/Banner/getbannerimag";
             //string data = clsCommon.GET(aa);
 
-            string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionId + "&CategoryId=" + CategoryId + "&SubCategoryId=" + SubCategoryId + "&ProductId=" + ProductId + "&StartNo=" + StartNo + "&EndNo=" + EndNo + "&InterBannerid=" + InterBannerid + "&SearchProductId=" + SearchProductId;
+            string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionId + "&CategoryId=" + CategoryId + "&SubCategoryId=" + SubCategoryId + "&ProductId=" + ProductId + "&StartNo=" + StartNo + "&EndNo=" + EndNo + "&InterBannerid=" + InterBannerid + "&Filter=" + Filter + "&SearchProductId=" + SearchProductId; 
             string Homebanner = clsCommon.strApiUrl + "/api/Banner/GetDashBoardBannerImag?JurisdictionId=" + JurisdictionId;
             string data = clsCommon.GET(dashboadapi);
 

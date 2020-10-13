@@ -926,12 +926,26 @@
 
     <div id="divCategory" class="ca-new-container" runat="server">
     </div>
-    <div id="divSubCat" class="ca-new-container SubCatMain" runat="server">
-        <label class="control-label SubCat">Besan </label>
-        <label class="control-label SubCat">Maida </label>
-        <label class="control-label SubCat">Other Floors </label>
+    <div class="col-md-12" >
+        <div class="col-md-10">
+            <div id="divSubCat" class="ca-new-container SubCatMain"  runat="server">
+                <label class="control-label SubCat"> Besan </label>
+                <label class="control-label SubCat"> Maida </label>
+                <label class="control-label SubCat"> Other Floors </label>
     </div>
-
+        </div>
+         <div class="col-md-2">
+             <select id="sort" onchange="SortProduct(this)">
+                 <option value="-1">Sort By:</option>
+                 <option value="1">Price - Low to High</option>
+                 <option value="2">Price - High to Low</option>
+                 <option value="3">Discount</option>
+                 <option value="4">Sosho Recommended</option>
+             </select>
+        </div>
+    </div>
+    
+    
 
     <div id="divBannerImage">
     </div>
@@ -1918,7 +1932,7 @@
                 $("#text" + categoryId).css({ 'color': '#1da1f2' });
                 $("#img" + categoryId).css({ 'border': '2px solid #1da1f2' });
             }
-
+            $("#sort").val("-1");
             $.ajax({
 
                 type: "POST",
@@ -1933,7 +1947,7 @@
                     $.ajax({
                         type: 'POST',
                         url: "Default.aspx/GetProductdata",
-                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:-1,InterBannerid:"",SearchProductId:-1}',
+                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
                         contentType: "application/json",
                         dataType: "json",
                         success: function (response) {
@@ -1946,7 +1960,10 @@
                             //$("#divIntermediateBannerImage").html(response.d.intermediateresponse);
                             $("#divProductNew").append(response.d.intermediateresponse);
                             AllProducts.push(...response.d.productdata.ProductList);
-                            document.documentElement.scrollTop = 0;
+                            //document.documentElement.scrollTop = 0;
+                            $('html, body').animate({ scrollTop: 0 }, 'slow', function () {
+                                //alert("reached top");
+                            });
                         },
                         failure: function (response) {
 
@@ -1967,22 +1984,55 @@
             Categoryimage(catid, el, '');
             GetProduct(subcatid, catid, el);
             // $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
-
         }
-        function GetProduct(subcatid, catid, el) {
+
+        function SortProduct(el) {
+            var $this = $(el);
+            var sortval = $this.val(); 
+            var categoryid = $('#hdnCategory').val();
+            var subcategoryid = $("#hdnSubCategoryId").val();
             var JurisdictionId = $("#hdnJurisdictionId").val();
-            $("#hdnSubCat").val(subcatid);
-            $("#hdnSubCategoryId").val(subcatid);
+            if (sortval == "-1")
+                sortval = "1";
             $.ajax({
                 type: 'POST',
                 url: "Default.aspx/GetProductdata",
-                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:' + subcatid + ',InterBannerid:"",SearchProductId:-1}',
+                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:' + subcategoryid + ',InterBannerid:"",Filter:'+ sortval +',SearchProductId:-1}',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    var ProductEndNo = parseInt(response.d.productcount);
+                    $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
+                    $("#hdnInterBannerId").val(response.d.InterBannerId);
+                    $('#hdnproductcallcount').val(response.d.productcount);
+                    $("#divProductNew").html(response.d.response);
+                    $("#divBannerImage").html(response.d.bannerresponse);
+                    $("#divProductNew").append(response.d.intermediateresponse);
+                    AllProducts.push(...response.d.productdata.ProductList);
+                },
+                failure: function (response) {
+
+                    alert("Something Wrong....");
+
+                }
+            });
+        }
+
+        function GetProduct(subcatid, catid,el) {
+            var JurisdictionId = $("#hdnJurisdictionId").val();
+            $("#hdnSubCat").val(subcatid);
+            $("#hdnSubCategoryId").val(subcatid);
+            $("#sort").val("-1");
+            $.ajax({
+                type: 'POST',
+                url: "Default.aspx/GetProductdata",
+                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:'+subcatid+',InterBannerid:"",Filter:1,SearchProductId:-1}',
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
                     var $this = $(el);
-                    //$this.css("background", "#1da1f2").css("color", "#ffff");
-                    //$this.siblings().css("background", "#ffff").css("color", "#1da1f2");
+                    $this.css("background", "#1da1f2").css("color", "#ffff");
+                    $this.siblings().css("background", "#ffff").css("color", "#1da1f2");
                     $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
                     $("#SubCat" + subcatid).siblings().css("background", "#ffff").css("color", "#1da1f2");
                     var ProductEndNo = parseInt(response.d.productcount);
@@ -2079,13 +2129,14 @@
         }
         function FilterCategoryimage(prodid, categoryId, subcatid, el, type) {
             debugger
+             
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $('.CategoryText').css({ 'color': '#1A1A1A' });
             $('.CategoryImagecenter').css({ 'border': 'none' });
 
             $("#text" + categoryId).css({ 'color': '#1da1f2' });
             $("#img" + categoryId).css({ 'border': '2px solid #1da1f2' });
-
+            $("#hdnSearchProductId").val(prodid);
 
 
             $.ajax({
@@ -2099,12 +2150,13 @@
                 success: function (response) {
                     $("#ContentPlaceHolder1_divSubCat").html(response.d);
                     $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
+                    $("#hdnSubCategoryId").val(subcatid);
                     //$("#SubCat" + subcatid).css("background", "#ffff").css("color", "#1da1f2");
                     //$($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
                     $.ajax({
                         type: 'POST',
                         url: "Default.aspx/GetProductdata",
-                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:' + subcatid + ',InterBannerid:"",SearchProductId:' + prodid + '}',
+                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:' + subcatid + ',InterBannerid:"",Filter:1,SearchProductId:' + prodid + '}',
                         contentType: "application/json",
                         dataType: "json",
                         success: function (response) {
@@ -2586,7 +2638,7 @@
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",SearchProductId:-1}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryid+',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -2802,12 +2854,17 @@
                     //var subcategoryid = $("#hdnSubCat").val();
                     var subcategoryid = $('#hdnSubCategoryId').val();
                     var interBannerId = $("#hdnInterBannerId").val();
+                    var searchprodid = $("#hdnSearchProductId").val();
+                    var sortval = $("#sort").val();
+                    if (sortval == "-1") {
+                        sortval = "1";
+                    }
                     if (ProductStartNo > 0) {
                         if (ProductCallCount != "") {
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '",SearchProductId:-1}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '",Filter:"' + sortval + '",SearchProductId:"'+searchprodid+'"}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -2863,7 +2920,7 @@
                 $.ajax({
                     type: 'POST',
                     url: "Default.aspx/GetProductdata",
-                    data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",SearchProductId:-1}',
+                    data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
                     contentType: "application/json",
                     dataType: "json",
                     success: function (response) {
