@@ -934,7 +934,7 @@
                 <label class="control-label SubCat"> Other Floors </label>
     </div>
         </div>
-         <div class="col-md-2">
+         <div class="col-md-2" id="divSortProduct">
              <select id="sort" onchange="SortProduct(this)">
                  <option value="-1">Sort By:</option>
                  <option value="1">Price - Low to High</option>
@@ -2404,6 +2404,7 @@
                 $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
                 $("#text" + $('#hdnCategory').val()).css({ 'color': '#1da1f2' });
                 $("#img" + $('#hdnCategory').val()).css({ 'border': '2px solid #1da1f2' });
+                $('#divSortProduct').hide();
                 //$(document).on('click', '#dvPackSizeModal0', function () {
                 //    alert("H111led.");
                 //});
@@ -2596,6 +2597,7 @@
                             $("#hdnJurisdictionId").val(JurisdictionId);
                             //$("#spanpincode").html('Deliver to ' + pincode);
                             $("#spanpincode").html(pincode);
+                            $('#divSortProduct').hide();
                             //Get Product Data Load
 
                             $("#BtnPinCodeApply").attr("disabled", false);
@@ -2656,6 +2658,7 @@
                                     $('#ContentPlaceHolder1_divCategory').show();
                                     $('#ContentPlaceHolder1_divSubCat').show();
                                     $('#lbllogout').show();
+                                    $('#divSortProduct').show();
                                     $("#btnsendMessage").text(response.d.whatsapp);
                                     //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
                                     $("#divProductNew").append(response.d.response);
