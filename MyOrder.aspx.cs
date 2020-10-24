@@ -234,7 +234,7 @@ public partial class MyOrder : System.Web.UI.Page
                     {
                         string orderidd = dtproduct.Rows[i]["OrderId"].ToString();
                         string orderid64 = clsCommon.Base64Encode(dtproduct.Rows[i]["OrderId"].ToString());
-                        Orderdetails += "<div class=\"row\"> <div class=\"order-list\"> <ul> <li> <div class=\"inner\"> <div class=\"orderid left\"> <p><strong>" + dtproduct.Rows[i]["OrderId"].ToString() + "</strong></p> </div> <div class=\"left olist-date\"> <p>" + dtproduct.Rows[i]["OrderDate"].ToString() + "</p> </div> <div class=\"amount right\"> <p>Order Total:<span>" + dtproduct.Rows[i]["PaidAmount"] + "</span></p> </div> <div class=\"amount right\"> <a href=\"OrderSummery.aspx?orderid="+ dtproduct.Rows[i]["OrderId"].ToString() + "\"> Reorder</a> </div> </div> </li> </ul>";
+                        Orderdetails += "<div class=\"row\"> <div class=\"order-list\"> <ul> <li> <div class=\"inner\"> <div class=\"orderid left\"> <p><strong>" + dtproduct.Rows[i]["OrderId"].ToString() + "</strong></p> </div> <div class=\"left olist-date\"> <p>" + dtproduct.Rows[i]["OrderDate"].ToString() + "</p> </div> <div class=\"amount right btnReOrderMargin\"> <p>Order Total:<span>" + dtproduct.Rows[i]["PaidAmount"] + "</span></p> </div> <div class=\"amount right btnReOrderPadding\"> <strong><a href=\"OrderSummery.aspx?orderid=" + dtproduct.Rows[i]["OrderId"].ToString() + "\"> Reorder</a></strong> </div> </div> </li> </ul>";
 
                         if (objorder.ListOrder != null && objorder.ListOrder.Count > 0)
                         {
