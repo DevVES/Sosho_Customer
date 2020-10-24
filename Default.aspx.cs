@@ -275,10 +275,12 @@ public partial class Default : System.Web.UI.Page
             if (res != "")
             {
                 ClsOrderModels.CheckPincodeModel objpin = JsonConvert.DeserializeObject<ClsOrderModels.CheckPincodeModel>(res);
-                //if (objpin.resultflag == "1")
-                //{
-
-                HttpContext.Current.Session["JurisdictionId"] = objpin.JurisdictionID;
+                if (objpin.resultflag == "1")
+                {
+                    HttpContext.Current.Session["PinCode"] = Pincode;
+                    HttpContext.Current.Session["JurisdictionId"] = objpin.JurisdictionID;
+                    HttpContext.Current.Session["CountryId"] = objpin.CountryID;
+                }
                 return res;
 
 
@@ -347,10 +349,11 @@ public partial class Default : System.Web.UI.Page
         foreach (var item in model)
         {
             item.MrpTotal = item.Mrp * item.Qty;
+            item.SoshoTotal = item.SoshoPrice * item.Qty;
             products.Add(new ClsOrderModels.ProductListNew
             {
                 productid = item.Productid,
-                PaidAmount = item.Mrp,
+                PaidAmount = item.SoshoPrice,
                 Quantity = item.Qty.ToString(),
                 UnitId = item.UnitId.ToString(),
                 Unit = item.Unit.ToString(),
@@ -359,7 +362,10 @@ public partial class Default : System.Web.UI.Page
                 //UnitId = "Gram",
                 //Unit = "500",
                 couponCode = "0",
-                refrcode = "0"
+                refrcode = "0",
+                BannerId = item.BannerId,
+                BannerProductType = item.BannerProductType,
+                Mrp = item.Mrp
             });
         }
 
@@ -382,7 +388,7 @@ public partial class Default : System.Web.UI.Page
         orderModel.Redeemeamount = "0";
         //orderModel.CustomerId = clsCommon.getCurrentCustomer().id;
         orderModel.orderMRP = model.Sum(x => x.MrpTotal).ToString();
-        orderModel.totalAmount = orderModel.orderMRP;
+        orderModel.totalAmount = model.Sum(x => x.SoshoTotal).ToString();
         orderModel.totalQty = model.Sum(x => x.Qty).ToString();
         //orderModel.totalWeight = (model.Sum(x => x.Qty) * model.Sum(x => x.Weight)).ToString();
         orderModel.totalWeight = "0";
@@ -543,11 +549,11 @@ public partial class Default : System.Web.UI.Page
                     sWhatsAppNo = objproduct.WhatsAppNo;
                     string sDiscount = "", sProductVariant = "", sMrp = "", sSoshoPrice = "", sWeight = "", sIsProductDescription = "", sAImageName = "";
                     decimal dMrp = 0, dSoshoPrice = 0, dSavePrice = 0;
-                    string sProductId = "", sGrpId = "", sCategoryId = "";
+                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "";
                     string sisSelected = "", sProductName = "", sProductDesc = "", sProductKeyFeatures = "";
                     int iIndex = 0;
                     string  sBannerActionId = "", sOpenUrlLink = "", sBannerCategoryId = "", sCategoryName = "";
-                    string sBannerProductId = "", sBannerProductMrp = "", sBannerWeight = "";
+                    string sBannerProductId = "", sBannerProductMrp = "", sBannerWeight = "", sBannerProductSoshoPrice = "";
 
                     sProductCount = objproduct.ProductList.Where(x=>x.ItemType == "1").Count().ToString();
                     //if (StartNo == "1")
@@ -742,6 +748,7 @@ public partial class Default : System.Web.UI.Page
                                     sWeight = objproduct.ProductList[j].ProductAttributesList[h].weight;
                                     sAImageName = objproduct.ProductList[j].ProductAttributesList[h].AImageName;
                                     sisSelected = objproduct.ProductList[j].ProductAttributesList[h].isSelected;
+                                    sIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[h].isQtyFreeze;
 
 
                                     if (!string.IsNullOrEmpty(sMrp))
@@ -826,9 +833,19 @@ public partial class Default : System.Web.UI.Page
                                     html += "</tr>";
                                     html += "<tr>";
                                     html += "<td class='ProductDropDown' colspan='2'>";
-                                    html += "<select ID='ddlUnit" + sGrpId + "'  runat='server' onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + "," + sGrpId + ",this)\">";
-                                    html += "<option Value='" + sWeight + "'>" + sWeight + "</option>";
-                                    html += "</select>";
+                                    if (objproduct.ProductList[j].ProductAttributesList.Count == 1)
+                                    {
+                                        //html += "<label id='ddlUnit" + sGrpId + "' value='" + sWeight + "'>" + sWeight + "</label>";
+                                       html += "<option id='ddlUnit" + sGrpId + "' style='font-weight: 700;' Value='" + sWeight + "'>" + sWeight + "</option>";
+                                    }
+                                    else
+                                    {
+                                        html += "<select ID='ddlUnit" + sGrpId + "'  runat='server' onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + "," + sGrpId + ",this)\">";
+                                        html += "<option Value='" + sWeight + "'>" + sWeight + "</option>";
+                                        html += "</select>";
+
+                                    }
+                                    
                                     html += "</td>";
                                     html += "<td>";
                                     //html += "</td><td></td> ";
@@ -849,7 +866,7 @@ public partial class Default : System.Web.UI.Page
                                     html += "<tr id='BtnAdd" + sGrpId + "'>";
                                     //html += "<td style='padding-top:15px;padding-left:27px;'>";
                                     html += "<td style='padding-top:6px;padding-left:10px;' colspan='3'>";
-                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sGrpId + "," + sSoshoPrice + ",this)'>ADD</button>";
+                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'>ADD</button>";
                                     html += "<input type='hidden' id='hdnProductId" + sGrpId + "' value='" + sProductId + "'>";
                                     html += "<input type='hidden' id='hdnGrpId" + sGrpId + "' value='" + sGrpId + "'>";
                                     html += "<input type='hidden' id='hdnCategoryId" + sGrpId + "' value='" + sCategoryId + "'>";
@@ -865,9 +882,19 @@ public partial class Default : System.Web.UI.Page
                                     //html += "<tr id='AddShow" + iIndex + "' style='display:none;'>";
                                     html += "<tr id='AddShow" + sGrpId + "' style='display:none;'>";
                                     html += "<td colspan='3' style='padding-top:15px;padding-left:10px;' class='AmazonFont'>";
-                                    html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sSoshoPrice + ",this)'><i class='fa fa-minus'></i></button>";
-                                    html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                    html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sSoshoPrice + ",this)'><i class='fa fa-plus'></i></button>";
+                                    if (!string.IsNullOrEmpty(sIsQtyFreeze) && Convert.ToBoolean(sIsQtyFreeze))
+                                    {
+                                        html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this) disabled'><i class='fa fa-minus'></i></button>";
+                                        html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;'  onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                        html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this) disabled'><i class='fa fa-plus'></i></button>";
+                                    }
+                                    else
+                                    {
+                                        html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-minus'></i></button>";
+                                        html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                        html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-plus'></i></button>";
+                                    }
+                                    
                                     html += "</td>";
                                     html += "</tr>";
                                     html += "</table>";
@@ -878,7 +905,7 @@ public partial class Default : System.Web.UI.Page
                                     if (sisSelected == "false")
                                         html += "<tr style='display:none;' class='trGrp" + sGrpId + " trProductId" + sProductId + "'>";
                                     else
-                                        html += "<tr class='trGrp" + sGrpId + "'>";
+                                        html += "<tr class='trGrp" + sGrpId + " trProductId" + sProductId + "'>";
                                     html += "<td colspan='5'> <hr class='solid'>";
                                     html += "</td>";
                                     html += "</tr>";
@@ -896,7 +923,7 @@ public partial class Default : System.Web.UI.Page
                         if (objproduct.ProductList[j].ItemType == "3")
                         {
 
-
+                            sInterBannerId = objproduct.ProductList[j].bannerId;
                             sBannerActionId = objproduct.ProductList[j].ActionId.ToString();
 
                             BannerIntermediateHtml = "<div class='row' id='OtherBanner'>";
@@ -925,10 +952,10 @@ public partial class Default : System.Web.UI.Page
                             {
                                 sBannerProductId = objproduct.ProductList[j].ProductId.ToString();
 
-                                sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
+                                sBannerProductSoshoPrice = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
                                 sBannerWeight = objproduct.ProductList[j].ProductAttributesList[0].weight.ToString();
                                 sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
-                                //sBannerProductMrp = objbanner.IntermediateBannerImages[0].MRP.ToString();
+                                sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
                                 //sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
 
                                 BannerIntermediateHtml += "<div class='offer-banner'>";
@@ -936,15 +963,15 @@ public partial class Default : System.Web.UI.Page
                                 BannerIntermediateHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "<div id='divBannerAdd" + sBannerProductId + "'>";
-                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sBannerProductMrp + ",this)'>Buy Now</button>";
+                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sBannerProductMrp+","+sBannerProductSoshoPrice + ",this,3,"+sInterBannerId+")'>Buy Now</button>";
                                 BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + sBannerProductId + "' value='" + sBannerWeight + "'>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "<div id='divBannerAddShow" + sBannerProductId + "' class='AmazonFont BannerAddPostion' style='display:none;'>";
                                 //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
-                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + ",this)'><i class='fa fa-minus'></i></button>";
+                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ")'><i class='fa fa-minus'></i></button>";
                                 BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
                                 //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
-                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + ",this)'><i class='fa fa-plus'></i></button>";
+                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ")'><i class='fa fa-plus'></i></button>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
@@ -956,7 +983,7 @@ public partial class Default : System.Web.UI.Page
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
                             }
-                            sInterBannerId = objproduct.ProductList[j].bannerId;
+                            
                             BannerIntermediateHtml += "</div>";
 
                         }
@@ -1246,7 +1273,7 @@ public partial class Default : System.Web.UI.Page
 
 
             //return html;
-           
+            HttpContext.Current.Session["WhatsAppNo"] = sWhatsAppNo;
             return new { productcount = sProductCount, response = html, whatsapp = sWhatsAppNo, bannerresponse = BannerHtml, intermediateresponse = BannerIntermediateHtml, productdata = JsonConvert.DeserializeObject<clsModals.getNewproduct>(data), InterBannerId = sInterBannerId };
         }
         catch (Exception ee)

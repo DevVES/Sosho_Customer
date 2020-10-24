@@ -34,7 +34,7 @@
                             <h5 id="lbladdname" runat="server">Pratixa patel</h5>
                             <div class="ship-address">
                                 <p id="lbladd" runat="server">257, Shaktinath, G.H.B-392001</p>
-                                <p id="lbladdstate" runat="server">Gujarat, India</p>
+                                <%--<p id="lbladdstate" runat="server">Gujarat, India</p>--%>
                             </div>
                             <p class="number">Phone Number: <span id="lbladdmob" runat="server">7069926537</span></p>
                         </div>
@@ -149,7 +149,7 @@
                 <div class="col-md-4 padding">
                     <div class="delivered">
                         <%--<p class="deliver-date">Delivered on Nov 17, 2018</p>--%>
-                        <p class="method">Payment Method : <span id="lblpayment" runat="server"></span></p>
+                        <p class="method">Payment Method : <span id="lblpayment" style="color:#1da1f2" runat="server"></span></p>
                     </div>
                 </div>
             </div>

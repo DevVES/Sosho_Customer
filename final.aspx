@@ -175,10 +175,10 @@
                         </table>
                       </div>
 
-                        <p class="method">Payment Method: <span id="paymentype" runat="server"></span></p>
+                        <p class="method">Payment Method: <span style="color:#1da1f2" id="paymentype" runat="server"></span></p>
                         <hr />
                         <p class="addr" style="font-weight: 600; font-size: 14px;"><span id="lbladdridd" runat="server"></span></p>
-                        <p class="addr" style="font-weight: 600; font-size: 14px;"><span id="lblmsg" runat="server"></span></p>
+                        <%--<p class="addr" style="font-weight: 600; font-size: 14px;"><span id="lblmsg" runat="server"></span></p>--%>
                     </div>
 
 
@@ -201,7 +201,8 @@
                     </div>
                 </div>--%>
                     <div class="order-delivery-date">
-                        <p id="lbldeliveryline" runat="server" style="color: #4caf50">Delivery in 1-2 working days</p>
+                        <p id="lbldeliveryline" runat="server" style="color: #4caf50"><b>Delivery in 1-2 working days </b></p>
+                        <p class="addr" style="font-weight: 600; font-size: 14px;"><span id="lblmsg" runat="server">Share this offer with your friends now</span></p>
                         <div style="display: none;">
                             <p class="code">
                                 Offer Code:
@@ -211,9 +212,34 @@
                         </div>
                     </div>
 
-                   <%-- <div id="lblwhatsapp" runat="server">--%>
-                        <%--  <a href="#" id="vg" class="wa-btn">Share on whatsapp <i class="fa fa-whatsapp"></i></a>--%>
-                    <%--</div>--%>
+                   <div id="lblwhatsapp" runat="server">
+                          <a href="#" id="vg" class="wa-btn">Share on whatsapp <i class="fa fa-whatsapp"></i></a>
+                    </div>
+                    <br />
+                    <div id="walletandpromo" runat="server">
+                      <%--  <table style="margin-left: 47px; width:90%" >
+                            <tbody>
+                            <tr>
+                                <td style="font-size:16px">Wallet Redeem Amount:</td>
+                                <td style="font-size:16px">50.00</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:16px">Promo Code</td>
+                                <td style="font-size:16px">FLAT 50</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:16px">PromoCode Discount:</td>
+                                <td style="font-size:16px">100.00</td>
+                            </tr>
+                                </tbody>
+                        </table>--%>
+                      </div>
+                    <br />
+                    <div style="text-align: center;">
+                        <a id="home" class="btn btn-primary" href="/Default.aspx" style="margin-left: 18px;background: rgb(29, 161, 242); border-color: rgb(29, 161, 242);">Home</a>
+                         <a id="orderdetails" class="btn btn-primary" href="javascript:void(0)" style="margin-left: 18px;background: rgb(29, 161, 242); border-color: rgb(29, 161, 242);">Order Details</a>
+
+                    </div>
 
                     <asp:Literal ID="ltrerr" runat="server"></asp:Literal>
                 </div>
@@ -336,6 +362,10 @@
 
              }, 10000);
 
+         });
+
+         $("#orderdetails").click(function () {
+             window.location.href = 'order_details.aspx?Orderid=' + '<%=Session["PlaceOrderId"].ToString()%>';
          });
 </script>
 

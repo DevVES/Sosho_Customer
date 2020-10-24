@@ -935,207 +935,205 @@ public partial class category : System.Web.UI.Page
         }
     }
 
-    public void GetProductdataTest(string JurisdictionId, string StartNo, string EndNo)
-    {
-        try
-        {
-            dbConnection dbc = new dbConnection();
-            string html = "", JurisdictionID = "1";
+    //public void GetProductdataTest(string JurisdictionId, string StartNo, string EndNo)
+    //{
+    //    try
+    //    {
+    //        dbConnection dbc = new dbConnection();
+    //        string html = "", JurisdictionID = "1";
 
-            //string aa = clsCommon.strApiUrl + "/api/Product/GetProductDetails";
-            //string Homebanner = clsCommon.strApiUrl + "/api/Banner/getbannerimag";
-            //string data = clsCommon.GET(aa);
+    //        //string aa = clsCommon.strApiUrl + "/api/Product/GetProductDetails";
+    //        //string Homebanner = clsCommon.strApiUrl + "/api/Banner/getbannerimag";
+    //        //string data = clsCommon.GET(aa);
 
-            string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionID + "&StartNo=" + StartNo + "&EndNo=" + EndNo;
-            string Homebanner = clsCommon.strApiUrl + "/api/Banner/getbannerimag";
-            string data = clsCommon.GET(dashboadapi);
+    //        string dashboadapi = clsCommon.strApiUrl + "/api/Product/GetDashBoardProductDetails?JurisdictionID=" + JurisdictionID + "&StartNo=" + StartNo + "&EndNo=" + EndNo;
+    //        string Homebanner = clsCommon.strApiUrl + "/api/Banner/getbannerimag";
+    //        string data = clsCommon.GET(dashboadapi);
 
-            if (!String.IsNullOrEmpty(data))
-            {
-                clsModals.getNewproduct objproduct = JsonConvert.DeserializeObject<clsModals.getNewproduct>(data);
-                string sDiscount = "", sProductVariant = "", sMrp = "", sSoshoPrice = "", sWeight = "", sIsProductDescription = "", sAImageName = "";
+    //        if (!String.IsNullOrEmpty(data))
+    //        {
+    //            clsModals.getNewproduct objproduct = JsonConvert.DeserializeObject<clsModals.getNewproduct>(data);
+    //            string sDiscount = "", sProductVariant = "", sMrp = "", sSoshoPrice = "", sWeight = "", sIsProductDescription = "", sAImageName = "";
 
-                for (int j = 0; j < objproduct.ProductList.Count; j++)
-                {
-                    html += "<div class='row' style ='padding-top:6px;'> ";
-                    html += "<div class='owl-carouselowl-theme' id='imagsliderimg' runat='server'>";
-                    html += "<div class='item active'>";
-                    html += "<table style='width:100%;'>";
-                    if (!string.IsNullOrEmpty(objproduct.ProductList[j].SpecialMessage))
-                    {
-                        html += "<tr>";
-                        html += "<td colspan='5' class='BlueText' style='padding:7px;padding-top:5px;text-align:center; '>" + objproduct.ProductList[j].SpecialMessage + " </td>";
-                        html += "</tr>";
-                    }
-                    html += "<tr>";
+    //            for (int j = 0; j < objproduct.ProductList.Count; j++)
+    //            {
+    //                html += "<div class='row' style ='padding-top:6px;'> ";
+    //                html += "<div class='owl-carouselowl-theme' id='imagsliderimg' runat='server'>";
+    //                html += "<div class='item active'>";
+    //                html += "<table style='width:100%;'>";
+    //                if (!string.IsNullOrEmpty(objproduct.ProductList[j].SpecialMessage))
+    //                {
+    //                    html += "<tr>";
+    //                    html += "<td colspan='5' class='BlueText' style='padding:7px;padding-top:5px;text-align:center; '>" + objproduct.ProductList[j].SpecialMessage + " </td>";
+    //                    html += "</tr>";
+    //                }
+    //                html += "<tr>";
 
-                    sDiscount = objproduct.ProductList[j].Discount;
-                    sProductVariant = objproduct.ProductList[j].IsProductVariant;
-                    sIsProductDescription = objproduct.ProductList[j].IsProductDescription;
+    //                sDiscount = objproduct.ProductList[j].Discount;
+    //                sProductVariant = objproduct.ProductList[j].IsProductVariant;
+    //                sIsProductDescription = objproduct.ProductList[j].IsProductDescription;
 
-                    if (sProductVariant.ToString() == "false")
-                    {
-                        if (!string.IsNullOrEmpty(sDiscount))
-                        {
-                            html += "<td style='padding-top:5px;'>";
-                            html += "<div  style='color:white; background-color:red;border-radius:50px; padding:15px; width:77px; position:absolute; text-align:center;'>";
-                            html += sDiscount;
-                            html += "</div>";
-                        }
-                        if (objproduct.ProductList[j].ProductImageList != null && objproduct.ProductList[j].ProductImageList.Count > 0)
-                        {
+    //                if (sProductVariant.ToString() == "false")
+    //                {
+    //                    if (!string.IsNullOrEmpty(sDiscount))
+    //                    {
+    //                        html += "<td style='padding-top:5px;'>";
+    //                        html += "<div  style='color:white; background-color:red;border-radius:50px; padding:15px; width:77px; position:absolute; text-align:center;'>";
+    //                        html += sDiscount;
+    //                        html += "</div>";
+    //                    }
+    //                    if (objproduct.ProductList[j].ProductImageList != null && objproduct.ProductList[j].ProductImageList.Count > 0)
+    //                    {
 
-                            for (int i = 0; i < objproduct.ProductList[j].ProductImageList.Count; i++)
-                            {
-                                if (i == 0)
-                                {
-                                    html += "<div><img src=" + objproduct.ProductList[j].ProductImageList[i].PImgname + " class='ProductImage'/></div>";
-                                }
-                                else
-                                {
-                                    html += "<div><img src=" + objproduct.ProductList[j].ProductImageList[i].PImgname + " class='ProductImage'/></div>";
-                                }
+    //                        for (int i = 0; i < objproduct.ProductList[j].ProductImageList.Count; i++)
+    //                        {
+    //                            if (i == 0)
+    //                            {
+    //                                html += "<div><img src=" + objproduct.ProductList[j].ProductImageList[i].PImgname + " class='ProductImage'/></div>";
+    //                            }
+    //                            else
+    //                            {
+    //                                html += "<div><img src=" + objproduct.ProductList[j].ProductImageList[i].PImgname + " class='ProductImage'/></div>";
+    //                            }
 
-                            }
-                        }
-                        html += "</td>";
-                        html += "<td>";
-                        html += "<table style='width:100%; position:relative; bottom:-6px; right:166px;'>";
+    //                        }
+    //                    }
+    //                    html += "</td>";
+    //                    html += "<td>";
+    //                    html += "<table style='width:100%; position:relative; bottom:-6px; right:166px;'>";
 
-                        if (objproduct.ProductList[j].IsSoshoRecommended.ToString() == "true")
-                        {
-                            html += "<tr>";
-                            html += "<td colspan='3' class='BlueText' style='border-radius:22px;padding:7px;padding-top:5px; text-align:center;'>" + objproduct.ProductList[j].SoshoRecommended + "</td>";
-                            html += "</tr>";
-                        }
+    //                    if (objproduct.ProductList[j].IsSoshoRecommended.ToString() == "true")
+    //                    {
+    //                        html += "<tr>";
+    //                        html += "<td colspan='3' class='BlueText' style='border-radius:22px;padding:7px;padding-top:5px; text-align:center;'>" + objproduct.ProductList[j].SoshoRecommended + "</td>";
+    //                        html += "</tr>";
+    //                    }
 
-                        html += "<tr>";
-                        html += "<td style='padding-top:5px;' colspan='3'>";
-                        html += "<span class='ProductName'>" + objproduct.ProductList[j].Name + "</span>";
-                        html += "</td>";
-                        html += "</tr>";
-                        html += "<tr>";
-                        html += "<td class='ProudctMRPText' style='padding-top:15px;'>M.R.P</td>";
-                        html += "<td class='ProductMRPValue'>:</td>";
-                        html += "<td class='ProductMRPValue' style='font-size:15px;'>₹ " + objproduct.ProductList[j].MRP + "</td>";
-                        html += "</tr>";
-                        html += "<tr class='AmazonFont' style='padding-top:15px;'>";
-                        html += "<td class='SoshoPrice' >Sosho Price</td>";
-                        html += "<td class='SoshoColon'>:</td>";
-                        html += "<td class='SoshoPriceValue'>₹ " + objproduct.ProductList[j].SellingPrice + "</td>";
-                        html += "</tr>";
-                        html += "<tr class='AmazonFont'>";
-                        html += "<td class='ProudctMRPText'>You Save</td>";
-                        html += "<td>:</td>";
-                        html += "<td style='font-size:15px;'>₹ " + objproduct.ProductList[j].MRP + "</td>";
-                        html += "</tr>";
-                        html += "<tr>";
-                        html += "<td  class='ProductDropDown'>";
-                        html += "<input id='txtweight' class='AmazonFont' runat='server' value='" + objproduct.ProductList[j].Weight + "' style ='width:120px;'/>";
-                        html += "</td><td></td> ";
-                        html += "<td style='padding-top:15px;padding-left:0px;' >";
-                        if (!string.IsNullOrEmpty(sIsProductDescription))
-                        {
-                            if (sIsProductDescription.ToString() == "True")
-                                html += "<img src='images/info - new.png' style='width:20px;height:20px' />";
-                        }
-                        html += "<span style='font-family:'Amazon Ember''><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
-                        html += "</td>";
-                        html += "<td style='font-family:Verdana;font-size:18px;padding-top:15px; '></td>";
-                        html += "</tr>";
-                    }
-                    else
-                    {
-                        //Product Attribute Image
-                        if (objproduct.ProductList[j].ProductAttributesList != null && objproduct.ProductList[j].ProductAttributesList.Count > 0)
-                        {
-                            for (int h = 0; h < objproduct.ProductList[j].ProductAttributesList.Count; h++)
-                            {
-                                sDiscount = objproduct.ProductList[j].ProductAttributesList[h].Discount;
-                                sMrp = objproduct.ProductList[j].ProductAttributesList[h].Mrp;
-                                sSoshoPrice = objproduct.ProductList[j].ProductAttributesList[h].soshoPrice;
-                                sWeight = objproduct.ProductList[j].ProductAttributesList[h].weight;
-                                sAImageName = objproduct.ProductList[j].ProductAttributesList[h].AImageName;
-                            }
+    //                    html += "<tr>";
+    //                    html += "<td style='padding-top:5px;' colspan='3'>";
+    //                    html += "<span class='ProductName'>" + objproduct.ProductList[j].Name + "</span>";
+    //                    html += "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr>";
+    //                    html += "<td class='ProudctMRPText' style='padding-top:15px;'>M.R.P</td>";
+    //                    html += "<td class='ProductMRPValue'>:</td>";
+    //                    html += "<td class='ProductMRPValue' style='font-size:15px;'>₹ " + objproduct.ProductList[j].MRP + "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr class='AmazonFont' style='padding-top:15px;'>";
+    //                    html += "<td class='SoshoPrice' >Sosho Price</td>";
+    //                    html += "<td class='SoshoColon'>:</td>";
+    //                    html += "<td class='SoshoPriceValue'>₹ " + objproduct.ProductList[j].SellingPrice + "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr class='AmazonFont'>";
+    //                    html += "<td class='ProudctMRPText'>You Save</td>";
+    //                    html += "<td>:</td>";
+    //                    html += "<td style='font-size:15px;'>₹ " + objproduct.ProductList[j].MRP + "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr>";
+    //                    html += "<td  class='ProductDropDown'>";
+    //                    html += "<input id='txtweight' class='AmazonFont' runat='server' value='" + objproduct.ProductList[j].Weight + "' style ='width:120px;'/>";
+    //                    html += "</td><td></td> ";
+    //                    html += "<td style='padding-top:15px;padding-left:0px;' >";
+    //                    if (!string.IsNullOrEmpty(sIsProductDescription))
+    //                    {
+    //                        if (sIsProductDescription.ToString() == "True")
+    //                            html += "<img src='images/info - new.png' style='width:20px;height:20px' />";
+    //                    }
+    //                    html += "<span style='font-family:'Amazon Ember''><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
+    //                    html += "</td>";
+    //                    html += "<td style='font-family:Verdana;font-size:18px;padding-top:15px; '></td>";
+    //                    html += "</tr>";
+    //                }
+    //                else
+    //                {
+    //                    //Product Attribute Image
+    //                    if (objproduct.ProductList[j].ProductAttributesList != null && objproduct.ProductList[j].ProductAttributesList.Count > 0)
+    //                    {
+    //                        for (int h = 0; h < objproduct.ProductList[j].ProductAttributesList.Count; h++)
+    //                        {
+    //                            sDiscount = objproduct.ProductList[j].ProductAttributesList[h].Discount;
+    //                            sMrp = objproduct.ProductList[j].ProductAttributesList[h].Mrp;
+    //                            sSoshoPrice = objproduct.ProductList[j].ProductAttributesList[h].soshoPrice;
+    //                            sWeight = objproduct.ProductList[j].ProductAttributesList[h].weight;
+    //                            sAImageName = objproduct.ProductList[j].ProductAttributesList[h].AImageName;
+    //                        }
 
-                            if (!string.IsNullOrEmpty(sDiscount))
-                            {
-                                html += "<td style='padding-top:5px;'>";
-                                html += "<div  style='color:white;background-color:red;border-radius:50px;padding:15px;width:77px;position:absolute;text-align:center;'>";
-                                html += sDiscount;
-                                html += "</div>";
-                            }
-                            html += "<div><img src=" + sAImageName + " class='ProductImage'/></div>";
-                        }
-                        html += "</td>";
-                        html += "<td>";
-                        html += "<table style='width:100%;position:relative;bottom:-6px;right:166px;'>";
+    //                        if (!string.IsNullOrEmpty(sDiscount))
+    //                        {
+    //                            html += "<td style='padding-top:5px;'>";
+    //                            html += "<div  style='color:white;background-color:red;border-radius:50px;padding:15px;width:77px;position:absolute;text-align:center;'>";
+    //                            html += sDiscount;
+    //                            html += "</div>";
+    //                        }
+    //                        html += "<div><img src=" + sAImageName + " class='ProductImage'/></div>";
+    //                    }
+    //                    html += "</td>";
+    //                    html += "<td>";
+    //                    html += "<table style='width:100%;position:relative;bottom:-6px;right:166px;'>";
 
-                        if (objproduct.ProductList[j].IsSoshoRecommended.ToString() == "true")
-                        {
-                            html += "<tr>";
-                            html += "<td colspan='3' class='BlueText' style='border-radius:22px;padding:7px;padding-top:5px;text-align:center;'>" + objproduct.ProductList[j].SoshoRecommended + "</td>";
-                            html += "</tr>";
-                        }
+    //                    if (objproduct.ProductList[j].IsSoshoRecommended.ToString() == "true")
+    //                    {
+    //                        html += "<tr>";
+    //                        html += "<td colspan='3' class='BlueText' style='border-radius:22px;padding:7px;padding-top:5px;text-align:center;'>" + objproduct.ProductList[j].SoshoRecommended + "</td>";
+    //                        html += "</tr>";
+    //                    }
 
-                        html += "<tr>";
-                        html += "<td style='padding-top:5px;' colspan='3'>";
-                        html += "<span class='ProductName'>" + objproduct.ProductList[j].Name + "</span>";
-                        html += "</td>";
-                        html += "</tr>";
-                        html += "<tr>";
-                        html += "<td class='ProudctMRPText' style='padding-top:15px;'>M.R.P</td>";
-                        html += "<td class='ProductMRPValue'>:</td>";
-                        html += "<td class='ProductMRPValue' style='font-size:15px;'>₹ " + sMrp + "</td>";
-                        html += "</tr>";
-                        html += "<tr class='AmazonFont' style='padding-top:15px;'>";
-                        html += "<td class='SoshoPrice'>Sosho Price</td>";
-                        html += "<td class='SoshoColon'>:</td>";
-                        html += "<td class='SoshoPriceValue'>₹ " + sSoshoPrice + "</td>";
-                        html += "</tr>";
-                        html += "<tr class='AmazonFont'>";
-                        html += "<td class='ProudctMRPText'>You Save</td>";
-                        html += "<td>:</td>";
-                        html += "<td style='font-size:15px;'>₹ " + sMrp + "</td>";
-                        html += "</tr>";
-                        html += "<tr>";
-                        html += "<td class='ProductDropDown'>";
-                        html += "<select ID='ddlUnit' runat='server'>";
-                        html += "<option Value='" + sWeight + "'>" + sWeight + "</option>";
-                        html += "</select>";
-                        html += "</td><td></td> ";
-                        html += "<td style='padding-top:15px;padding-left:0px;' >";
-                        html += "<img src='images/info - new.png' style='width:20px;height:20px' />";
-                        html += "<span style='font-family:'Amazon Ember''><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
-                        html += "</td>";
-                        html += "<td style='font-family:Verdana;font-size:18px;padding-top:15px;'></td>";
-                        html += "</tr>";
-                    }
+    //                    html += "<tr>";
+    //                    html += "<td style='padding-top:5px;' colspan='3'>";
+    //                    html += "<span class='ProductName'>" + objproduct.ProductList[j].Name + "</span>";
+    //                    html += "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr>";
+    //                    html += "<td class='ProudctMRPText' style='padding-top:15px;'>M.R.P</td>";
+    //                    html += "<td class='ProductMRPValue'>:</td>";
+    //                    html += "<td class='ProductMRPValue' style='font-size:15px;'>₹ " + sMrp + "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr class='AmazonFont' style='padding-top:15px;'>";
+    //                    html += "<td class='SoshoPrice'>Sosho Price</td>";
+    //                    html += "<td class='SoshoColon'>:</td>";
+    //                    html += "<td class='SoshoPriceValue'>₹ " + sSoshoPrice + "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr class='AmazonFont'>";
+    //                    html += "<td class='ProudctMRPText'>You Save</td>";
+    //                    html += "<td>:</td>";
+    //                    html += "<td style='font-size:15px;'>₹ " + sMrp + "</td>";
+    //                    html += "</tr>";
+    //                    html += "<tr>";
+    //                    html += "<td class='ProductDropDown'>";
+    //                    html += "<select ID='ddlUnit' runat='server'>";
+    //                    html += "<option Value='" + sWeight + "'>" + sWeight + "</option>";
+    //                    html += "</select>";
+    //                    html += "</td><td></td> ";
+    //                    html += "<td style='padding-top:15px;padding-left:0px;' >";
+    //                    html += "<img src='images/info - new.png' style='width:20px;height:20px' />";
+    //                    html += "<span style='font-family:'Amazon Ember''><b> " + objproduct.ProductList[j].SoldCount + "</b></span>";
+    //                    html += "</td>";
+    //                    html += "<td style='font-family:Verdana;font-size:18px;padding-top:15px;'></td>";
+    //                    html += "</tr>";
+    //                }
 
-                    html += "<tr>";
-                    html += "<td style='padding-top:15px;padding-left:27px;'>";
-                    html += "<button type='button' class='btn BlueText' style='color:white;font-size:16px;width:93px;'>ADD</button>";
-                    html += "</td>";
-                    html += "</tr>";
-                    html += "<tr>";
-                    html += "<td colspan='3' style='padding-top:15px;padding-left:27px;' class='AmazonFont'>";
-                    html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server'><i class='fa fa-minus'></i></button>";
-                    html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;'/>";
-                    html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' ><i class='fa fa-plus'></i></button>";
-                    html += "</td>";
-                    html += "</tr>";
-                    html += "</table>";
-                    html += "</td>";
-                    html += "</tr>";
-                    html += "</table>";
-                    html += "</div></div></div>";
+    //                html += "<tr>";
+    //                html += "<td style='padding-top:15px;padding-left:27px;'>";
+    //                html += "<button type='button' class='btn BlueText' style='color:white;font-size:16px;width:93px;'>ADD</button>";
+    //                html += "</td>";
+    //                html += "</tr>";
+    //                html += "<tr>";
+    //                html += "<td colspan='3' style='padding-top:15px;padding-left:27px;' class='AmazonFont'>";
+    //                html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server'><i class='fa fa-minus'></i></button>";
+    //                html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;'/>";
+    //                html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' ><i class='fa fa-plus'></i></button>";
+    //                html += "</td>";
+    //                html += "</tr>";
+    //                html += "</table>";
+    //                html += "</td>";
+    //                html += "</tr>";
+    //                html += "</table>";
+    //                html += "</div></div></div>";
 
-                }
-                //content.InnerHtml = html;
+    //            }
+    //            //content.InnerHtml = html;
 
-            }
-
-
+    //        }
 
 
 
@@ -1143,25 +1141,27 @@ public partial class category : System.Web.UI.Page
 
 
 
-            string databanner = clsCommon.GET(Homebanner);
 
 
-            if (!String.IsNullOrEmpty(databanner))
-            {
-                clsModals.BnnerImage objbanner = JsonConvert.DeserializeObject<clsModals.BnnerImage>(databanner);
-                if (objbanner.response.Equals("1"))
-                {
-                    //lbltopbanner.Src = objbanner.BannerImageList[0].ImgUrl;
-                    //link.HRef = objbanner.BannerImageList[0].DataLink;
-                }
-            }
+    //        string databanner = clsCommon.GET(Homebanner);
 
-            //return html;
 
-        }
-        catch (Exception ee)
-        {
-            // return "";
-        }
-    }
+    //        if (!String.IsNullOrEmpty(databanner))
+    //        {
+    //            clsModals.BnnerImage objbanner = JsonConvert.DeserializeObject<clsModals.BnnerImage>(databanner);
+    //            if (objbanner.response.Equals("1"))
+    //            {
+    //                //lbltopbanner.Src = objbanner.BannerImageList[0].ImgUrl;
+    //                //link.HRef = objbanner.BannerImageList[0].DataLink;
+    //            }
+    //        }
+
+    //        //return html;
+
+    //    }
+    //    catch (Exception ee)
+    //    {
+    //        // return "";
+    //    }
+    //}
 }

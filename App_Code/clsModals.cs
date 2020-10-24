@@ -335,4 +335,48 @@ public class clsModals
         public string[] message;
     }
 
+    public class finallistformulti
+    {
+
+        public string CustomerDetail;
+        public string paymentmode;
+        public string deliverymsg;
+        public string whatsappmsg;
+        public string facebookMsg;
+        public string Response;
+        public string Message;
+        public string OrderTotal;
+        public string PromoCode;
+        public string CashbackAmount;
+        public string ReedeemAmount;
+        public string DiscountAmount;
+        public List<finallistprod> finallistprods { get; set; }
+
+    }
+
+    public class finallistprod
+    {
+        public int BannerProductType;
+        public string ProductName;
+        public string Qty;
+        //public string msg;
+    }
+
+    public class AddFranchies
+    {
+        public string Name;
+        public string Email;
+        public string Mobile;
+        public string PinCode;
+        public string Address;
+        public string CreatedBy;
+    }
+
+    public class AddFranchiesResponse
+    {
+        public string response;
+        public string message;
+        public String FranchieId = "";
+    }
+
 }

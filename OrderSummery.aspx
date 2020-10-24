@@ -20,29 +20,42 @@
             height: 27px !important;
             font-size: 18px !important;
         }
+        .sidebar-overlay {
+            position: absolute;
+            display: none;
+            left: 200vw;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 15;
+        }
     </style>
     <div id="order-summery">
         <div class="container">
-            <div class="ordersummery-address">
+            <%--<div class="ordersummery-address">--%>
+                <div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <%--<div class="col-md-6">
                         <div class="shipped-address">
                             <p class="title">Shipping Address</p>
                             <div class="customer-address">
-                                <span class="phone-no"><span id="lblfname" runat="server">Pratixa Patel</span> </span>
+                                <span class="phone-no"><span id="lblfname" runat="server"></span> </span>
                                 <span id="lblmno" runat="server"></span>&nbsp;
-                                <a href="checkout.aspx">Change</a>
+                                <a href="javascript:void(0)" id="Addrbtn"><span runat="server" id="spnAddrbtn">Change</span></a>
 
                                 <div class="address-detail">
                                     <span id="add1" runat="server"></span>
-                                    <span id="add2" runat="server">Bharuch, Gujarat, 392001</span>
-                                    <span id="add3" runat="server">India</span>
+                                    <span id="add2" runat="server"></span>
+                                    <span id="add3" runat="server"></span>
                                 </div>
 
 
                             </div>
                         </div>
-                    </div>
+                    </div>--%>
                     <div id="divMyText" style="display: none">
 
                         <asp:Label ID="lblCustid" runat="server"></asp:Label>
@@ -51,7 +64,10 @@
                         <asp:Label ID="lblccode" runat="server"></asp:Label>
                         <asp:Label ID="lblbuyflag" runat="server"></asp:Label>
                         <asp:Label ID="lblWhatsAppNo" runat="server"></asp:Label>
-
+                        <input type="hidden" id="promocode" />
+                        <input type="hidden" id="productstatus" runat="server" value="false" />
+                        <input type="hidden" id="minOrderAmount" runat="server" value="0" />
+                        <input type="hidden" id="reedemableAmount" runat="server" value="0" />
                     </div>
                     <asp:Literal ID="ltrerr" runat="server"></asp:Literal>
                     <div class="col-md-6 right-section" style="display: none">
@@ -130,7 +146,10 @@
                 <div class="total">
                     <div class="row section">
                         <div class="total-amount">
-                            <span>Total Price:₹</span><span id="totwtshipping" runat="server"></span>
+                            <span>Total MRP: ₹</span><span id="totmrp" runat="server"></span>
+                        </div>
+                        <div class="total-amount">
+                            <span>Total Sosho Price: ₹</span><span id="totwtshipping" runat="server"></span>
                         </div>
                         <div class="saving hide">
                             <p id="P1" runat="server">(-) Offer Discount (₹<asp:Label ID="lblofferprice" runat="server" Text="15"></asp:Label>*<asp:Label ID="lblqty" runat="server" Text="2"></asp:Label>) :₹<span id="lbltotofferprice" runat="server">30</span></p>
@@ -149,14 +168,23 @@
                             <p id="lblgst" runat="server">Total Saving + Shipping Discount: <span>₹258</span></p>
                             <p class="discount-price" id="totwithshipp" runat="server">Shipping Included:<span class="discount-price-span"></span></p>
                         </div>
+                         <div class="redeem" id="divTotalDiscount">
+                            <p id="P4" runat="server">Total Discount: ₹ <span id="spntotDiscount" runat="server">0</span></p>
+
+                        </div>
                         <div class="redeem" id="divRedeem">
-                            <p id="lblredeemtext" runat="server">(-) Redeem Amount: ₹<span id="lblredeem" runat="server">0</span></p>
+                            <p id="lblredeemtext" runat="server">(-) Wallet Redeem Amount: ₹<span id="lblredeem" runat="server">0</span></p>
 
                         </div>
                         <div class="redeem hide" id="divPromo">
-                            <p id="P2" runat="server">Promo Code Amount: ₹<span id="spnpromo">0</span></p>
+                            <p id="P2" runat="server">PromoCode Cashback: ₹<span id="spnpromo">0</span></p>
                         </div>
-
+                          <div class="redeem hide" id="divDiscount">
+                            <p id="P3" runat="server">(-) PromoCode Discount: ₹ <span id="spndiscount">0</span></p>
+                        </div>
+                         <div class="total-amount">
+                            <p id="P5" runat="server">Total Saving: ₹<span id="spnsaving" runat="server">0</span></p>
+                        </div>
                         <div class="payable-amount">
                             <p id="lblpayableamt" runat="server">Payable Amount: ₹<span id="lbltotpayamt" runat="server">8552</span></p>
                         </div>
@@ -171,7 +199,8 @@
                             <div id="coupon-box" class="coupon-box">
                                 <div class="sb-inline-block titlebox" style="vertical-align: middle;" id="coupon-box-2017-1">
                                     <div class="title">
-                                        <a href="javascript:void(0);" onclick="OpenModal()"  ><strong class="formlabel">Have a promocode?</strong></a>
+                                        <a href="javascript:void(0);" id="havepromo" onclick="OpenModal()"><strong class="formlabel">Have a promocode?</strong></a>
+                                         <a href="javascript:void(0);" id="cancelpromo" onclick="CancelPromo()"><strong class="formlabel">Remove Promocode</strong></a>
                                     </div>
                                 </div>
                                 <div class="coupon-code sb-inline-block hide" id="coupon-box-2017-2">
@@ -313,9 +342,13 @@
             }
             $("#divRedeem").hide();
             $("#ContentPlaceHolder1_Button1").hide();
+            $("#cancelpromo").hide();
+            $("#ContentPlaceHolder1_spnsaving").html($("#ContentPlaceHolder1_spntotDiscount").html());
             //$('#myPromoCodeModal').modal({ backdrop: true});
+
         });
         function OpenModal() {
+            $('#_redeemmsg1').text('');
             $('#myPromoCodeModal').show();
         }
         function CloseModal() {
@@ -333,27 +366,28 @@
 
                  var ptotprice = $('#ContentPlaceHolder1_lbltotpayamt').html();
 
-                  var reedam = $('#ContentPlaceHolder1_lblredeem').html();
-            reedam = Number(reedam);
+                var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+                if (reedam == "") {
+                    reedam = "0";
+                }
+                reedam = Number(reedam);
 
-            ptotprice = Number(ptotprice);
-
-
-
-            if (reedam == "") {
-                reedam = "0";
-            }
-
-
-            var finalprice = ptotprice + reedam;
-               finalprice= finalprice.toFixed(2);
+                ptotprice = Number(ptotprice);
 
 
 
-            var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
-            objpay.innerHTML = finalprice;
+            
 
-            finalprice = 0;
+
+                var finalprice = ptotprice + reedam;
+                finalprice = finalprice.toFixed(2);
+
+
+
+                var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
+                objpay.innerHTML = finalprice;
+
+                finalprice = 0;
 
 
                 $("#ContentPlaceHolder1_lblredeem").html("0");
@@ -365,6 +399,14 @@
                 $("#divRedeem").hide();
                 $("#btnredem").show();
                 $("#cancel_redeemamount").hide();
+
+                var discount = $("#spndiscount").html();
+                if (discount == "") {
+                    discount = "0";
+                }
+                discount = Number(discount);
+
+                document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spnsaving.ClientID %>").innerHTML) - reedam;
 
                
                 return;
@@ -378,20 +420,27 @@
 
             ptotprice = Number(ptotprice);
 
-
+            var discount = $("#spndiscount").html();
+             if (discount == "") {
+                discount = "0";
+            }
+            discount = Number(discount);
 
             if (reedam == "") {
                 reedam = "0";
             }
+           
 
 
-            var finalprice = ptotprice - reedam;
+            var finalprice = ptotprice - (reedam + discount);
                finalprice= finalprice.toFixed(2);
 
 
 
             var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
             objpay.innerHTML = finalprice;
+
+            document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML) + reedam + discount;
 
             finalprice = 0;
 
@@ -445,7 +494,9 @@
             var proqty = $this.parents('.single-product').find('#txtqty').val();
             var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
             //var PWeight = prweight.substr(0, prweight.indexOf('-'));
-            var PWeight = prweight.substring(prweight.indexOf(':')+1,prweight.indexOf('-'));
+            var PWeight = prweight.substring(prweight.indexOf(':') + 1, prweight.indexOf('-'));
+
+            var pmrp = $this.parents('.single-product').find('#lblmrp')[0].innerHTML;
 
             var qty = Number(proqty);
             if (qty > 1) {
@@ -465,10 +516,24 @@
                     reedam = "0";
                 }
                 reedam = Number(reedam);
+                var discount = $("#spndiscount").html();
+                 if (discount == "") {
+                    discount = "0";
+                }
+                discount = Number(discount);
 
+               
                 var prtotalamunt = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
                 document.getElementById("<%=totwtshipping.ClientID %>").innerHTML = (prtotalamunt - Number(price));
-                document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML) - reedam;
+                document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML) - (reedam + discount);
+
+
+                var prtotalmrp = Number(document.getElementById("<%=totmrp.ClientID %>").innerHTML);
+                document.getElementById("<%=totmrp.ClientID %>").innerHTML = (prtotalmrp - Number(pmrp));
+
+                document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML = Number(document.getElementById("<%=totmrp.ClientID %>").innerHTML) - Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
+
+                document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML) + reedam + discount;
 
                 if (products.length > 0) {
                     var product = products.find(x => x.Productid == prodid);
@@ -498,10 +563,44 @@
                     }
                     products.push(obj);
                 }
+                var minOrderAmnt = $("#ContentPlaceHolder1_minOrderAmount").val();
+                minOrderAmnt = Number(minOrderAmnt);
+
+                if (minOrderAmnt > Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML)) {
+                    saveitem(0);
+                    $('#ContentPlaceHolder1_lblshowmsgwallet').show();
+                    $('#ContentPlaceHolder1_punchamt').val("0");
+                    $('#ContentPlaceHolder1_lblshowmsgwallet').html("Wallet money can be redeemed only if minimum order amount is more than ₹ " + minOrderAmnt);
+                }
+                else {
+
+                    if ($('#ContentPlaceHolder1_reedemableAmount').val() == "0") {
+                        var orderAmnt = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
+                        $.ajax({
+                            type: "POST",
+                            url: "OrderSummery.aspx/GetReedemableAmount",
+                            data: '{OrderAmount:"' + orderAmnt + '"}',
+                            contentType: "application/json;charset=utf-8",
+                            datatype: "json",
+                            success: function (ResponseData) {
+                                debugger
+                            },
+                            failure: function (ResponseData) {
+                                alert("Somthing Wrong");
+                            }
+                        });
+                    } else {
+                        $('#ContentPlaceHolder1_punchamt').val( $('#ContentPlaceHolder1_reedemableAmount').val());
+                        $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                    }
+                    
+                }
             }
             else {
                 Remove(prodid, el);
             }
+
+
             console.log(products);
         }
 
@@ -512,7 +611,9 @@
             var proqty = $this.parents('.single-product').find('#txtqty').val();
             var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
             //var PWeight = prweight.substr(0, prweight.indexOf('-'));
-            var PWeight = prweight.substring(prweight.indexOf(':')+1,prweight.indexOf('-'));
+            var PWeight = prweight.substring(prweight.indexOf(':') + 1, prweight.indexOf('-'));
+
+            var pmrp = $this.parents('.single-product').find('#lblmrp')[0].innerHTML;
 
             var qty = Number(proqty);
             qty = qty + 1;
@@ -532,11 +633,24 @@
             }
             reedam = Number(reedam);
 
+            var discount = $("#spndiscount").html();
+              if (discount == "") {
+                discount = "0";
+            }
+            discount = Number(discount);
+
+          
+
             var prtotalamunt = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
             document.getElementById("<%=totwtshipping.ClientID %>").innerHTML = (prtotalamunt + Number(price));
-            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML)-reedam;
+            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML) - (reedam + discount);
 
+            var prtotalmrp = Number(document.getElementById("<%=totmrp.ClientID %>").innerHTML);
+            document.getElementById("<%=totmrp.ClientID %>").innerHTML = (prtotalmrp + Number(pmrp));
 
+            document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML = Number(document.getElementById("<%=totmrp.ClientID %>").innerHTML) - Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
+
+            document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML) + reedam + discount;
             if (products.length > 0) {
                 var product = products.find(x => x.Productid == prodid);
                 if (product != null && product != undefined) {
@@ -565,6 +679,20 @@
                 }
                 products.push(obj);
             }
+
+            var minOrderAmnt = $("#ContentPlaceHolder1_minOrderAmount").val();
+            minOrderAmnt = Number(minOrderAmnt);
+
+            if (minOrderAmnt > Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML)) {
+                saveitem(0);
+                $('#ContentPlaceHolder1_lblshowmsgwallet').show();
+                $('#ContentPlaceHolder1_punchamt').val("0");
+                $('#ContentPlaceHolder1_lblshowmsgwallet').html("Wallet money can be redeemed only if minimum order amount is more than ₹ " + minOrderAmnt);
+            } else {
+                $('#ContentPlaceHolder1_punchamt').val( $('#ContentPlaceHolder1_reedemableAmount').val());
+                $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+            }
+
             console.log(products);
         }
 
@@ -572,6 +700,7 @@
             //alert("ProductId: " + prodid);
             var $this = $(el);
             var r = confirm("Are you sure you want to remove this item?");
+            var productstatus = $("#ContentPlaceHolder1_productstatus").val();
             if (r == true) {
                 $.ajax({
 
@@ -581,11 +710,26 @@
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (ResponseData) {
+                        
+                        ResponseData.d = ResponseData.d.split(",");
                         //alert(ResponseData.d);
-                        if (ResponseData.d == "Success") {
+                        if (ResponseData.d[0] == "Success") {
+                            $("#ContentPlaceHolder1_productstatus").val(ResponseData.d[1]);
                             var price = $this.parents('.single-product').find('#lbltotprices')[0].innerHTML;
                             var prtotalamunt = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
                             document.getElementById("<%=totwtshipping.ClientID %>").innerHTML = (prtotalamunt - Number(price));
+
+                            var proqty = $this.parents('.single-product').find('#txtqty').val();
+                            proqty = Number(proqty);
+
+                            var pmrp = $this.parents('.single-product').find('#lblmrp')[0].innerHTML;
+
+                            var total = Number(pmrp) * proqty;
+
+                            var prtotalmrp = Number(document.getElementById("<%=totmrp.ClientID %>").innerHTML);
+                            document.getElementById("<%=totmrp.ClientID %>").innerHTML = (prtotalmrp - total);
+
+                            document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML = Number(document.getElementById("<%=totmrp.ClientID %>").innerHTML) - Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
 
                             var reedam = $('#ContentPlaceHolder1_lblredeem').html();
                 
@@ -595,11 +739,34 @@
                             }
                             reedam = Number(reedam);
 
+                            var discount = $("#spndiscount").html();
+                             if (discount == "") {
+                                discount = "0";
+                            }
+                            discount = Number(discount);
 
-                            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML) - reedam ;
+                           
+
+                            document.getElementById("<%=lbltotpayamt.ClientID %>").innerHTML = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML) - (reedam + discount);
+
+                            document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML) + reedam + discount;
+
                             $this.parents('.single-product')[1].remove();
 
-                        } else if (ResponseData.d == "lastproduct") {
+                            var minOrderAmnt = $("#ContentPlaceHolder1_minOrderAmount").val();
+                            minOrderAmnt = Number(minOrderAmnt);
+
+                            if (minOrderAmnt > Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML)) {
+                                saveitem(0);
+                                $('#ContentPlaceHolder1_lblshowmsgwallet').show();
+                                $('#ContentPlaceHolder1_punchamt').val("0");
+                                $('#ContentPlaceHolder1_lblshowmsgwallet').html("Wallet money can be redeemed only if minimum order amount is more than ₹ " + minOrderAmnt);
+                            } else {
+                                $('#ContentPlaceHolder1_punchamt').val( $('#ContentPlaceHolder1_reedemableAmount').val());
+                                $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                            }
+
+                        } else if (ResponseData.d[0] == "lastproduct") {
                             //alert("One product is required to complete order. So you can not remove this product.");
                             window.location = "Default.aspx";
                         }
@@ -660,7 +827,7 @@
             }
             var custid = $('#<%=lblCustid.ClientID%>').html();
             //var payamt = $('#<%=lbltemp.ClientID%>').html();
-            var payamt = $("#ContentPlaceHolder1_lbltotpayamt").html();
+            var payamt = $("#ContentPlaceHolder1_totwtshipping").html();
 
            
 
@@ -731,16 +898,35 @@
             var CustId = $("#ContentPlaceHolder1_lblCustid").html();
             var PaidAmt = $("#ContentPlaceHolder1_lbltotpayamt").html();
             var Qty = $("#ContentPlaceHolder1_txtqty").val();
-            var disct = $("#ContentPlaceHolder1_lbltotofferprice").html();
+            //var disct = $("#ContentPlaceHolder1_lbltotofferprice").html();
             var redeemamount = $("#ContentPlaceHolder1_lblredeem").html();
             var addrid = $("#ContentPlaceHolder1_lbladdrid").html();
             var refcode = $("#ContentPlaceHolder1_lblccode").html();
             var buyflag = $("#ContentPlaceHolder1_lblbuyflag").html();
             var shipcharge = $("#ContentPlaceHolder1_lbltotshipping").html();
             var Ccode = 0;
-            var totalamount = PaidAmt;
+            //var totalamount = PaidAmt;totwtshipping
+            var totalamount = $("#ContentPlaceHolder1_totwtshipping").html();
             var PromoAmount = $("#spnpromo").html();
+            var Discount = $("#spndiscount").html();
+            var PromoCode = $("#promocode").val();
+            var addrBtntxt = $("#ContentPlaceHolder1_spnAddrbtn").html();
+            var reorderid = getUrlVars()["orderid"];
+            if (reorderid == undefined || reorderid == "undefined") {
+                reorderid = "0";
+            }
+            var pstatus = $("#ContentPlaceHolder1_productstatus").val();
 
+            if (pstatus == "true" || pstatus == true) {
+                alert("Please remove the items which are not serviceable or out of stock or offer expire first from the list.");
+                $("#btnplaceorder").attr("disabled", false);
+                return;
+            }
+            if (addrBtntxt == "Select Address") {
+                alert("Please select address.");
+                $("#btnplaceorder").attr("disabled", false);
+                return;
+            }
 
             if (PaidAmt == "0" || PaidAmt == "0.0" || PaidAmt == "0.00") {
                 $.ajax({
@@ -789,12 +975,13 @@
                     //url: "OrderSummery.aspx/CODPlaceOrder",
                     //data: '{CustId:"' + CustId + '",PayAmt:"' + PaidAmt + '",addr:"' + addrid + '",qty:"' + Qty + '",buyflag:"' + buyflag + '",disc:"' + disct + '",redm:"' + Redamt + '",ccode:"' + Ccode + '",shipcharg:"' + shipcharge + '",rcode:"' + refcode + '"}',
                     url: "OrderSummery.aspx/CODPlaceMultipleOrder",
-                    data: JSON.stringify({ summeryModel: products, totalamount,redeemamount,PromoAmount }),
+                    data: JSON.stringify({ summeryModel: products, totalamount,redeemamount,PromoAmount,Discount,PaidAmt,PromoCode,reorderid }),
                     contentType: "application/json",
                     dataType: "json",
 
                     success: function (response) {
-                        window.location = "final.aspx";
+                        //window.location = "final.aspx";
+                        window.location = "checkout.aspx";
                         // alert(response.d)
                         if (response != "") {
 
@@ -877,9 +1064,9 @@
                 }
             }
 
-                var custid = $('#<%=lblCustid.ClientID%>').html();
-                var payamt = $("#ContentPlaceHolder1_lbltotpayamt").html();
-
+            var custid = $('#<%=lblCustid.ClientID%>').html();
+            var payamt = $("#ContentPlaceHolder1_totwtshipping").html();
+            $("#promocode").val(promocode);
                 $.ajax({
                     type: "POST",
                     url: "OrderSummery.aspx/RedeemePromoCodeFromOrder",
@@ -888,6 +1075,10 @@
                     dataType: "json",
 
                     success: function (response) {
+                        $("#divPromo").addClass('hide');
+                        $("#spnpromo").html('');
+                        $("#divDiscount").addClass('hide');
+                        $("#spndiscount").html('');
                         if (response.d != "") {
                             var bar_data =
                             {
@@ -897,10 +1088,69 @@
 
                             //Flag 1 Only Calculation 
                             if (bar_data.data.response == 1) {
+                                $("#cancelpromo").show();
+                                $("#havepromo").hide();
+                                if (bar_data.data.OfferName != "Discount") {
+                                    $("#divPromo").removeClass('hide');
+                                    $("#spnpromo").html(bar_data.data.PromoCodeCalcAmount);
+                                    $('#myPromoCodeModal').hide();
 
-                                 $("#divPromo").removeClass('hide');
-                                $("#spnpromo").html(bar_data.data.PromoCodeCalcAmount);
-                                $('#myPromoCodeModal').hide();
+
+                                    var ptotprice = $('#ContentPlaceHolder1_totwtshipping').html();
+         
+
+                                    var discount = $("#spndiscount").html();
+                                    if (discount == "") {
+                                        discount = "0";
+                                    }
+                                    discount = Number(discount);
+
+                                    var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+                                    if (reedam == "") {
+                                        reedam = "0";
+                                    }
+                                    reedam = Number(reedam);
+
+                                    ptotprice = Number(ptotprice);
+                                 
+                                    
+                                    var finalprice = ptotprice - (discount + reedam);
+                                    finalprice = finalprice.toFixed(2);
+                                    var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
+                                    objpay.innerHTML = finalprice;
+
+                                    document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML) + reedam + discount;
+
+                                } else {
+                                     $("#divDiscount").removeClass('hide');
+                                    $("#spndiscount").html(bar_data.data.PromoCodeCalcAmount);
+                                    $('#myPromoCodeModal').hide();
+                                    var ptotprice = $('#ContentPlaceHolder1_totwtshipping').html();
+         
+
+                                    var discount = $("#spndiscount").html();
+                                     if (discount == "") {
+                                        discount = "0";
+                                    }
+                                    discount = Number(discount);
+
+                                    var reedam = $('#ContentPlaceHolder1_lblredeem').html();
+                                    if (reedam == "") {
+                                        reedam = "0";
+                                    }
+                                    reedam = Number(reedam);
+
+                                    ptotprice = Number(ptotprice);
+                                   
+                                    
+                                    var finalprice = ptotprice - (discount + reedam);
+                                    finalprice = finalprice.toFixed(2);
+                                    var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
+                                    objpay.innerHTML = finalprice;
+
+                                    document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spntotDiscount.ClientID %>").innerHTML) + reedam + discount;
+                                }
+                                
 
                             }
 
@@ -923,6 +1173,54 @@
 
            
         }
+
+        function CancelPromo() {
+            
+
+            var ptotprice = $('#ContentPlaceHolder1_lbltotpayamt').html();
+         
+
+            var discount = $("#spndiscount").html();
+            if (discount == "") {
+                discount = "0";
+            }
+            discount = Number(discount);
+
+            ptotprice = Number(ptotprice);
+                                                                     
+            var finalprice = ptotprice + discount;
+            finalprice = finalprice.toFixed(2);
+            var objpay = document.getElementById("<%= lbltotpayamt.ClientID %>");
+            objpay.innerHTML = finalprice;
+
+            document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spnsaving.ClientID %>").innerHTML) - discount;
+            $("#cancelpromo").hide();
+            $("#havepromo").show();
+            $("#divDiscount").addClass('hide');
+            $("#spndiscount").html('');
+            $("#divPromo").addClass('hide');
+            $("#spnpromo").html('');
+        }
+
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        $("#Addrbtn").click(function () {
+            var orderid = getUrlVars()["orderid"];
+            if (orderid != undefined && orderid != "" && orderid != "undefined") {
+                window.location = "checkout.aspx?orderid=" + orderid;
+            } else {
+                window.location = "checkout.aspx"
+            }
+        });
         
     </script>
 

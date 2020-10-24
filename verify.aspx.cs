@@ -152,14 +152,15 @@ public partial class verify : System.Web.UI.Page
                         {
                             HttpContext.Current.Session["buyqty"] = buyqty;
                             HttpContext.Current.Session["BuyFlag"] = buyflagvalue;
-                            if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
-                            {
-                                Response.Redirect("~/checkout.aspx?offercode=" + Request.QueryString["offercode"]);
-                            }
-                            else
-                            {
-                                Response.Redirect("~/checkout.aspx");
-                            }
+                            //if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
+                            //{
+                            //    Response.Redirect("~/checkout.aspx?offercode=" + Request.QueryString["offercode"]);
+                            //}
+                            //else
+                            //{
+                            //    Response.Redirect("~/checkout.aspx");
+                            //}
+                            Response.Redirect("~/OrderSummery.aspx");
                         }
                         else
                         {

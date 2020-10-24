@@ -17,6 +17,7 @@ public partial class OrderSummery : System.Web.UI.Page
        
         try
         {
+            string orderid = string.Empty;
             string Customerid = "";
             ltrerr.Text = "";
             if (!IsPostBack)
@@ -73,11 +74,21 @@ public partial class OrderSummery : System.Web.UI.Page
                     lblbuyflag.Text = BuyFlag;
                 }
 
+                if (!string.IsNullOrWhiteSpace(Request.QueryString["orderid"]))
+                {
+                     orderid = Request.QueryString["orderid"].ToString();
+                    //HttpContext.Current.Session["orderid"] = orderid;
+                    GetProductDetailsForReorder(orderid);
 
+                }
+                //else
+                //{
+                //    getaddr(Customerid, AddrId, BuyFlag);
+                //}
 
-                getaddr(Customerid, AddrId, BuyFlag);
+                
                 GetProductDetails(Customerid, AddrId, BuyFlag, Buyqty);
-                getreedemamt(Customerid, "200", " 0");
+                //getreedemamt(Customerid, "200", " 0");
                 //200 and 0 Not effected
 
             }
@@ -88,33 +99,45 @@ public partial class OrderSummery : System.Web.UI.Page
         }
     }
 
-    public void getaddr(string Custid, string addressid, string buyflag)
-    {
-        try
-        {
+    //public void getaddr(string Custid, string addressid, string buyflag = "")
+    //{
+    //    try
+    //    {
 
-            string aa = clsCommon.strApiUrl + "/api/OrderSummery/GetOrderSummery?custid=" + Custid + "&AddressId=" + addressid + "&BuyFlag=" + buyflag + "";
+    //        string aa = clsCommon.strApiUrl + "/api/OrderSummery/GetOrderSummery?custid=" + Custid + "&AddressId=" + addressid + "&BuyFlag=" + buyflag + "";
 
-            string data = clsCommon.GET(aa);
-            if (!String.IsNullOrEmpty(data))
-            {
-                ClsOrderModels.OrderSummery objsummery = JsonConvert.DeserializeObject<ClsOrderModels.OrderSummery>(data);
-                if (objsummery.Response.Equals("1"))
-                {
-                    lblfname.InnerText = objsummery.OrderCustomerList[0].Cfname + " " + objsummery.OrderCustomerList[0].Clname;
-                    add1.InnerText = objsummery.OrderCustomerList[0].addr;
-                    add2.InnerText = objsummery.OrderCustomerList[0].Cityname + " ," + objsummery.OrderCustomerList[0].statename;
-                    add3.InnerText = objsummery.OrderCustomerList[0].Countryname;                  
-                    lblmno.InnerText = " " + objsummery.OrderCustomerList[0].cph;
-                }
-            }
-        }
-        catch (Exception ee)
-        {
+    //        string data = clsCommon.GET(aa);
+    //        if (!String.IsNullOrEmpty(data))
+    //        {
+    //            ClsOrderModels.OrderSummery objsummery = JsonConvert.DeserializeObject<ClsOrderModels.OrderSummery>(data);
+    //            if (objsummery.Response.Equals("1"))
+    //            {
+    //                lblfname.InnerText = objsummery.OrderCustomerList[0].Cfname + " " + objsummery.OrderCustomerList[0].Clname;
+    //                if (string.IsNullOrEmpty(objsummery.OrderCustomerList[0].BuildingNo) && string.IsNullOrEmpty(objsummery.OrderCustomerList[0].BuildingName) && string.IsNullOrEmpty(objsummery.OrderCustomerList[0].AreaName))
+    //                {
+    //                    add1.InnerText = objsummery.OrderCustomerList[0].addr;
+    //                }
+    //                else
+    //                {
+    //                    add1.InnerText = objsummery.OrderCustomerList[0].BuildingNo + "," + objsummery.OrderCustomerList[0].BuildingName + "," + objsummery.OrderCustomerList[0].AreaName + "," + objsummery.OrderCustomerList[0].Landmark;
+    //                }
+    //                //add1.InnerText = objsummery.OrderCustomerList[0].addr;
+    //                add2.InnerText = objsummery.OrderCustomerList[0].Cityname + " ," + objsummery.OrderCustomerList[0].statename;
+    //                add3.InnerText = objsummery.OrderCustomerList[0].Countryname;                  
+    //                lblmno.InnerText = " " + objsummery.OrderCustomerList[0].cph;
+    //            }
+    //            else
+    //            {
+    //                spnAddrbtn.InnerHtml = "Select Address";
+    //            }
+    //        }
+    //    }
+    //    catch (Exception ee)
+    //    {
 
-            ltrerr.Text = ee.StackTrace;
-        }
-    }
+    //        ltrerr.Text = ee.StackTrace;
+    //    }
+    //}
 
     public void GetProductDetails(string Custid, string addressid, string buyflag, string buyqty)
     {
@@ -144,7 +167,8 @@ public partial class OrderSummery : System.Web.UI.Page
                     string prodname = "";
                     string Weight = "";
 
-                    var MrpTotal = item.PaidAmount * Convert.ToDecimal(item.Quantity);
+                    var SoshoTotal = item.PaidAmount * Convert.ToDecimal(item.Quantity);
+                    var MrpTotal = item.Mrp * Convert.ToDecimal(item.Quantity);
                     string Unit = item.Unit;
                     string UnitId = item.UnitId;
                     string imgquery="", querydata="";
@@ -217,29 +241,65 @@ public partial class OrderSummery : System.Web.UI.Page
                     html += "<div class=\"single-product right\"><div class=\"product-name-order\" id=\"lblpname\"><p>"+prodname+"</p></div>";
                     //html += "<div class=\"price\"><div class=\"gram\">Price / Qty :<p id=\"lblproprice\"> " + item.PaidAmount + "</p> <span id=\"lbldisplayunit\"> Weight:"+ Weight +"</span></div>";
                     html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lbldisplayunit\"> Weight:" + Weight + "</span></div>";
-                    html += "<div class=\"final-amt\"><p id=\"lbltotprices\">" + MrpTotal + ".00 </p></div></div>";
-                    html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lblproprice\"> <span>Price / Qty : " + item.PaidAmount + "</span></div></div>";
+                    html += "<div class=\"final-amt\"><p id=\"lbltotprices\">" + SoshoTotal + ".00 </p></div></div>";
+                    html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lblproprice\"> <span>Price / Qty : " + item.PaidAmount + "</span> <span id=\"lblmrp\" style=\"display:none;\">"+item.Mrp+"</span></div></div>";
                     if (IsQtyFreeze)
                     {
-                        html += "<div class=\"product-qty\"><div class=\"inline\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\" disabled><i class=\"fa fa-minus\"></i></button>";
+                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\" disabled><i class=\"fa fa-minus\"></i></button>";
                         html += "<div class=\"qty\" style=\"display: grid;\"><input readonly=true type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div></div>";
-                        html += "<div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div>";
+
+                        if (!item.isProductAvailable)
+                        {
+                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Not Serviceble</lable></div>";
+                        }else if (item.isOfferExpired){
+                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Offer Expired</lable></div>";
+                        }
+                        else if (item.isOutOfStock)
+                        {
+                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
+                        }
+
+                        html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
                     }
                     else
                     {
-                        html += "<div class=\"product-qty\"><div class=\"inline\"><button type=\"button\" class=\"minus\" style=\"color:white;background-color:#1DA1F2\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\"><i class=\"fa fa-minus\"></i></button>";
+                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" class=\"minus\" style=\"color:white;background-color:#1DA1F2\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\"><i class=\"fa fa-minus\"></i></button>";
                         html += "<div class=\"qty\" style=\"display: grid;\"><input type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\"><i class=\"fa fa-plus\"></i></button></div></div>";
-                        html += "<div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\"><i class=\"fa fa-plus\"></i></button></div>";
+
+                        if (!item.isProductAvailable)
+                        {
+                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Not Serviceble</lable></div>";
+                        }
+                        else if (item.isOfferExpired)
+                        {
+                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Offer Expired</lable></div>";
+                        }
+                        else if (item.isOutOfStock)
+                        {
+                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
+                        }
+
+                        html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
                     }
+                    if (item.isOfferExpired || !item.isProductAvailable || item.isOutOfStock)
+                    {
+                        productstatus.Value = "true";
+                    }
+
+
                     prodcontent.InnerHtml = html;
                     totwtshipping.InnerText = orderModel.totalAmount;
+                    totmrp.InnerText = orderModel.orderMRP;
+                    spntotDiscount.InnerText = (Convert.ToDecimal(orderModel.orderMRP) - Convert.ToDecimal(orderModel.totalAmount)).ToString();
                     lbltotpayamt.InnerText = orderModel.totalAmount;
                 }
-                
+                string Customerid = clsCommon.getCurrentCustomer().id;
+                getreedemamt(Customerid, orderModel.totalAmount);
+
             }
 
             
@@ -359,13 +419,13 @@ public partial class OrderSummery : System.Web.UI.Page
         }
     }
 
-    public void getreedemamt(string Custid, string payableamt, string reedemamt)
+    public void getreedemamt(string Custid, string OrderAmount = "")
     {
         try
         {
             dbConnection dbc = new dbConnection();
             //string aa = clsCommon.strApiUrl + "/api/RedeemWallet/RedeemWallet?CustomerId=" + Custid + "&OrderTotal=" + payableamt + "&Redemeamount=" + reedemamt + "";
-            string aa = clsCommon.strApiUrl + "api/Wallet/GetCustomerOfferDetail?CustomerId=" + Custid;
+            string aa = clsCommon.strApiUrl + "api/Wallet/GetCustomerOfferDetail?CustomerId=" + Custid + "&OrderAmount=" + OrderAmount;
             string redeem = clsCommon.GET(aa);
             string html = string.Empty;
             if (!String.IsNullOrEmpty(redeem))
@@ -380,6 +440,10 @@ public partial class OrderSummery : System.Web.UI.Page
                 if (objreed.response.Equals("1"))
                 {
                     reeamt.InnerHtml = objreed.RedeemeAmount.ToString();
+                    punchamt.Value = objreed.RedeemableAmount;
+                    lblshowmsgwallet.InnerHtml = objreed.RedeemDetails;
+                    minOrderAmount.Value = objreed.MinimumOrderAmount;
+                    reedemableAmount.Value = objreed.RedeemableAmount;
                     if (objreed.PromoCodeList != null && objreed.PromoCodeList.Count > 0)
                     {
                         foreach (var item in objreed.PromoCodeList)
@@ -750,202 +814,220 @@ public partial class OrderSummery : System.Web.UI.Page
 
     }
     [System.Web.Services.WebMethod]
-    public static object CODPlaceMultipleOrder(List<ClsOrderModels.OrderSummeryModel> summeryModel,string totalamount,string redeemamount, string PromoAmount)
+    public static object CODPlaceMultipleOrder(List<ClsOrderModels.OrderSummeryModel> summeryModel,string totalamount,string redeemamount, string PromoAmount, string Discount, string PaidAmt, string PromoCode,string reorderid = "0")
     {
         try
         {
+            HttpContext.Current.Session["summeryModel"] = summeryModel;
+            HttpContext.Current.Session["totalamount"] = totalamount;
+            HttpContext.Current.Session["redeemamount"] = redeemamount;
+            HttpContext.Current.Session["PromoAmount"] = PromoAmount;
+            HttpContext.Current.Session["Discount"] = Discount;
+            HttpContext.Current.Session["PaidAmt"] = PaidAmt;
+            HttpContext.Current.Session["PromoCode"] = PromoCode;
+            HttpContext.Current.Session["reorderid"] = reorderid;
+
+            return "Success";
             //ClsOrderModels.PlaceMultipleOrderModel OrderDetail;
-            ClsOrderModels.PlaceMultipleOrderNewModel OrderDetail;
-            WalletModel.RedeemeWalletFromOrder walletHistory;
-            WalletModel.RedeemePromoCodeFromOrder PromoHistory;
-            if ((HttpContext.Current.Session["ConfirmOrder"] != null))
-            {
-                //OrderDetail = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
-                OrderDetail = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
+            //ClsOrderModels.PlaceMultipleOrderNewModel OrderDetail;
+            //WalletModel.RedeemeWalletFromOrder walletHistory;
+            //WalletModel.RedeemePromoCodeFromOrder PromoHistory;
+            //if ((HttpContext.Current.Session["ConfirmOrder"] != null))
+            //{
+            //    //OrderDetail = (ClsOrderModels.PlaceMultipleOrderModel)HttpContext.Current.Session["ConfirmOrder"];
+            //    OrderDetail = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
 
-            }
-            else
-            {
-                //OrderDetail = new ClsOrderModels.PlaceMultipleOrderModel();
-                OrderDetail = new ClsOrderModels.PlaceMultipleOrderNewModel();
-            }
+            //}
+            //else
+            //{
+            //    //OrderDetail = new ClsOrderModels.PlaceMultipleOrderModel();
+            //    OrderDetail = new ClsOrderModels.PlaceMultipleOrderNewModel();
+            //}
 
-            if ((HttpContext.Current.Session["WalletHistory"] != null))
-            {
-                walletHistory = (WalletModel.RedeemeWalletFromOrder)HttpContext.Current.Session["WalletHistory"];
+            //if ((HttpContext.Current.Session["WalletHistory"] != null))
+            //{
+            //    walletHistory = (WalletModel.RedeemeWalletFromOrder)HttpContext.Current.Session["WalletHistory"];
 
-            }
-            else
-            {
-                walletHistory = new WalletModel.RedeemeWalletFromOrder();
-            }
+            //}
+            //else
+            //{
+            //    walletHistory = new WalletModel.RedeemeWalletFromOrder();
+            //}
 
-            if ((HttpContext.Current.Session["PromoHistory"] != null))
-            {
-                PromoHistory = (WalletModel.RedeemePromoCodeFromOrder)HttpContext.Current.Session["PromoHistory"];
+            //if ((HttpContext.Current.Session["PromoHistory"] != null))
+            //{
+            //    PromoHistory = (WalletModel.RedeemePromoCodeFromOrder)HttpContext.Current.Session["PromoHistory"];
 
-            }
-            else
-            {
-                PromoHistory = new WalletModel.RedeemePromoCodeFromOrder();
-            }
+            //}
+            //else
+            //{
+            //    PromoHistory = new WalletModel.RedeemePromoCodeFromOrder();
+            //}
 
-            OrderDetail.WalletId = walletHistory.WalletId;
-            OrderDetail.WalletLinkId = walletHistory.WalletLinkId;
-            OrderDetail.WalletType = walletHistory.WalletType;
-            OrderDetail.Walletbalance = walletHistory.balance;
-            OrderDetail.WalletCrAmount = walletHistory.CrAmount;
-            OrderDetail.WalletCrDate = walletHistory.CrDate;
-            OrderDetail.WalletCrDescription = walletHistory.CrDescription;
+            //OrderDetail.WalletId = walletHistory.WalletId;
+            //OrderDetail.WalletLinkId = walletHistory.WalletLinkId;
+            //OrderDetail.WalletType = walletHistory.WalletType;
+            //OrderDetail.Walletbalance = walletHistory.balance;
+            //OrderDetail.WalletCrAmount = walletHistory.CrAmount;
+            //OrderDetail.WalletCrDate = walletHistory.CrDate;
+            //OrderDetail.WalletCrDescription = walletHistory.CrDescription;
 
-            OrderDetail.PromoCodeamount = PromoAmount;
-            OrderDetail.PromoCodebalance = PromoHistory.PromoCodebalance;
-            OrderDetail.PromoCodeCrAmount = PromoHistory.PromoCodeCrAmount;
-            OrderDetail.PromoCodeCrDate = PromoHistory.PromoCodeCrDate;
-            OrderDetail.PromoCodeCrDescription = PromoHistory.PromoCodeCrDescription;
-            OrderDetail.PromoCodeId = PromoHistory.PromoCodeId;
-            OrderDetail.PromoCodeLinkId = PromoHistory.PromoCodeLinkId;
-            OrderDetail.PromoCodetype = PromoHistory.PromoCodetype;
+            ////OrderDetail.PromoCodeamount = PromoAmount;
+            //OrderDetail.PromoCodebalance = PromoHistory.PromoCodebalance;
+            //OrderDetail.PromoCodeCrAmount = PromoHistory.PromoCodeCrAmount;
+            //OrderDetail.PromoCodeCrDate = PromoHistory.PromoCodeCrDate;
+            //OrderDetail.PromoCodeCrDescription = PromoHistory.PromoCodeCrDescription;
+            //OrderDetail.PromoCodeId = PromoHistory.PromoCodeId;
+            //OrderDetail.PromoCodeLinkId = PromoHistory.PromoCodeLinkId;
+            //OrderDetail.PromoCodetype = PromoHistory.PromoCodetype;
+
+            //OrderDetail.Cashbackamount = string.IsNullOrEmpty(PromoAmount) ? 0 : Convert.ToDecimal(PromoAmount);
+            //OrderDetail.discountamount = Discount;
+            //OrderDetail.PaidAmount = Convert.ToDecimal(PaidAmt);
+            //OrderDetail.PromoCode = PromoCode;
+            //OrderDetail.ReOrderId = reorderid;
 
 
 
 
-            decimal payableamt = 0;
-            decimal.TryParse(OrderDetail.products[0].PaidAmount.ToString(), out payableamt);
-            if (payableamt > 0)
-            {
-            NewCode:
+            //decimal payableamt = 0;
+            //decimal.TryParse(OrderDetail.products[0].PaidAmount.ToString(), out payableamt);
+            //if (payableamt > 0)
+            //{
+            //NewCode:
 
-                string CCCode = "";
-                string refercode = "";
-                string addressid = "";
+            //    string CCCode = "";
+            //    string refercode = "";
+            //    string addressid = "";
                 
-                if ((HttpContext.Current.Session["ReferCode"] != null) && (HttpContext.Current.Session["ReferCode"].ToString() != ""))
-                {
-                    refercode = HttpContext.Current.Session["ReferCode"].ToString();
-                }
+            //    if ((HttpContext.Current.Session["ReferCode"] != null) && (HttpContext.Current.Session["ReferCode"].ToString() != ""))
+            //    {
+            //        refercode = HttpContext.Current.Session["ReferCode"].ToString();
+            //    }
 
 
-                if ((HttpContext.Current.Session["JurisdictionId"] != null) && (HttpContext.Current.Session["JurisdictionId"].ToString() != ""))
-                {
-                    OrderDetail.JurisdictionID = HttpContext.Current.Session["JurisdictionId"].ToString();
-                }
+            //    if ((HttpContext.Current.Session["JurisdictionId"] != null) && (HttpContext.Current.Session["JurisdictionId"].ToString() != ""))
+            //    {
+            //        OrderDetail.JurisdictionID = HttpContext.Current.Session["JurisdictionId"].ToString();
+            //    }
 
 
-                if (refercode == "")
-                {
-                    string coddd = clsCommon.GenerateRandomNumber().ToString();
-                    int test = getcheck(coddd);
+            //    if (refercode == "")
+            //    {
+            //        string coddd = clsCommon.GenerateRandomNumber().ToString();
+            //        int test = getcheck(coddd);
 
-                    if (test == 0)
-                    {
-                        goto NewCode;
-                    }
+            //        if (test == 0)
+            //        {
+            //            goto NewCode;
+            //        }
 
-                    CCCode = coddd;
-                }
-                else
-                {
-                }
+            //        CCCode = coddd;
+            //    }
+            //    else
+            //    {
+            //    }
 
-                if ((HttpContext.Current.Session["Addressid"] != null))
-                {
-                    addressid = HttpContext.Current.Session["Addressid"].ToString();
-                    addressid = clsCommon.Base64Decode(addressid);
-                }
+            //    if ((HttpContext.Current.Session["Addressid"] != null))
+            //    {
+            //        addressid = HttpContext.Current.Session["Addressid"].ToString();
+            //        addressid = clsCommon.Base64Decode(addressid);
+            //    }
 
                
-                OrderDetail.AddressId = addressid;
-                OrderDetail.CustomerId = clsCommon.getCurrentCustomer().id;
-                OrderDetail.Redeemeamount = redeemamount;
+            //    OrderDetail.AddressId = addressid;
+            //    OrderDetail.CustomerId = clsCommon.getCurrentCustomer().id;
+            //    OrderDetail.Redeemeamount = redeemamount;
+            //    OrderDetail.orderMRP = totalamount;
+            //    OrderDetail.totalAmount = totalamount;
 
-                foreach (var item in OrderDetail.products)
-                {
-                    item.couponCode = CCCode;
-                    item.refrcode = refercode;
-                }
-                if (summeryModel.Count > 0 && summeryModel != null)
-                {
-                    int totalqty = 0;
-                    //List<ClsOrderModels.OrderQuantityModel> orderQuantities = new List<ClsOrderModels.OrderQuantityModel>();
-                    OrderDetail.orderMRP = totalamount;
-                    OrderDetail.totalAmount = totalamount;
-                    foreach (var item in summeryModel)
-                    {
-                        foreach (var product in OrderDetail.products)
-                        {
-                            if(item.Productid == product.productid)
-                            {
-                                product.Quantity = item.Qty.ToString();
-                            }
+            //    foreach (var item in OrderDetail.products)
+            //    {
+            //        item.couponCode = CCCode;
+            //        item.refrcode = refercode;
+            //    }
+            //    if (summeryModel.Count > 0 && summeryModel != null)
+            //    {
+            //        int totalqty = 0;
+            //        //List<ClsOrderModels.OrderQuantityModel> orderQuantities = new List<ClsOrderModels.OrderQuantityModel>();
+            //        //OrderDetail.orderMRP = totalamount;
+            //        //OrderDetail.totalAmount = totalamount;
+            //        foreach (var item in summeryModel)
+            //        {
+            //            foreach (var product in OrderDetail.products)
+            //            {
+            //                if(item.Productid == product.productid)
+            //                {
+            //                    product.Quantity = item.Qty.ToString();
+            //                }
                             
-                        }
+            //            }
                         
-                    }
-                    for (int i = 0; i < OrderDetail.products.Count; i++)
-                    {
-                        totalqty += Convert.ToInt32(OrderDetail.products[i].Quantity);
-                    }
-                    OrderDetail.totalQty = totalqty.ToString();
-                }
-                WebClient client = new WebClient();
-                client.Encoding = Encoding.UTF8;
-                client.Headers["Content-type"] = "application/json";
-                client.Headers["DeviceType"] = "Web";
+            //        }
+            //        for (int i = 0; i < OrderDetail.products.Count; i++)
+            //        {
+            //            totalqty += Convert.ToInt32(OrderDetail.products[i].Quantity);
+            //        }
+            //        OrderDetail.totalQty = totalqty.ToString();
+            //    }
+            //    WebClient client = new WebClient();
+            //    client.Encoding = Encoding.UTF8;
+            //    client.Headers["Content-type"] = "application/json";
+            //    client.Headers["DeviceType"] = "Web";
 
-                var model = JsonConvert.SerializeObject(OrderDetail);
-                //var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrder", model);
-                var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrderNew", model);
-                //string creaturl = clsCommon.strApiUrl + "/api/CODOrder/CODPlaceOrder?CustomerId=" + CustId + "&PaidAmount=" + PayAmt + "&AddressId=" + addr + "&Quantity=" + qty + "&buywith=" + buyflag + "&discountamount=" + disc + "&Redeemeamount=" + redm + "&couponCode=" + (String.IsNullOrWhiteSpace(CCCode) ? "0" : CCCode) + "&refrcode=" + (String.IsNullOrWhiteSpace(rcode) ? "0" : rcode) + "";
+            //    var model = JsonConvert.SerializeObject(OrderDetail);
+            //    //var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrder", model);
+            //    var data = client.UploadString(clsCommon.strApiUrl + "/api/CODOrder/CODPlaceMultipleOrderNew", model);
+            //    //string creaturl = clsCommon.strApiUrl + "/api/CODOrder/CODPlaceOrder?CustomerId=" + CustId + "&PaidAmount=" + PayAmt + "&AddressId=" + addr + "&Quantity=" + qty + "&buywith=" + buyflag + "&discountamount=" + disc + "&Redeemeamount=" + redm + "&couponCode=" + (String.IsNullOrWhiteSpace(CCCode) ? "0" : CCCode) + "&refrcode=" + (String.IsNullOrWhiteSpace(rcode) ? "0" : rcode) + "";
 
-                //string creaturl = clsCommon.strApiUrl + "/api/CODOrder/CODPlaceOrder?CustomerId=" + CustId + "&PaidAmount=" + PayAmt + "&AddressId=" + addr + "&Quantity=" + qty + "&buywith=" + buyflag + "&discountamount=" + disc + "&Redeemeamount=" + redm + "&couponCode=" + (String.IsNullOrWhiteSpace(CCCode) ? "0" : CCCode) + "&refrcode=" + rcode + "";
+            //    //string creaturl = clsCommon.strApiUrl + "/api/CODOrder/CODPlaceOrder?CustomerId=" + CustId + "&PaidAmount=" + PayAmt + "&AddressId=" + addr + "&Quantity=" + qty + "&buywith=" + buyflag + "&discountamount=" + disc + "&Redeemeamount=" + redm + "&couponCode=" + (String.IsNullOrWhiteSpace(CCCode) ? "0" : CCCode) + "&refrcode=" + rcode + "";
 
-                //string res = clsCommon.GET(creaturl);
+            //    //string res = clsCommon.GET(creaturl);
 
-                if (!string.IsNullOrWhiteSpace(data))
-                {
-                    ClsOrderModels.PlaceOrderModel objplaceorder = JsonConvert.DeserializeObject<ClsOrderModels.PlaceOrderModel>(data);
-                    //ClsOrderModels.PlaceMultipleOrderNewModel objplaceorder = JsonConvert.DeserializeObject<ClsOrderModels.PlaceMultipleOrderNewModel>(data);
-                    if (objplaceorder.resultflag == "1")
-                    {
+            //    if (!string.IsNullOrWhiteSpace(data))
+            //    {
+            //        ClsOrderModels.PlaceOrderModel objplaceorder = JsonConvert.DeserializeObject<ClsOrderModels.PlaceOrderModel>(data);
+            //        //ClsOrderModels.PlaceMultipleOrderNewModel objplaceorder = JsonConvert.DeserializeObject<ClsOrderModels.PlaceMultipleOrderNewModel>(data);
+            //        if (objplaceorder.resultflag == "1")
+            //        {
 
-                        string Oid = objplaceorder.OrderId;
-                        string value = clsCommon.Base64Encode(Oid);
-                        string couponcode = objplaceorder.Ccode;
-
-
-                        if (!string.IsNullOrWhiteSpace(Oid))
-                        {
-                            HttpContext.Current.Session["PlaceOrderId"] = value;
-                            HttpContext.Current.Session["CouponCode"] = couponcode;
+            //            string Oid = objplaceorder.OrderId;
+            //            string value = clsCommon.Base64Encode(Oid);
+            //            string couponcode = objplaceorder.Ccode;
 
 
+            //            if (!string.IsNullOrWhiteSpace(Oid))
+            //            {
+            //                HttpContext.Current.Session["PlaceOrderId"] = value;
+            //                HttpContext.Current.Session["CouponCode"] = couponcode;
 
 
 
-                            return data;
 
-                        }
-                        else
-                        {
-                            return "";
-                        }
-                    }
-                    else
-                    {
-                        return "";
-                    }
 
-                }
-                else
-                {
-                    return "";
-                }
-            }
-            else
-            {
-                return "";
-            }
+            //                return data;
+
+            //            }
+            //            else
+            //            {
+            //                return "";
+            //            }
+            //        }
+            //        else
+            //        {
+            //            return "";
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        return "";
+            //    }
+            //}
+            //else
+            //{
+            //    return "";
+            //}
 
         }
         catch (Exception ee)
@@ -978,8 +1060,17 @@ public partial class OrderSummery : System.Web.UI.Page
                 orderModel.products.Remove(product);
 
                 HttpContext.Current.Session["ConfirmOrder"] = orderModel;
+                string p = "false";
+                foreach (var item in orderModel.products)
+                {
+                    if(item.isOfferExpired || item.isOutOfStock || !item.isProductAvailable)
+                    {
+                        p = "true";
+                    } 
+                }
 
-                return "Success";
+
+                return "Success,"+ p;
             }
             else
             {
@@ -991,6 +1082,132 @@ public partial class OrderSummery : System.Web.UI.Page
         else
         {
             return "Fail";
+        }
+    }
+    public void GetProductDetailsForReorder(string orderid)
+    {
+        string JurisdictionId = string.Empty;
+        if ((HttpContext.Current.Session["JurisdictionId"] != null))
+        {
+            JurisdictionId = Session["JurisdictionId"].ToString();
+        }
+        string CustomerId = clsCommon.getCurrentCustomer().id;
+
+        string apiString = clsCommon.strApiUrl + "api/CODOrder/GetProductListFromReOrder?orderid=" + orderid + "&JurisdictionId=" + JurisdictionId + "&CustomerId=" + CustomerId;
+        string data = clsCommon.GET(apiString);
+
+        if (!String.IsNullOrEmpty(data))
+        {
+            ClsOrderModels.ReOrderProductList objorder = JsonConvert.DeserializeObject<ClsOrderModels.ReOrderProductList>(data);
+            string value = clsCommon.Base64Encode(objorder.AddressId);
+            //HttpContext.Current.Session["Addressid"] = value;
+            //getaddr(CustomerId, objorder.AddressId);
+            ClsOrderModels.PlaceMultipleOrderNewModel orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
+            List<ClsOrderModels.ProductListNew> products = new List<ClsOrderModels.ProductListNew>();
+            List<ClsOrderModels.ConfirmOrderNewModel> model = new List<ClsOrderModels.ConfirmOrderNewModel>();
+            foreach (var item in objorder.ProductList)
+            {
+                int BannerProductType = Convert.ToInt32(item.ItemType);
+                int BannerId = string.IsNullOrEmpty(item.bannerId) ? 0 : Convert.ToInt32(item.bannerId);
+                string Productid = item.ProductId;
+                int Qty = item.Quantity;
+                string ProductVariant = item.ItemType == "1" ? string.Empty : "BannerProduct";
+                bool isOfferExpired = item.isOfferExpired;
+                bool isProductAvailable = item.isProductAvailable;
+
+                int mrp = 0;int soshoprice = 0;
+                string grpid = string.Empty, Unit = string.Empty, Unitid = string.Empty;
+                bool isOutOfStock = false;
+
+               
+
+                foreach (var attributes in item.ProductAttributesList)
+                {
+                    mrp = Convert.ToInt32(attributes.Mrp);
+                    soshoprice = Convert.ToInt32(attributes.soshoPrice);
+                    grpid = attributes.AttributeId;
+                    Unit = attributes.weight.Split('-')[0];
+                    Unitid = attributes.weight.Split('-')[1];
+                    isOutOfStock = attributes.isOutOfStock;
+                }
+
+                model.Add(new ClsOrderModels.ConfirmOrderNewModel
+                {
+                    BannerProductType = BannerProductType,
+                    BannerId = BannerId,
+                    Productid = Productid,
+                    Grpid = grpid,
+                    Mrp = mrp,
+                    SoshoPrice = soshoprice,
+                    Qty = Qty,
+                    Unit = Unit,
+                    UnitId = Unitid,
+                    Productvariant = ProductVariant,
+                    isOfferExpired = isOfferExpired,
+                    isProductAvailable = isProductAvailable,
+                    isOutOfStock = isOutOfStock
+
+                });
+
+
+            }
+
+            foreach (var item in model)
+            {
+                item.MrpTotal = item.Mrp * item.Qty;
+                item.SoshoTotal = item.SoshoPrice * item.Qty;
+                products.Add(new ClsOrderModels.ProductListNew
+                {
+                    productid = item.Productid,
+                    PaidAmount = item.SoshoPrice,
+                    Quantity = item.Qty.ToString(),
+                    UnitId = item.UnitId.ToString(),
+                    Unit = item.Unit.ToString(),
+                    Productvariant = item.Productvariant,
+                    AttributeId = item.Grpid,
+                    //UnitId = "Gram",
+                    //Unit = "500",
+                    couponCode = "0",
+                    refrcode = "0",
+                    BannerId = item.BannerId,
+                    BannerProductType = item.BannerProductType,
+                    Mrp = item.Mrp,
+                    isOfferExpired = item.isOfferExpired,
+                    isOutOfStock = item.isOutOfStock,
+                    isProductAvailable = item.isProductAvailable
+                });
+            }
+
+            orderModel.discountamount = "0";
+            orderModel.Redeemeamount = "0";
+            //orderModel.CustomerId = clsCommon.getCurrentCustomer().id;
+            orderModel.orderMRP = model.Sum(x => x.MrpTotal).ToString();
+            orderModel.totalAmount = model.Sum(x => x.SoshoTotal).ToString();
+            orderModel.totalQty = model.Sum(x => x.Qty).ToString();
+            //orderModel.totalWeight = (model.Sum(x => x.Qty) * model.Sum(x => x.Weight)).ToString();
+            orderModel.totalWeight = "0";
+
+            orderModel.products = products;
+            getreedemamt(CustomerId, orderModel.totalAmount);
+            HttpContext.Current.Session["ConfirmOrder"] = orderModel;
+        }
+
+    }
+    [System.Web.Services.WebMethod]
+    public static object GetReedemableAmount(string OrderAmount = "")
+    {
+        string customerid = clsCommon.getCurrentCustomer().id;
+        string aa = clsCommon.strApiUrl + "api/Wallet/GetCustomerOfferDetail?CustomerId=" + customerid + "&OrderAmount=" + OrderAmount;
+        string redeem = clsCommon.GET(aa);
+        if (!String.IsNullOrEmpty(redeem))
+        {
+            WalletModel.RedeemeWallet objreed = JsonConvert.DeserializeObject<WalletModel.RedeemeWallet>(redeem);
+            return objreed;
+
+        }
+        else
+        {
+            return "";
         }
     }
 }

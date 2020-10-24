@@ -25,7 +25,7 @@ public partial class PersonalInfo : System.Web.UI.Page
                 editsection.Visible = true;
                 Customerid = clsCommon.getCurrentCustomer().id;
 
-                string qry = "select top 1 FirstName,LastName,(select CityName from CityMaster where Id= CityId) as CityName,(select StateName from StateMaster where Id= StateId) as stateName,Email,MobileNo from CustomerAddress where CustomerId=" + Customerid +"order by Id asc";
+                string qry = "select top 1 FirstName,LastName,(select CityName from CityMaster where Id= CityId) as CityName,(select StateName from StateMaster where Id= StateId) as stateName,Email,Mobile from Customer where Id=" + Customerid +"order by Id asc";
                 DataTable dtcust = dbc.GetDataTable(qry);
 
                 if(dtcust.Rows.Count>0 && dtcust != null)
@@ -34,7 +34,7 @@ public partial class PersonalInfo : System.Web.UI.Page
                     city.InnerText = dtcust.Rows[0]["CityName"].ToString();
                     state.InnerText = dtcust.Rows[0]["stateName"].ToString();
                     email11.InnerText = dtcust.Rows[0]["Email"].ToString();
-                    mobile.InnerText = dtcust.Rows[0]["MobileNo"].ToString();                   
+                    mobile.InnerText = dtcust.Rows[0]["Mobile"].ToString();                   
                 }
 
             }
@@ -72,7 +72,7 @@ public partial class PersonalInfo : System.Web.UI.Page
         }
 
 
-        string qry = "select top 1 FirstName,LastName,CityId,StateId,Email,MobileNo from CustomerAddress where CustomerId=" + Customerid + "order by Id asc";
+        string qry = "select top 1 FirstName,LastName,CityId,StateId,Email,Mobile from Customer where Id=" + Customerid + "order by Id asc";
         DataTable dtedit = dbc.GetDataTable(qry);
 
         if (dtedit.Rows.Count > 0 && dtedit != null)
@@ -89,7 +89,7 @@ public partial class PersonalInfo : System.Web.UI.Page
             //ddlcity.SelectedItem.ToString() = dtedit.Rows[0]["CityName"].ToString();
            // txtstate.Text = dtedit.Rows[0]["stateName"].ToString();
             txtemail.Text = dtedit.Rows[0]["Email"].ToString();
-            txtmob.Text = dtedit.Rows[0]["MobileNo"].ToString();
+            txtmob.Text = dtedit.Rows[0]["Mobile"].ToString();
             txtmob.Enabled = false;
 
         }                
@@ -112,7 +112,7 @@ public partial class PersonalInfo : System.Web.UI.Page
         //string cityid = ddlcity.SelectedItem.ToString();
         string stateid = (ddlstate.SelectedValue).ToString();
 
-        String querynew = "UPDATE [dbo].[CustomerAddress] SET [FirstName] = @1 ,[LastName]= @2,[Email] = @3 ,[CityId]=@4 ,[StateId]=@5 WHERE [CustomerId] =  '" + Customerid + "'";
+        String querynew = "UPDATE [dbo].[Customer] SET [FirstName] = @1 ,[LastName]= @2,[Email] = @3 ,[CityId]=@4 ,[StateId]=@5 WHERE [Id] =  '" + Customerid + "'";
         string[] parms_new = { fname, lname, email, cityid, stateid };
         int resvaltrn = dbc.ExecuteQueryWithParams(querynew, parms_new);
 
@@ -122,7 +122,7 @@ public partial class PersonalInfo : System.Web.UI.Page
 
             Customerid = clsCommon.getCurrentCustomer().id;
 
-            string qry = "select top 1 FirstName,LastName,(select CityName from CityMaster where Id= CityId) as CityName,(select StateName from StateMaster where Id= StateId) as stateName,Email,MobileNo from CustomerAddress where CustomerId=" + Customerid + "order by Id asc";
+            string qry = "select top 1 FirstName,LastName,(select CityName from CityMaster where Id= CityId) as CityName,(select StateName from StateMaster where Id= StateId) as stateName,Email,Mobile from Customer where Id=" + Customerid + "order by Id asc";
             DataTable dtcust = dbc.GetDataTable(qry);
 
             if (dtcust.Rows.Count > 0 && dtcust != null)
@@ -131,7 +131,7 @@ public partial class PersonalInfo : System.Web.UI.Page
                 city.InnerText = dtcust.Rows[0]["CityName"].ToString();
                 state.InnerText = dtcust.Rows[0]["stateName"].ToString();
                 email11.InnerText = dtcust.Rows[0]["Email"].ToString();
-                mobile.InnerText = dtcust.Rows[0]["MobileNo"].ToString();
+                mobile.InnerText = dtcust.Rows[0]["Mobile"].ToString();
             }
 
             edittable.Visible = false;

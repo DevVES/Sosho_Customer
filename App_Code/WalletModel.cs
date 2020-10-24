@@ -33,6 +33,9 @@ using System.Web;
         public string response;
         public string message;
         public string RedeemeAmount;
+        public string RedeemableAmount;
+        public string RedeemDetails;
+        public string MinimumOrderAmount;
         public List<PromoCodeDataList> PromoCodeList { get; set; }
         //public List<CashbackDataList> CashbackList { get; set; }
 
@@ -90,6 +93,29 @@ using System.Web;
         public string PromoCodeCrDescription;
         public string PromoCodebalance;
         public string ValidationMessage;
+        public string OfferId;
+        public string OfferName;
+    }
+
+
+    public class getWalletHistory
+    {
+        public string response;
+        public string message;
+        public string WalletBalance;
+        public List<WalletHistoryList> WalletHistoryList { get; set; }
+
+    }
+
+    public class WalletHistoryList
+    {
+
+        public string Date;
+        public string Summary;
+        public string type;
+        public string CrDrAmount;
+        public string Balance;
+
     }
 
 }

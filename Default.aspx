@@ -1344,8 +1344,7 @@
                 }
             });
         }
-        function AddClick(rowindex, prodid, grpid, mrp, el) {
-            debugger
+        function AddClick(rowindex, prodid, grpid, mrp, soshoprice, el,bannerProductType) {
             //$('#AddShow' + rowindex).css('display', '');
             //$('#BtnAdd' + rowindex).css('display', 'none');
 
@@ -1411,10 +1410,13 @@
                 Productid: prodid,
                 Grpid: grpId,
                 Mrp: parseInt(mrp),
+                SoshoPrice: parseInt(soshoprice),
                 Qty: parseInt(qty),
                 Unit: parts[0],
                 UnitId: parts[1],
-                Productvariant: productvariant
+                Productvariant: productvariant,
+                BannerProductType: bannerProductType,
+                BannerId : "0"
 
             }
             products.push(obj);
@@ -1426,7 +1428,7 @@
                 $('#hdnProductCount').val(count);
             }
         }
-        function plusqty(type, prodid, grpid, mrp, el) {
+        function plusqty(type, prodid, grpid, mrp, soshoprice, el,bannerProductType) {
             var grpId = grpid;
             var productvariant = $('#hdnProductVariant' + grpid).val();
             var unitId = $('#ddlUnit' + grpid).val();
@@ -1454,10 +1456,13 @@
                     Productid: prodid,
                     Grpid: grpId,
                     Mrp: parseInt(mrp),
+                    SoshoPrice: parseInt(soshoprice),
                     Qty: value,
                     Unit: parts[0],
                     UnitId: parts[1],
-                    Productvariant: productvariant
+                    Productvariant: productvariant,
+                    BannerProductType: bannerProductType,
+                    BannerId : "0"
 
                 }
                 products.push(obj);
@@ -1488,10 +1493,13 @@
                         Productid: prodid,
                         Grpid: grpId,
                         Mrp: parseInt(mrp),
+                        SoshoPrice: parseInt(soshoprice),
                         Qty: value,
                         Unit: parts[0],
                         UnitId: parts[1],
-                        Productvariant: productvariant
+                        Productvariant: productvariant,
+                        BannerProductType: bannerProductType,
+                        BannerId : "0"
 
                     }
                     products.push(obj);
@@ -1523,7 +1531,7 @@
             }
 
         }
-        function BannerAddClick(rowindex, prodid, mrp, el) {
+        function BannerAddClick(rowindex, prodid, mrp,soshoprice, el,bannerProductType,BannerId) {
             //$('#divBannerAddShow' + rowindex).show();
             //$('#divBannerAdd' + rowindex).hide();
 
@@ -1548,10 +1556,13 @@
                 Productid: prodid,
                 Grpid: grpId,
                 Mrp: parseInt(mrp),
+                SoshoPrice: parseInt(soshoprice),
                 Qty: parseInt(qty),
                 Unit: parts[0],
                 UnitId: parts[1],
-                Productvariant: productvariant
+                Productvariant: productvariant,
+                BannerProductType: bannerProductType,
+                BannerId: BannerId
 
             }
             products.push(obj);
@@ -1612,7 +1623,7 @@
         //}
 
 
-        function Bannerplusqty(type, prodid, grpid, mrp, el) {
+        function Bannerplusqty(type, prodid, grpid, mrp,soshoprice, el,bannerProductType,BannerId) {
             var grpId = grpid;
             var productvariant = "BannerProduct";
             var unitId = $('#hdnddlUnit' + prodid).val();
@@ -1638,10 +1649,13 @@
                     Productid: prodid,
                     Grpid: grpId,
                     Mrp: parseInt(mrp),
+                    SoshoPrice: parseInt(soshoprice),
                     Qty: value,
                     Unit: parts[0],
                     UnitId: parts[1],
-                    Productvariant: productvariant
+                    Productvariant: productvariant,
+                    BannerProductType: bannerProductType,
+                    BannerId: BannerId
 
                 }
                 products.push(obj);
@@ -1670,10 +1684,13 @@
                         Productid: prodid,
                         Grpid: grpId,
                         Mrp: parseInt(mrp),
+                        SoshoPrice: parseInt(soshoprice),
                         Qty: value,
                         Unit: parts[0],
                         UnitId: parts[1],
-                        Productvariant: productvariant
+                        Productvariant: productvariant,
+                        BannerProductType: bannerProductType,
+                        BannerId: BannerId
 
                     }
                     products.push(obj);
@@ -1901,11 +1918,12 @@
                     var querystring = window.location.search;
                     $("#divMainloader").attr("display", "none");
                     $("#cnfrm").attr("disabled", false);
-                    if (querystring != "") {
-                        window.location = "checkout.aspx/" + querystring;
-                    } else {
-                        window.location = "checkout.aspx";
-                    }
+                    //if (querystring != "") {
+                    //    window.location = "checkout.aspx/" + querystring;
+                    //} else {
+                    //    window.location = "checkout.aspx";
+                    //}
+                    window.location = "OrderSummery.aspx";
 
                 },
                 failure: function (response) {
@@ -1920,7 +1938,6 @@
             Categoryimage(categoryId, el, type);
         }
         function Categoryimage(categoryId, el, type) {
-            debugger
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $('.CategoryText').css({ 'color': '#1A1A1A' });
             $('.CategoryImagecenter').css({ 'border': 'none' });
@@ -2128,8 +2145,6 @@
             FilterCategoryimage(prodid, catid, subcatid, el, '');
         }
         function FilterCategoryimage(prodid, categoryId, subcatid, el, type) {
-            debugger
-             
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $('.CategoryText').css({ 'color': '#1A1A1A' });
             $('.CategoryImagecenter').css({ 'border': 'none' });
@@ -2540,11 +2555,24 @@
                 //$(this).parent().removeClass("boldPackSize");
                 var check = $(this);
                 //$(this).css({ 'backgroundColor': '#F00', 'color': '#FFF' });    // Change its style.
-                $(this).css({ 'backgroundColor': '#1DA1F2' });
+                $(this).css({ 'backgroundColor': '#c3e3f7' });
                 var AttrId = $(this).attr("id");
                 var AttrIndex = $(this).attr("id").replace('dvPackSizeModal', '');
                 var AttrProductId = $(this).find("#hdnPackSizeProductId" + AttrIndex).text();
                 var AttrGrpId = $(this).find("#hdnPackSizeGrpId" + AttrIndex).text();
+
+                if (AllProducts.length > 0) {
+                    var FilterProduct = AllProducts.find(x => x.ProductId == AttrProductId && x.ItemType == "1");
+                    if (FilterProduct != null && FilterProduct != undefined) {
+                        for (var i = 0; i < FilterProduct.ProductAttributesList.length; i++) {
+                            FilterProduct.ProductAttributesList[i].isSelected = 'false';
+                        }
+                        var FilterAttrProduct = FilterProduct.ProductAttributesList.find(x => x.AttributeId == AttrGrpId);
+                        if (FilterAttrProduct != null && FilterAttrProduct != undefined) {
+                            FilterAttrProduct.isSelected = 'true';
+                        }
+                    }
+                }
 
                 //Hide Modeal Popup
                 $('#modalProductPackingSize').modal('hide');
@@ -2555,6 +2583,8 @@
                 //Show Grp Product
                 $('.trGrp' + AttrGrpId).css('display', '');
             });
+
+      
 
             //   $("#divPackSize").click(function(evt){
             //alert($(this).attr("id"));
@@ -2713,12 +2743,12 @@
                 //$('#divPackSize').text('');
                 //$('#PackingProdName').text($('#hdnPName' + rowindex).val());
                 //$('#spanWeight').text(ddlValue);
-
+                var $this = $(el);
                 var ddlValue = $('#ddlUnit' + grpid).val();
                 $('#divPackSize').text('');
                 $('#PackingProdName').text($('#hdnPName' + grpid).val());
                 $('#spanWeight').text(ddlValue);
-
+                //$this.children().slideUp("fast");
                 if (AllProducts.length > 0) {
                     //var FilterProduct = AllProducts[0].find(x => x.ProductId == prodid);
                     var FilterProduct = AllProducts.find(x => x.ProductId == prodid && x.ItemType == "1");
@@ -2732,7 +2762,7 @@
                             var sisSelected = FilterProduct.ProductAttributesList[i].isSelected;
                             var grpid = FilterProduct.ProductAttributesList[i].AttributeId;
                             if (sisSelected == 'true') {
-                                divsize += '<div style="border-radius: 22px; border: solid;background-Color:#1DA1F2;" id="dvPackSizeModal' + i + '">';
+                                divsize += '<div style="border-radius: 22px; border: solid;background-Color:#c3e3f7;" id="dvPackSizeModal' + i + '">';
                             }
                             else {
                                 divsize += '<div style="border-radius: 22px; border: solid;" id="dvPackSizeModal' + i + '">';
@@ -2746,7 +2776,9 @@
                             divsize += '</td>';
                             divsize += '<td><span id="spanSoshoPrice">' + Sosho + '</span></td>';
                             divsize += '<td style="color: red; font-weight: bold;"><span id="spanDiscountOffer">' + sDiscount + '</span></td>';
-                            divsize += '<td>Best Buy</td>';
+                            if (FilterProduct.ProductAttributesList[i].isBestBuy == "true") {
+                                divsize += '<td>Best Buy</td>';
+                            }
                             divsize += '<td>';
                             if (sisSelected == 'true') {
                                 divsize += '<i class="fa fa-check fa-2x" aria-hidden="true"></i>';
@@ -2871,7 +2903,6 @@
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
-                                    debugger;
                                     if (response.d.productcount != "") {
                                         $('#hdnProductEndNo').val(parseInt(ProductStartNo + parseInt(response.d.productdata.BannerPosition)));
                                         $('#hdnproductcallcount').val(response.d.productcount);
