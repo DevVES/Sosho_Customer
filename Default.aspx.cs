@@ -549,7 +549,7 @@ public partial class Default : System.Web.UI.Page
                     sWhatsAppNo = objproduct.WhatsAppNo;
                     string sDiscount = "", sProductVariant = "", sMrp = "", sSoshoPrice = "", sWeight = "", sIsProductDescription = "", sAImageName = "";
                     decimal dMrp = 0, dSoshoPrice = 0, dSavePrice = 0;
-                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "";
+                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "", sIsOutofStock = "";
                     string sisSelected = "", sProductName = "", sProductDesc = "", sProductKeyFeatures = "";
                     int iIndex = 0;
                     string  sBannerActionId = "", sOpenUrlLink = "", sBannerCategoryId = "", sCategoryName = "";
@@ -749,6 +749,8 @@ public partial class Default : System.Web.UI.Page
                                     sAImageName = objproduct.ProductList[j].ProductAttributesList[h].AImageName;
                                     sisSelected = objproduct.ProductList[j].ProductAttributesList[h].isSelected;
                                     sIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[h].isQtyFreeze;
+                                    sIsOutofStock = objproduct.ProductList[j].ProductAttributesList[h].isOutOfStock;
+
 
 
                                     if (!string.IsNullOrEmpty(sMrp))
@@ -866,7 +868,15 @@ public partial class Default : System.Web.UI.Page
                                     html += "<tr id='BtnAdd" + sGrpId + "'>";
                                     //html += "<td style='padding-top:15px;padding-left:27px;'>";
                                     html += "<td style='padding-top:6px;padding-left:10px;' colspan='3'>";
-                                    html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'>ADD</button>";
+                                    if (Convert.ToBoolean(sIsOutofStock))
+                                    {
+                                        html += "<label style=\"border: 2px solid red; text-align: center; color: red; font-size: large; font-weight: 600; border-radius:8px; padding: 4px;\">Out of stock</label>";
+                                    }
+                                    else
+                                    {
+                                        html += "<button type='button' class='btn BlueText BtnAddText' onclick='AddClick(" + iIndex + "," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'>ADD</button>";
+                                    }
+                                    
                                     html += "<input type='hidden' id='hdnProductId" + sGrpId + "' value='" + sProductId + "'>";
                                     html += "<input type='hidden' id='hdnGrpId" + sGrpId + "' value='" + sGrpId + "'>";
                                     html += "<input type='hidden' id='hdnCategoryId" + sGrpId + "' value='" + sCategoryId + "'>";

@@ -224,7 +224,7 @@ public partial class MyOrder : System.Web.UI.Page
                 ClsOrderModels.orderlist objorder = JsonConvert.DeserializeObject<ClsOrderModels.orderlist>(data);
                 string Orderdetails = string.Empty;
 
-                string Querydata = "select [Order].id as OrderId,[Order].OrderTotal,ISNULL([Order].PaidAmount,0) as PaidAmount ,FORMAT(CreatedOnUtc, 'dd MMM yyy htt') AS OrderDate from [Order]   where [Order].CustomerId=" + CustomerId + " order by [Order].id desc";
+                string Querydata = "select [Order].id as OrderId,[Order].OrderTotal,ISNULL([Order].PaidAmount,0) as PaidAmount ,FORMAT(CreatedOnUtc, 'dd MMM yyy') AS OrderDate from [Order]   where [Order].CustomerId=" + CustomerId + " order by [Order].id desc";
 
                 DataTable dtproduct = dbc.GetDataTable(Querydata);
 

@@ -121,7 +121,7 @@
                         if (response.d.response == "1") {
                             swal({
                                 title: "Successful!",
-                                text: "Thank you for registering. We will contact you very soon!",
+                                text: response.d.message,
                                 icon: "success",
                                 button: "Ok",
                             }).then((value) => {

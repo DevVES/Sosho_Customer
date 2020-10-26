@@ -361,7 +361,6 @@
         //SaveButtonClick
 
         function saveitem(flag) {
-            debugger;
             if (flag == 0) {
 
                  var ptotprice = $('#ContentPlaceHolder1_lbltotpayamt').html();
@@ -576,19 +575,7 @@
 
                     if ($('#ContentPlaceHolder1_reedemableAmount').val() == "0") {
                         var orderAmnt = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
-                        $.ajax({
-                            type: "POST",
-                            url: "OrderSummery.aspx/GetReedemableAmount",
-                            data: '{OrderAmount:"' + orderAmnt + '"}',
-                            contentType: "application/json;charset=utf-8",
-                            datatype: "json",
-                            success: function (ResponseData) {
-                                debugger
-                            },
-                            failure: function (ResponseData) {
-                                alert("Somthing Wrong");
-                            }
-                        });
+                        GetReedemableAmount(orderAmnt);
                     } else {
                         $('#ContentPlaceHolder1_punchamt').val( $('#ContentPlaceHolder1_reedemableAmount').val());
                         $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
@@ -689,8 +676,13 @@
                 $('#ContentPlaceHolder1_punchamt').val("0");
                 $('#ContentPlaceHolder1_lblshowmsgwallet').html("Wallet money can be redeemed only if minimum order amount is more than ₹ " + minOrderAmnt);
             } else {
-                $('#ContentPlaceHolder1_punchamt').val( $('#ContentPlaceHolder1_reedemableAmount').val());
-                $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                if ($('#ContentPlaceHolder1_reedemableAmount').val() == "0") {
+                    var orderAmnt = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
+                    GetReedemableAmount(orderAmnt);
+                } else {
+                    $('#ContentPlaceHolder1_punchamt').val($('#ContentPlaceHolder1_reedemableAmount').val());
+                    $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                }
             }
 
             console.log(products);
@@ -762,8 +754,13 @@
                                 $('#ContentPlaceHolder1_punchamt').val("0");
                                 $('#ContentPlaceHolder1_lblshowmsgwallet').html("Wallet money can be redeemed only if minimum order amount is more than ₹ " + minOrderAmnt);
                             } else {
-                                $('#ContentPlaceHolder1_punchamt').val( $('#ContentPlaceHolder1_reedemableAmount').val());
-                                $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                                if ($('#ContentPlaceHolder1_reedemableAmount').val() == "0") {
+                                    var orderAmnt = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
+                                    GetReedemableAmount(orderAmnt);
+                                } else {
+                                    $('#ContentPlaceHolder1_punchamt').val($('#ContentPlaceHolder1_reedemableAmount').val());
+                                    $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                                }
                             }
 
                         } else if (ResponseData.d[0] == "lastproduct") {
@@ -1221,6 +1218,26 @@
                 window.location = "checkout.aspx"
             }
         });
+
+        function GetReedemableAmount(orderamount) {
+            $.ajax({
+                type: "POST",
+                url: "OrderSummery.aspx/GetReedemableAmount",
+                data: '{OrderAmount:"' + orderamount + '"}',
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: function (ResponseData) {
+                    if (ResponseData != null && ResponseData != undefined && ResponseData != "" && ResponseData.d != null && ResponseData.d != undefined && ResponseData.d != "" && ResponseData.d.response == "1") {
+                        $('#ContentPlaceHolder1_reedemableAmount').val(ResponseData.d.RedeemableAmount);
+                        $('#ContentPlaceHolder1_punchamt').val(ResponseData.d.RedeemableAmount);
+                        $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                    }
+                },
+                failure: function (ResponseData) {
+                    alert("Somthing Wrong");
+                }
+            });
+        }
         
     </script>
 
