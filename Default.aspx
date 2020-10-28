@@ -9,6 +9,8 @@
     <link href="css/CircularContentCarousel/style.css" rel="stylesheet" />
     <link href="css/CircularContentCarousel/jquery.jscrollpane.css" rel="stylesheet" />
     <link href="css/completeCss.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
     <style>
         #header-content1 {
             width: 940px;
@@ -276,7 +278,7 @@
         }
 
         .SoshoPriceValue {
-            color: red;
+            color: #B12704;
             font-size: 18px;
             font-weight: bold;
         }
@@ -306,7 +308,7 @@
 
         .DiscountOffer {
             color: white;
-            background-color: red;
+            background-color: #B12704;
             border-radius: 50px;
             padding: 15px;
             width: 77px;
@@ -348,6 +350,14 @@
         .SearchBarTextBox {
             font-family: 'Amazon Ember';
             width: 30%;
+        }
+
+        .slick-prev:before, .slick-next:before {
+            color: #1da1f2;
+        }
+
+        .slick-prev, .slick-next {
+            top: 60%;
         }
 
         @media only screen and (max-width: 600px) {
@@ -432,6 +442,7 @@
             color: #1da1f2;
             cursor: pointer;
             margin-left: 10px;
+            margin-top: 5px;
         }
 
         .SubCatMain {
@@ -908,6 +919,9 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                         <input type="text" id="small-searchterms" autocomplete="off" name="q" placeholder="Discover the Origin here" maxlength="200" class="SearchBarTextBox" />
+                                       <%-- <span onclick="ClearFilter()" style="margin-left: -27px; z-index: 100; cursor:pointer; display:none">
+                                            <i class="fa fa-times"></i>
+                                        </span>--%>
                                     </div>
                                 </div>
                                 <div>
@@ -926,26 +940,26 @@
 
     <div id="divCategory" class="ca-new-container" runat="server">
     </div>
-    <div class="col-md-12" >
+    <div class="col-md-12">
         <div class="col-md-10">
-            <div id="divSubCat" class="ca-new-container SubCatMain"  runat="server">
-                <label class="control-label SubCat"> Besan </label>
-                <label class="control-label SubCat"> Maida </label>
-                <label class="control-label SubCat"> Other Floors </label>
-    </div>
+            <div id="divSubCat" class="ca-new-container SubCatMain" runat="server">
+                <label class="control-label SubCat">Besan </label>
+                <label class="control-label SubCat">Maida </label>
+                <label class="control-label SubCat">Other Floors </label>
+            </div>
         </div>
-         <div class="col-md-2" id="divSortProduct">
-             <select id="sort" onchange="SortProduct(this)">
-                 <option value="-1">Sort By:</option>
-                 <option value="1">Price - Low to High</option>
-                 <option value="2">Price - High to Low</option>
-                 <option value="3">Discount</option>
-                 <option value="4">Sosho Recommended</option>
-             </select>
+        <div class="col-md-2" id="divSortProduct">
+            <select id="sort" onchange="SortProduct(this)">
+                <option value="-1">Sort By:</option>
+                <option value="1">Price - Low to High</option>
+                <option value="2">Price - High to Low</option>
+                <option value="3">Discount</option>
+                <option value="4">Sosho Recommended</option>
+            </select>
         </div>
     </div>
-    
-    
+
+
 
     <div id="divBannerImage">
     </div>
@@ -1344,7 +1358,7 @@
                 }
             });
         }
-        function AddClick(rowindex, prodid, grpid, mrp, soshoprice, el,bannerProductType) {
+        function AddClick(rowindex, prodid, grpid, mrp, soshoprice, el, bannerProductType) {
             //$('#AddShow' + rowindex).css('display', '');
             //$('#BtnAdd' + rowindex).css('display', 'none');
 
@@ -1416,7 +1430,7 @@
                 UnitId: parts[1],
                 Productvariant: productvariant,
                 BannerProductType: bannerProductType,
-                BannerId : "0"
+                BannerId: "0"
 
             }
             products.push(obj);
@@ -1428,7 +1442,7 @@
                 $('#hdnProductCount').val(count);
             }
         }
-        function plusqty(type, prodid, grpid, mrp, soshoprice, el,bannerProductType) {
+        function plusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType) {
             var grpId = grpid;
             var productvariant = $('#hdnProductVariant' + grpid).val();
             var unitId = $('#ddlUnit' + grpid).val();
@@ -1462,7 +1476,7 @@
                     UnitId: parts[1],
                     Productvariant: productvariant,
                     BannerProductType: bannerProductType,
-                    BannerId : "0"
+                    BannerId: "0"
 
                 }
                 products.push(obj);
@@ -1499,7 +1513,7 @@
                         UnitId: parts[1],
                         Productvariant: productvariant,
                         BannerProductType: bannerProductType,
-                        BannerId : "0"
+                        BannerId: "0"
 
                     }
                     products.push(obj);
@@ -1531,7 +1545,7 @@
             }
 
         }
-        function BannerAddClick(rowindex, prodid, mrp,soshoprice, el,bannerProductType,BannerId) {
+        function BannerAddClick(rowindex, prodid, grpid, mrp, soshoprice, el, bannerProductType, BannerId) {
             //$('#divBannerAddShow' + rowindex).show();
             //$('#divBannerAdd' + rowindex).hide();
 
@@ -1544,13 +1558,13 @@
             var qty = $('#divBannerAddShow' + prodid).find('input').val();
 
 
-            var grpId = prodid;
+            var grpId = grpid;
             var productvariant = "BannerProduct";
             //var unitId = $('#hdnddlUnit' + rowindex).val();
             //var unitvalue = $('#hdnddlUnit' + rowindex).val();
 
-            var unitId = $('#hdnddlUnit' + prodid).val();
-            var unitvalue = $('#hdnddlUnit' + prodid).val();
+            var unitId = $('#hdnddlUnit' + grpid).val();
+            var unitvalue = $('#hdnddlUnit' + grpid).val();
             var parts = unitvalue.split('-');
             obj = {
                 Productid: prodid,
@@ -1623,11 +1637,11 @@
         //}
 
 
-        function Bannerplusqty(type, prodid, grpid, mrp,soshoprice, el,bannerProductType,BannerId) {
+        function Bannerplusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType, BannerId) {
             var grpId = grpid;
             var productvariant = "BannerProduct";
-            var unitId = $('#hdnddlUnit' + prodid).val();
-            var unitvalue = $('#hdnddlUnit' + prodid).val();
+            var unitId = $('#hdnddlUnit' + grpid).val();
+            var unitvalue = $('#hdnddlUnit' + grpid).val();
             var parts = unitvalue.split(' - ');
 
             var $this = $(el);
@@ -1938,6 +1952,7 @@
             Categoryimage(categoryId, el, type);
         }
         function Categoryimage(categoryId, el, type) {
+            $('#ContentPlaceHolder1_divSubCat').slick('unslick');
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $('.CategoryText').css({ 'color': '#1A1A1A' });
             $('.CategoryImagecenter').css({ 'border': 'none' });
@@ -1949,7 +1964,8 @@
                 $("#text" + categoryId).css({ 'color': '#1da1f2' });
                 $("#img" + categoryId).css({ 'border': '2px solid #1da1f2' });
             }
-            $("#sort").val("-1");
+            //$("#sort").val("-1");
+            var sort = $("#sort").val();
             $.ajax({
 
                 type: "POST",
@@ -1961,10 +1977,11 @@
                 success: function (response) {
                     $("#ContentPlaceHolder1_divSubCat").html(response.d);
                     $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
+                    InitializeSlick();
                     $.ajax({
                         type: 'POST',
                         url: "Default.aspx/GetProductdata",
-                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
+                        data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryId + ',SubCategoryId:-1,InterBannerid:"",Filter:' + sort + ',SearchProductId:-1}',
                         contentType: "application/json",
                         dataType: "json",
                         success: function (response) {
@@ -1980,6 +1997,7 @@
                             //document.documentElement.scrollTop = 0;
                             $('html, body').animate({ scrollTop: 0 }, 'slow', function () {
                                 //alert("reached top");
+                                GetSessionProductData();
                             });
                         },
                         failure: function (response) {
@@ -2005,7 +2023,7 @@
 
         function SortProduct(el) {
             var $this = $(el);
-            var sortval = $this.val(); 
+            var sortval = $this.val();
             var categoryid = $('#hdnCategory').val();
             var subcategoryid = $("#hdnSubCategoryId").val();
             var JurisdictionId = $("#hdnJurisdictionId").val();
@@ -2014,7 +2032,7 @@
             $.ajax({
                 type: 'POST',
                 url: "Default.aspx/GetProductdata",
-                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:' + subcategoryid + ',InterBannerid:"",Filter:'+ sortval +',SearchProductId:-1}',
+                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:' + subcategoryid + ',InterBannerid:"",Filter:' + sortval + ',SearchProductId:-1}',
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
@@ -2026,6 +2044,7 @@
                     $("#divBannerImage").html(response.d.bannerresponse);
                     $("#divProductNew").append(response.d.intermediateresponse);
                     AllProducts.push(...response.d.productdata.ProductList);
+                    GetSessionProductData();
                 },
                 failure: function (response) {
 
@@ -2035,15 +2054,16 @@
             });
         }
 
-        function GetProduct(subcatid, catid,el) {
+        function GetProduct(subcatid, catid, el) {
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $("#hdnSubCat").val(subcatid);
             $("#hdnSubCategoryId").val(subcatid);
-            $("#sort").val("-1");
+            //$("#sort").val("-1");
+            var filter = $("#sort").val();
             $.ajax({
                 type: 'POST',
                 url: "Default.aspx/GetProductdata",
-                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:'+subcatid+',InterBannerid:"",Filter:1,SearchProductId:-1}',
+                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + catid + ',SubCategoryId:' + subcatid + ',InterBannerid:"",Filter:' + filter + ',SearchProductId:-1}',
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
@@ -2061,6 +2081,7 @@
                     //$("#divIntermediateBannerImage").html(response.d.intermediateresponse);
                     $("#divProductNew").append(response.d.intermediateresponse);
                     AllProducts.push(...response.d.productdata.ProductList);
+                    GetSessionProductData();
                 },
                 failure: function (response) {
 
@@ -2184,6 +2205,7 @@
                             $("#divProductNew").append(response.d.intermediateresponse);
                             AllProducts.push(...response.d.productdata.ProductList);
                             document.documentElement.scrollTop = 0;
+                            GetSessionProductData();
                         },
                         failure: function (response) {
 
@@ -2408,6 +2430,7 @@
 
         <script>
             $(document).ready(function () {
+                InitializeSlick();
                 //$("#myPinCodeModal").modal('show');
                 $('.mobile-number').hide();
                 $('.offer-time').hide();
@@ -2415,7 +2438,15 @@
                 $('#ContentPlaceHolder1_divSubCat').hide();
                 $('#lbllogout').hide();
                 $('#header_topbar1').hide();
-                $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
+                var sValue = '<%=HttpContext.Current.Session["PinCode"]%>';
+                if (sValue != "") {
+                    $("#txtPinCodeval").val(sValue);
+                    $("#BtnPinCodeApply").click();
+                } else {
+                    $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false });
+                    //$('#myPinCodeModal').modal({keyboard: true});
+                }
+
                 $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
                 $("#text" + $('#hdnCategory').val()).css({ 'color': '#1da1f2' });
                 $("#img" + $('#hdnCategory').val()).css({ 'border': '2px solid #1da1f2' });
@@ -2584,7 +2615,7 @@
                 $('.trGrp' + AttrGrpId).css('display', '');
             });
 
-      
+
 
             //   $("#divPackSize").click(function(evt){
             //alert($(this).attr("id"));
@@ -2670,7 +2701,7 @@
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:'+categoryid+',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -2816,7 +2847,9 @@
                 $('#txtPinCodeval').val('');
                 $("#ContentPlaceHolder1_lblpinmsg").text("");
                 $("#ContentPlaceHolder1_lblpinnotmsg").text("");
-                $('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false })
+                //$('#myPinCodeModal').modal({ backdrop: 'static', keyboard: false });
+                $('#myPinCodeModal').modal({ backdrop: true, keyboard: true });
+                $('#txtPinCodeval').focus();
             }
 
 
@@ -2899,7 +2932,7 @@
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '",Filter:"' + sortval + '",SearchProductId:"'+searchprodid+'"}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '",Filter:"' + sortval + '",SearchProductId:"' + searchprodid + '"}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -2925,6 +2958,7 @@
                                         //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
                                         //$("#divProductNew").after(response.d.intermediateresponse);
                                         AllProducts.push(...response.d.productdata.ProductList);
+                                        GetSessionProductData();
                                     }
                                     else {
                                         $('#hdnProductEndNo').val('0');
@@ -2951,10 +2985,11 @@
                 $('#OtherBanner').html('');
                 var JurisdictionId = $("#hdnJurisdictionId").val();
                 var categoryid = $('#hdnCategory').val();
+                var sort = $("#sort").val();
                 $.ajax({
                     type: 'POST',
                     url: "Default.aspx/GetProductdata",
-                    data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
+                    data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",Filter:' + sort + ',SearchProductId:-1}',
                     contentType: "application/json",
                     dataType: "json",
                     success: function (response) {
@@ -2979,6 +3014,7 @@
                         $("#divProductNew").append(response.d.intermediateresponse);
                         AllProducts.push(...response.d.productdata.ProductList);
                         $("#hdnBannerCount").val(parseInt("1"));
+                        GetSessionProductData();
                     },
                     failure: function (response) {
 
@@ -2987,6 +3023,83 @@
                     }
                 });
             }
+
+            function GetSessionProductData() {
+                if (products.length > 0) {
+                    $.each(products, function (index, value) {
+                        if (value.Productvariant == "BannerProduct") {
+                            $('#divBannerAddShow' + value.Productid).show();
+                            $('#divBannerAdd' + value.Productid).hide();
+                            $('#divBannerAddShow' + value.Productid).find('input').val(value.Qty);
+                        } else {
+                            $('#AddShow' + value.Grpid).show();
+                            $('#BtnAdd' + value.Grpid).hide();
+                            $('#AddShow' + value.Grpid).find('input').val(value.Qty);
+                        }
+                    });
+                }
+
+                //$.ajax({
+                //    type: 'GET',
+                //    url: "Default.aspx/GetSessionProductData",
+                //    success: function (response) {
+                //        //console.log(response);
+                //    },
+                //    failure: function (response) {
+
+                //        alert("Something Wrong....");
+
+                //    }
+                //});
+
+            }
+
+            function InitializeSlick() {
+                $('#ContentPlaceHolder1_divSubCat').slick({
+                    dots: false,
+                    infinite: true,
+                    speed: 300,
+                    slidesToShow: 5,
+                    slidesToScroll: 1,
+                    initialSlide: 1,
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                dots: false
+                            }
+                        },
+                        {
+                            breakpoint: 600,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1
+                            }
+                        }
+                        // You can unslick at a given breakpoint now by adding:
+                        // settings: "unslick"
+                        // instead of a settings object
+                    ]
+                });
+            }
+            //$(".SearchBarTextBox").change(function () {
+            //    var val = $(this).val();
+            //    if (val != "") {
+            //        $(this).next().css('display','block');
+            //    } else {
+            //        $(this).next().css('display','none');
+            //    }
+            //});
         </script>
     </div>
     <%--<script src="OwlCarousel/docs/assets/vendors/jquery.min.js"></script>--%>
@@ -3028,8 +3141,10 @@
     <!-- the jScrollPane script -->
     <%--<script src="js/CircularContentCarousel/jquery.mousewheel.js"></script>--%>
     <script src="js/CircularContentCarousel/jquery.contentcarousel.js"></script>
+    <script type="text/javascript" src="slick/slick.min.js"></script>
     <script type="text/javascript">
         //$('#ca-container').contentcarousel();
         $('#ContentPlaceHolder1_divCategory').contentcarousel();
+
     </script>
 </asp:Content>

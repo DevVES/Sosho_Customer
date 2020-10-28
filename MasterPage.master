@@ -91,9 +91,10 @@
                             </a>
                         </div>
                         <div class="mobile-number">
-                            <p  id="app" style="background:#1DA1F2;color:#FFFFFF;">
+                            <p  id="app" onclick="sendMessage(this)" style="background:#1DA1F2;color:#FFFFFF;cursor:pointer">
                                 <%--<img src="images/whatsapp_tiny.png" /><span><button @click="sendMessage" style="background:#fff;border:none" id="btnsendMessage">6359408097</button></span>--%>
-                                <img src="images/whatsapp_tiny.png" /><span><button @click="sendMessage" style="background:#1DA1F2;color:#FFFFFF;border:none" id="btnsendMessage">6359408097</button></span>
+                                <%--<img src="images/whatsapp_tiny.png" /><span><button onclick="sendMessage(this)" type="button" style="background:#1DA1F2;color:#FFFFFF;border:none" id="btnsendMessage">6359408097</button></span>--%>
+                                <img src="images/whatsapp_tiny.png" /><span style="background:#1DA1F2;color:#FFFFFF;border:none" id="btnsendMessage">6359408097</span>
                                 <input type="hidden" id="hdnJurisdictionId" />
                                 <input type="hidden" id="hdnProductEndNo"/>
                                 <input type="hidden" id="hdnBannerCount" />
@@ -409,6 +410,11 @@
         //        }
         //    }
         //});
+        function sendMessage(el) {
+            var $this = $(el);
+            var no = $this.find('span').html();
+            window.open('https://api.whatsapp.com/send?phone='+ no.trim());
+        }
     </script>
     <script>
         var ranNum = Math.floor(Math.random() * Math.floor(14382));

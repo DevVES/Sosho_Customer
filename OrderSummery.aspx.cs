@@ -192,11 +192,12 @@ public partial class OrderSummery : System.Web.UI.Page
                     //{
                         if (item.Productvariant.ToString() == "BannerProduct")
                         {
-                            imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
-                            dtimg = dbc.GetDataTable(imgquery);
+                        //imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
+                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
+                        dtimg = dbc.GetDataTable(imgquery);
 
-                            querydata = "select KeyValue from StringResources where KeyName='TopBannerImageUrl'";
-                            dtpathimg = dbc.GetDataTable(querydata);
+                        querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
+                        dtpathimg = dbc.GetDataTable(querydata);
                         }
                         else
                         {
@@ -206,7 +207,7 @@ public partial class OrderSummery : System.Web.UI.Page
                             //querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
                             //dtpathimg = dbc.GetDataTable(querydata);
 
-                            imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
+                            imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product_ProductAttribute_Mapping.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
                             dtimg = dbc.GetDataTable(imgquery);
 
                             querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
@@ -245,10 +246,10 @@ public partial class OrderSummery : System.Web.UI.Page
                     html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lblproprice\"> <span>Price / Qty : " + item.PaidAmount + "</span> <span id=\"lblmrp\" style=\"display:none;\">"+item.Mrp+"</span></div></div>";
                     if (IsQtyFreeze)
                     {
-                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\" disabled><i class=\"fa fa-minus\"></i></button>";
+                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\"><i class=\"fa fa-minus\"></i></button>";
                         html += "<div class=\"qty\" style=\"display: grid;\"><input readonly=true type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#a5a5a5\" onclick=\"Priceplus(" + item.productid + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div>";
 
                         if (!item.isProductAvailable)
                         {

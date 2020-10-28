@@ -549,11 +549,11 @@ public partial class Default : System.Web.UI.Page
                     sWhatsAppNo = objproduct.WhatsAppNo;
                     string sDiscount = "", sProductVariant = "", sMrp = "", sSoshoPrice = "", sWeight = "", sIsProductDescription = "", sAImageName = "";
                     decimal dMrp = 0, dSoshoPrice = 0, dSavePrice = 0;
-                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "", sIsOutofStock = "";
+                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "", sMinQty = string.Empty, sIsOutofStock = "";
                     string sisSelected = "", sProductName = "", sProductDesc = "", sProductKeyFeatures = "";
                     int iIndex = 0;
-                    string  sBannerActionId = "", sOpenUrlLink = "", sBannerCategoryId = "", sCategoryName = "";
-                    string sBannerProductId = "", sBannerProductMrp = "", sBannerWeight = "", sBannerProductSoshoPrice = "";
+                    string  sBannerActionId = "", sOpenUrlLink = "", sBannerCategoryId = "", sCategoryName = "", sBannerMinQty = string.Empty;
+                    string sBannerProductId = "", sBannerProductMrp = "", sBannerWeight = "", sBannerProductSoshoPrice = "", sBannerIsQtyFreeze = string.Empty;
 
                     sProductCount = objproduct.ProductList.Where(x=>x.ItemType == "1").Count().ToString();
                     //if (StartNo == "1")
@@ -750,6 +750,7 @@ public partial class Default : System.Web.UI.Page
                                     sisSelected = objproduct.ProductList[j].ProductAttributesList[h].isSelected;
                                     sIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[h].isQtyFreeze;
                                     sIsOutofStock = objproduct.ProductList[j].ProductAttributesList[h].isOutOfStock;
+                                    sMinQty = objproduct.ProductList[j].ProductAttributesList[h].MinQty;
 
 
 
@@ -842,7 +843,7 @@ public partial class Default : System.Web.UI.Page
                                     }
                                     else
                                     {
-                                        html += "<select ID='ddlUnit" + sGrpId + "'  runat='server' onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + "," + sGrpId + ",this)\">";
+                                        html += "<select ID='ddlUnit" + sGrpId + "'  runat='server'  onmousedown=\"(function(e){ e.preventDefault();})(event, this)\" onclick=\"myPackSize(" + iIndex + ",'" + sDiscount + "'," + sProductId + "," + sGrpId + ",this)\">";
                                         html += "<option Value='" + sWeight + "'>" + sWeight + "</option>";
                                         html += "</select>";
 
@@ -894,14 +895,14 @@ public partial class Default : System.Web.UI.Page
                                     html += "<td colspan='3' style='padding-top:15px;padding-left:10px;' class='AmazonFont'>";
                                     if (!string.IsNullOrEmpty(sIsQtyFreeze) && Convert.ToBoolean(sIsQtyFreeze))
                                     {
-                                        html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this) disabled'><i class='fa fa-minus'></i></button>";
-                                        html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;'  onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                        html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this) disabled'><i class='fa fa-plus'></i></button>";
+                                        html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-minus'></i></button>";
+                                        html += "<input id='txtqty' runat='server' value='"+ sMinQty + "' style='font-weight:bold;width:40px;text-align: center;'  onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                        html += "<button class='btn ProductBtn' type='button' id='btnplus' style='background: #a5a5a5;' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1) disabled'><i class='fa fa-plus'></i></button>";
                                     }
                                     else
                                     {
                                         html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-minus'></i></button>";
-                                        html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                        html += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:40px;text-align: center;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
                                         html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-plus'></i></button>";
                                     }
                                     
@@ -925,6 +926,11 @@ public partial class Default : System.Web.UI.Page
                                     iIndex++;
                                 }
 
+                            }
+                            if (objproduct.ProductList.Count == (j + 1))
+                            {
+                                var hdnProdId = objproduct.ProductList.Where(x => x.ItemType == "1").FirstOrDefault().ProductId;
+                                html += "<input type='hidden' id='hdnProdId' value='" + hdnProdId + "'/>";
                             }
                             // }
                         }
@@ -967,21 +973,33 @@ public partial class Default : System.Web.UI.Page
                                 sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
                                 sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
                                 //sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
+                                sBannerIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[0].isQtyFreeze;
+                                sBannerMinQty = objproduct.ProductList[j].ProductAttributesList[0].MinQty;
 
                                 BannerIntermediateHtml += "<div class='offer-banner'>";
                                 BannerIntermediateHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
                                 BannerIntermediateHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "<div id='divBannerAdd" + sBannerProductId + "'>";
-                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sBannerProductMrp+","+sBannerProductSoshoPrice + ",this,3,"+sInterBannerId+")'>Buy Now</button>";
-                                BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + sBannerProductId + "' value='" + sBannerWeight + "'>";
+                                BannerIntermediateHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp+","+sBannerProductSoshoPrice + ",this,3,"+sInterBannerId+")'>Buy Now</button>";
+                                BannerIntermediateHtml += "<input type='hidden' id='hdnddlUnit" + sGrpId + "' value='" + sBannerWeight + "'>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "<div id='divBannerAddShow" + sBannerProductId + "' class='AmazonFont BannerAddPostion' style='display:none;'>";
                                 //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
-                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ")'><i class='fa fa-minus'></i></button>";
-                                BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
-                                BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ")'><i class='fa fa-plus'></i></button>";
+                                if (Convert.ToBoolean(sBannerIsQtyFreeze))
+                                {
+                                    BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ")'><i class='fa fa-minus'></i></button>";
+                                    BannerIntermediateHtml += "<input id='txtqty' runat='server' value='"+sBannerMinQty+ "' style='font-weight:bold;width:30px;text-align: center;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                    //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                    BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' style='background: #a5a5a5;' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ") disabled'><i class='fa fa-plus'></i></button>";
+                                }
+                                else
+                                {
+                                    BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ")'><i class='fa fa-minus'></i></button>";
+                                    BannerIntermediateHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;text-align: center;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                    //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                    BannerIntermediateHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,3," + sInterBannerId + ")'><i class='fa fa-plus'></i></button>";
+                                }
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
                                 BannerIntermediateHtml += "</div>";
@@ -998,11 +1016,7 @@ public partial class Default : System.Web.UI.Page
 
                         }
 
-                        if (objproduct.ProductList.Count == (j + 1))
-                        {
-                            var hdnProdId = objproduct.ProductList.Where(x => x.ItemType == "1").FirstOrDefault().ProductId;
-                            html += "<input type='hidden' id='hdnProdId' value='" + hdnProdId + "'/>";
-                        }
+                       
                         
                     }
 
@@ -1976,7 +1990,7 @@ public partial class Default : System.Web.UI.Page
 
                 }
             }
-            divSubCat.InnerHtml = html;
+           divSubCat.InnerHtml = html;
 
 
         }
@@ -2270,5 +2284,23 @@ public partial class Default : System.Web.UI.Page
         }
         else
             return 0;
+    }
+
+    [System.Web.Services.WebMethod]
+    public static object GetSessionProductData()
+    {
+        ClsOrderModels.PlaceMultipleOrderNewModel orderModel;
+        if ((HttpContext.Current.Session["ConfirmOrder"] != null))
+        {
+            orderModel = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
+
+        }
+        else
+        {
+            orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
+        }
+
+        return orderModel;
+
     }
 }

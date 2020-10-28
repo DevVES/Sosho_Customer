@@ -149,7 +149,7 @@
 
 
                         <p class="number">Order Number: <span id="lblorderid" runat="server"></span></p>
-                       <asp:Label ID="lblWhatsAppNo" runat="server" Visible="false"></asp:Label>
+                       <asp:Label ID="lblWhatsAppNo" runat="server" CssClass="hide"></asp:Label>
                         <%--<p class="number">Product Name: <span runat="server" id="Span1"></span></p>
                         <p class="number">Units: <span id="Span2" runat="server"></span></p>--%>
                         <div id="details" runat="server">
@@ -343,7 +343,7 @@
 
              
              $('.offer-time').css('display', 'none');
-             $("#btnsendMessage").text($('#lblWhatsAppNo').text());
+             $("#btnsendMessage").text($('#ContentPlaceHolder1_lblWhatsAppNo').text());
              window.setTimeout(function () {
 
                  if ($('#webscreen').css('display') == "block") {

@@ -2206,7 +2206,7 @@ select, -box input {
 
     #shopping-cart .single-product .left {
         width: 25%;
-        float: left;
+        /*float: left;*/
         /*text-align: center;*/
     }
 
@@ -3415,18 +3415,18 @@ margin:0;
         #wrapper #dialog .inner ul li {
             padding: 0 15px;
         }
-#wrapper #dialog .verify-btn {
-    background: #ff5722;
-    border: 1px solid #ff5722;
-    padding: 6px 35px;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #fff;
-    font-family: Calibri;
-    border-radius: 0;
-    margin: 0;
-}
+    #wrapper #dialog .verify-btn {
+        background: #1ca1f1;
+        border: 1px solid #1ca1f1;
+        padding: 6px 35px;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #fff;
+        font-family: Calibri;
+        border-radius: 0;
+        margin: 0;
+    }
 #wrapper #dialog .resend-btn {
     background: #c3bfbf;
     border: 1px solid #c3bfbf;
@@ -3451,16 +3451,16 @@ margin:0;
         width: 100%;
     }
     /*sign up page*/
-    .verify-btn{
-        background: #ff5722;
-    border: 2px solid #ff5722;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 0px 20px;
-    margin-top: 24px;
-    color: #ffffff;
-    font-family: Calibri;
+    .verify-btn {
+        background: #1ca1f1;
+        border: 2px solid #1ca1f1;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 0px 20px;
+        margin-top: 24px;
+        color: #ffffff;
+        font-family: Calibri;
     }
     /*order-summery page */
     #order-summery .ordersummery-address .right-section {

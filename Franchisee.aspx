@@ -63,6 +63,9 @@
         </div>
     </div>
     <script type="text/javascript">
+         $(document).ready(function () {
+          $('.offer-time').css('display','none');
+      });
         $("#ContentPlaceHolder1_Button1").click(function () {
             var name = $("#ContentPlaceHolder1_txtname").val();
             var email = $("#ContentPlaceHolder1_txtemail").val();
