@@ -94,7 +94,7 @@
                             <p  id="app" onclick="sendMessage(this)" style="background:#1DA1F2;color:#FFFFFF;cursor:pointer">
                                 <%--<img src="images/whatsapp_tiny.png" /><span><button @click="sendMessage" style="background:#fff;border:none" id="btnsendMessage">6359408097</button></span>--%>
                                 <%--<img src="images/whatsapp_tiny.png" /><span><button onclick="sendMessage(this)" type="button" style="background:#1DA1F2;color:#FFFFFF;border:none" id="btnsendMessage">6359408097</button></span>--%>
-                                <img src="images/whatsapp_tiny.png" /><span style="background:#1DA1F2;color:#FFFFFF;border:none" id="btnsendMessage">6359408097</span>
+                                <img src="images/whatsapp_tiny.png" /><span class="WhatsApp-mobile" id="btnsendMessage"></span>
                                 <input type="hidden" id="hdnJurisdictionId" />
                                 <input type="hidden" id="hdnProductEndNo"/>
                                 <input type="hidden" id="hdnBannerCount" />
@@ -103,7 +103,7 @@
                             </p>
                         </div>
                         <div id="lblshow" runat="server">
-                        <a class="custom-header-toggle-button" href="javascript:void(0);" id="Menulist1">
+                        <a class="custom-header-toggle-button" href="javascript:void(0);" id="Menulist1" style="background:#1DA1F2;">
                             <img class="custom-header-menu-nav-icon" src="images/align-justify1.png" alt="Nav" />
                             <img class="custom-header-menu-close-icon" src="images/close-button.png" alt="Close" />
                         </a>
@@ -122,17 +122,17 @@
 
                 <div class="row offer-time" style="background:#1DA1F2;color:#FFFFFF;font-size:16px;">
                     <div class="col-md-12">
-                        <div class="col-md-6 col-sm-6 col-xs-5 padding">
+                        <div class="col-md-6 col-sm-6 col-xs-5 padding setfontsize" >
                             <%--<i class="fa fa-map-marker" style="font-size: 25px; color: red"></i>--%>
-                            <i class="fa fa-map-marker"></i>
-                            <span style="color:#FFFFFF;font-size:16px;font-family:'Amazon Ember'">Deliver to </span>
-                            <span id="spanpincode" style="color:#FFFFFF;font-size:16px;font-family:'Amazon Ember';cursor:pointer;" onclick="CallPinCodePopup()"></span>
+                            <i class="fa fa-map-marker" style="vertical-align:-webkit-baseline-middle;"></i>
+                            <span style="color:#FFFFFF;font-family:'Amazon Ember';vertical-align:-webkit-baseline-middle;">Deliver to </span>
+                            <span id="spanpincode" style="color:#FFFFFF;font-family:'Amazon Ember';cursor:pointer;vertical-align:-webkit-baseline-middle;" onclick="CallPinCodePopup()"></span>
                         </div>
                          
-                             <div class="col-md-6 col-sm-6 col-xs-5 padding">
-                                <div class="offer-zone">
+                             <div class="col-md-6 col-sm-6 col-xs-5 padding setfontsize">
+                                <div class="offer-zone" style="margin-top:3px;">
                                     <%--<p id="count" style="font-family:'Amazon Ember';text-align:right;"></p>--%>
-                                    <span id="count" style="color:#FFFFFF;font-family:'Amazon Ember'"></span>
+                                    <span id="count"  style="color:#FFFFFF;font-family:'Amazon Ember'"></span>
                                     <span id="cnfrm" class="button hide" onclick="ConfirmOrder()" style="cursor: pointer;text-align:left;"> Confirm Order </span>         
                                     <input type="hidden" id="hdnProductCount" />
                                     <input type="hidden" id="hdnproductcallcount" />

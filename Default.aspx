@@ -391,6 +391,7 @@
 
             .ProudctMRPText {
                 font-size: 14px;
+                width: 118px;
             }
 
             .SoshoPrice {

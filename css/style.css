@@ -3873,6 +3873,17 @@ font-size:15px;
 .btnReOrderPadding {
     padding-right: 10px !important;
 }
+/*whatsApp mobile number*/
+.WhatsApp-mobile {
+    background: #1DA1F2;
+    color: #FFFFFF;
+    border: none;
+    /*vertical-align: super;*/
+}
+
+.setfontsize {
+    font-size:16px !important;
+}
 
 @media only screen and (max-device-width: 480px) {
     #location .address-search .avability {
@@ -3901,6 +3912,17 @@ font-size:15px;
     .offer-banner {
         margin-top: 5px;
     }
+
+    .setfontsize {
+        font-size: 12px !important;
+    }
+
+    .search-bar-text-wrap {
+        width: 80% !important;
+    }
+    /*.ver-alignmentSub{
+        vertical-align:sub;
+    }*/
         }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) {
@@ -3917,6 +3939,28 @@ font-size:15px;
     }
     .btnReOrderPadding {
         padding-right: 0px !important;
+    }
+
+    .WhatsApp-mobile {
+        vertical-align: top;
+    }
+
+    .custom-header-animate {
+        border: 1px solid #1DA1F2 !important;
+    }
+
+    .setfontsize {
+        font-size: 12px !important;
+    }
+    .search-bar-text-wrap{
+        width:80% !important;
+    }
+    /*.ver-alignmentSub {
+        vertical-align: sub;
+    }*/
+    /*Wallet Css*/
+    #wallet .main p {
+        font-size: 11px;
     }
 }
 

@@ -12,7 +12,7 @@
             <div class="row">
                 <h3>Become a Franchisee</h3>
             </div>
-            <div class="row">
+            <div class="row" style="text-align:-webkit-center;">
                 <div class="main">
                     <div class="tbl-width">
                         <table class="edit-table">

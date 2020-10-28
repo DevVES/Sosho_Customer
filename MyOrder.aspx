@@ -229,6 +229,11 @@
           <script>
               $(document).ready(function () {
                   $('.offer-time').css('display', 'none');
+                  var wpno = '<%=Session["WhatsAppNo"]%>'
+                  if (wpno != ""){
+                      $("#btnsendMessage").text(wpno);
+                  }
+                  
               });
               function decorateWhatsAppLink() {
                   //set up the url
