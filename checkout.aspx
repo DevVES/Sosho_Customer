@@ -1481,7 +1481,10 @@
              return false;
          }
 
-         function Deliverydone(addrid,pincode) {
+         function Deliverydone(addrid, pincode) {
+             //disableButton();
+             //document.getElementById('ContentPlaceHolder1_btnsave').disabled = true;
+             $(".deliver-btn").prop('disabled', true);
              //alert(addrid);
              var addresssid = addrid;
              var addr = Number(addresssid);

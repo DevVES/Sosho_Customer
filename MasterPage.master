@@ -102,8 +102,8 @@
                                 <input type="hidden" id="hdnSearchProductId" value="-1"/>
                             </p>
                         </div>
-                        <div id="lblshow" runat="server">
-                        <a class="custom-header-toggle-button" href="javascript:void(0);" id="Menulist1" style="background:#1DA1F2;">
+                        <div id="lblshow" runat="server" style="background:#1DA1F2 !important;">
+                        <a class="custom-header-toggle-button" href="javascript:void(0);" id="Menulist1" >
                             <img class="custom-header-menu-nav-icon" src="images/align-justify1.png" alt="Nav" />
                             <img class="custom-header-menu-close-icon" src="images/close-button.png" alt="Close" />
                         </a>
@@ -413,7 +413,7 @@
         function sendMessage(el) {
             var $this = $(el);
             var no = $this.find('span').html();
-            window.open('https://api.whatsapp.com/send?phone='+ no.trim());
+            window.open('https://api.whatsapp.com/send?phone=91'+ no.trim());
         }
     </script>
     <script>

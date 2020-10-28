@@ -48,6 +48,10 @@
     <script>
         $(document).ready(function () {
             $('.offer-time').css('display', 'none');
+            var wpno = '<%=Session["WhatsAppNo"]%>'
+            if (wpno != "") {
+                $("#btnsendMessage").text(wpno);
+            }
         });
     </script>
 </asp:Content>

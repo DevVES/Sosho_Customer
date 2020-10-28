@@ -59,7 +59,8 @@
 
         @media only screen and (max-device-width: 480px) {
             table{
-                margin-left:55px;
+                /*margin-left:55px;*/
+                margin-left:0px;
             }
         }
 
@@ -155,7 +156,7 @@
                         <div id="details" runat="server">
                         <table style="margin-left: 112px;">
                             <thead>
-                                <th class="number" style="padding: 6px;text-align:center">Product Name </th>
+                                <th class="number" style="padding: 6px;text-align:center;width:100%;">Product Name </th>
                                 <th class="number" style="padding: 6px;">Unit </th>
                             </thead>
                             <tbody>

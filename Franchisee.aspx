@@ -64,7 +64,11 @@
     </div>
     <script type="text/javascript">
          $(document).ready(function () {
-          $('.offer-time').css('display','none');
+             $('.offer-time').css('display', 'none');
+             var wpno = '<%=Session["WhatsAppNo"]%>'
+             if (wpno != "") {
+                 $("#btnsendMessage").text(wpno);
+             }
       });
         $("#ContentPlaceHolder1_Button1").click(function () {
             var name = $("#ContentPlaceHolder1_txtname").val();

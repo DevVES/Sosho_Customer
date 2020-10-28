@@ -85,7 +85,7 @@
                 //{
                     lbllogout.innerHTML = "";
                 //}
-                
+                    $(".mobile-number").hide();
                 $('.offer-time').css('display', 'none');
                 
             });

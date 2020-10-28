@@ -81,7 +81,11 @@
     </div>
   <script>
       $(document).ready(function () {
-          $('.offer-time').css('display','none');
+          $('.offer-time').css('display', 'none');
+          var wpno = '<%=Session["WhatsAppNo"]%>'
+          if (wpno != "") {
+              $("#btnsendMessage").text(wpno);
+          }
       });
       function GetState(e) {
           var id = e.options[e.selectedIndex].value;

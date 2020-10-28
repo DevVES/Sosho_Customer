@@ -297,6 +297,8 @@
         .ProductBtn {
             color: white;
             background-color: #1DA1F2;
+            margin:3px;
+            font-size:10px;
         }
 
         .tableheader {
@@ -2056,6 +2058,7 @@
         }
 
         function GetProduct(subcatid, catid, el) {
+            debugger
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $("#hdnSubCat").val(subcatid);
             $("#hdnSubCategoryId").val(subcatid);
@@ -2431,6 +2434,7 @@
 
         <script>
             $(document).ready(function () {
+                $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
                 InitializeSlick();
                 //$("#myPinCodeModal").modal('show');
                 $('.mobile-number').hide();
@@ -2448,7 +2452,7 @@
                     //$('#myPinCodeModal').modal({keyboard: true});
                 }
 
-                $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
+                
                 $("#text" + $('#hdnCategory').val()).css({ 'color': '#1da1f2' });
                 $("#img" + $('#hdnCategory').val()).css({ 'border': '2px solid #1da1f2' });
                 $('#divSortProduct').hide();
@@ -3057,6 +3061,7 @@
 
             function InitializeSlick() {
                 $('#ContentPlaceHolder1_divSubCat').slick({
+                    vertical: false,
                     dots: false,
                     infinite: true,
                     speed: 300,
@@ -3067,6 +3072,7 @@
                         {
                             breakpoint: 1024,
                             settings: {
+                                vertical: false,
                                 slidesToShow: 3,
                                 slidesToScroll: 1,
                                 infinite: true,
@@ -3076,6 +3082,7 @@
                         {
                             breakpoint: 600,
                             settings: {
+                                vertical: false,
                                 slidesToShow: 3,
                                 slidesToScroll: 1
                             }
@@ -3083,6 +3090,7 @@
                         {
                             breakpoint: 480,
                             settings: {
+                                vertical: false,
                                 slidesToShow: 3,
                                 slidesToScroll: 1
                             }
