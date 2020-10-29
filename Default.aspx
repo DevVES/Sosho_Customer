@@ -3155,5 +3155,9 @@
         //$('#ca-container').contentcarousel();
         $('#ContentPlaceHolder1_divCategory').contentcarousel();
 
+        //function CarouselCategory() {
+        //    debugger
+        //    $('#ContentPlaceHolder1_divCategory').contentcarousel();
+        //}
     </script>
 </asp:Content>
