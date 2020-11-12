@@ -251,7 +251,29 @@
                   //set the href attribute on the link
                   $whatsApp.attr('href', url + encodedText);
               }
+              function Reorder(orderid) {
+                  $.ajax({
 
+                      type: "POST",
+                      url: "OrderSummery.aspx/GetProductDetailsForReorder",
+                      data: '{orderid:"' + orderid + '"}',
+                      contentType: "application/json",
+                      dataType: "json",
+
+                      success: function (response) {
+                          if (response.d == "Success") {
+                              window.location = "Default.aspx";
+                          } else {
+                              alert("Something Wrong....");
+                          }
+                      },
+                      failure: function (response) {
+
+                          alert("Something Wrong....");
+
+                      }
+                  });
+              }
               //call the decorator function
               decorateWhatsAppLink()
     </script>

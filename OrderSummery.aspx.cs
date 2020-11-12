@@ -74,13 +74,13 @@ public partial class OrderSummery : System.Web.UI.Page
                     lblbuyflag.Text = BuyFlag;
                 }
 
-                if (!string.IsNullOrWhiteSpace(Request.QueryString["orderid"]))
-                {
-                     orderid = Request.QueryString["orderid"].ToString();
-                    //HttpContext.Current.Session["orderid"] = orderid;
-                    GetProductDetailsForReorder(orderid);
+                //if (!string.IsNullOrWhiteSpace(Request.QueryString["orderid"]))
+                //{
+                //     orderid = Request.QueryString["orderid"].ToString();
+                //    //HttpContext.Current.Session["orderid"] = orderid;
+                //    GetProductDetailsForReorder(orderid);
 
-                }
+                //}
                 //else
                 //{
                 //    getaddr(Customerid, AddrId, BuyFlag);
@@ -193,7 +193,7 @@ public partial class OrderSummery : System.Web.UI.Page
                         if (item.Productvariant.ToString() == "BannerProduct")
                         {
                         //imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
-                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
+                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name, pm.PackingType,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
                         dtimg = dbc.GetDataTable(imgquery);
 
                         querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
@@ -207,7 +207,7 @@ public partial class OrderSummery : System.Web.UI.Page
                             //querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
                             //dtpathimg = dbc.GetDataTable(querydata);
 
-                            imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product_ProductAttribute_Mapping.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
+                            imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,Product_ProductAttribute_Mapping.PackingType,UnitMaster.UnitName,Product.Unit,Product_ProductAttribute_Mapping.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
                             dtimg = dbc.GetDataTable(imgquery);
 
                             querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
@@ -234,6 +234,11 @@ public partial class OrderSummery : System.Web.UI.Page
                             if (dtimg.Rows[0]["IsQtyFreeze"].ToString() == "True")
                                 IsQtyFreeze = true;
                         }
+
+                        if (!string.IsNullOrEmpty(dtimg.Rows[0]["PackingType"].ToString()))
+                        {
+                            prodname = string.Concat(prodname, ',',' ', dtimg.Rows[0]["PackingType"].ToString());
+                        }
                        
                     }
                     html += "<div class=\"single-product\">";
@@ -246,10 +251,10 @@ public partial class OrderSummery : System.Web.UI.Page
                     html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lblproprice\"> <span>Price / Qty : " + item.PaidAmount + "</span> <span id=\"lblmrp\" style=\"display:none;\">"+item.Mrp+"</span></div></div>";
                     if (IsQtyFreeze)
                     {
-                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\"><i class=\"fa fa-minus\"></i></button>";
+                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid +','+item.AttributeId+','+item.PaidAmount+','+item.Mrp+','+item.BannerId+','+item.BannerProductType+",this)\"><i class=\"fa fa-minus\"></i></button>";
                         html += "<div class=\"qty\" style=\"display: grid;\"><input readonly=true type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#a5a5a5\" onclick=\"Priceplus(" + item.productid + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#a5a5a5\" onclick=\"Priceplus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ','  + item.BannerId + ',' + item.BannerProductType + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div>";
 
                         if (!item.isProductAvailable)
                         {
@@ -259,17 +264,17 @@ public partial class OrderSummery : System.Web.UI.Page
                         }
                         else if (item.isOutOfStock)
                         {
-                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
+                            html += "<div class=\"clsOutofStock col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
                         }
 
-                        html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
+                        html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ","+item.AttributeId+ ",this)\"></i></div></div></div>";
                     }
                     else
                     {
-                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" class=\"minus\" style=\"color:white;background-color:#1DA1F2\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ",this)\"><i class=\"fa fa-minus\"></i></button>";
+                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" class=\"minus\" style=\"color:white;background-color:#1DA1F2\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ',' + item.BannerId + ',' + item.BannerProductType + ",this)\"><i class=\"fa fa-minus\"></i></button>";
                         html += "<div class=\"qty\" style=\"display: grid;\"><input type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ",this)\"><i class=\"fa fa-plus\"></i></button></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ',' + item.BannerId + ',' + item.BannerProductType + ",this)\"><i class=\"fa fa-plus\"></i></button></div>";
 
                         if (!item.isProductAvailable)
                         {
@@ -281,10 +286,10 @@ public partial class OrderSummery : System.Web.UI.Page
                         }
                         else if (item.isOutOfStock)
                         {
-                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
+                            html += "<div class=\"clsOutofStock col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
                         }
 
-                        html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ",this)\"></i></div></div></div>";
+                        html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid +","+item.AttributeId+ ",this)\"></i></div></div></div>";
                     }
                     if (item.isOfferExpired || !item.isProductAvailable || item.isOutOfStock)
                     {
@@ -815,7 +820,7 @@ public partial class OrderSummery : System.Web.UI.Page
 
     }
     [System.Web.Services.WebMethod]
-    public static object CODPlaceMultipleOrder(List<ClsOrderModels.OrderSummeryModel> summeryModel,string totalamount,string redeemamount, string PromoAmount, string Discount, string PaidAmt, string PromoCode,string reorderid = "0")
+    public static object CODPlaceMultipleOrder(List<ClsOrderModels.ConfirmOrderNewModel> summeryModel,string totalamount,string redeemamount, string PromoAmount, string Discount, string PaidAmt, string PromoCode,string reorderid = "0")
     {
         try
         {
@@ -1040,7 +1045,7 @@ public partial class OrderSummery : System.Web.UI.Page
     }
 
     [System.Web.Services.WebMethod]
-    public static string Remove(string productid)
+    public static string Remove(string productid, string attributeid)
     {
         ClsOrderModels.PlaceMultipleOrderNewModel orderModel;
         if ((HttpContext.Current.Session["ConfirmOrder"] != null))
@@ -1057,7 +1062,7 @@ public partial class OrderSummery : System.Web.UI.Page
         {
             if (orderModel.products.Count > 1)
             {
-                ClsOrderModels.ProductListNew product = orderModel.products.Where(x => x.productid == productid).FirstOrDefault();
+                ClsOrderModels.ProductListNew product = orderModel.products.Where(x => x.productid == productid && x.AttributeId == attributeid).FirstOrDefault();
                 orderModel.products.Remove(product);
 
                 HttpContext.Current.Session["ConfirmOrder"] = orderModel;
@@ -1085,112 +1090,250 @@ public partial class OrderSummery : System.Web.UI.Page
             return "Fail";
         }
     }
-    public void GetProductDetailsForReorder(string orderid)
+    [System.Web.Services.WebMethod]
+    public static string  GetProductDetailsForReorder(string orderid)
     {
-        string JurisdictionId = string.Empty;
-        if ((HttpContext.Current.Session["JurisdictionId"] != null))
+        try
         {
-            JurisdictionId = Session["JurisdictionId"].ToString();
-        }
-        string CustomerId = clsCommon.getCurrentCustomer().id;
 
-        string apiString = clsCommon.strApiUrl + "api/CODOrder/GetProductListFromReOrder?orderid=" + orderid + "&JurisdictionId=" + JurisdictionId + "&CustomerId=" + CustomerId;
-        string data = clsCommon.GET(apiString);
 
-        if (!String.IsNullOrEmpty(data))
-        {
-            ClsOrderModels.ReOrderProductList objorder = JsonConvert.DeserializeObject<ClsOrderModels.ReOrderProductList>(data);
-            string value = clsCommon.Base64Encode(objorder.AddressId);
-            //HttpContext.Current.Session["Addressid"] = value;
-            //getaddr(CustomerId, objorder.AddressId);
-            ClsOrderModels.PlaceMultipleOrderNewModel orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
-            List<ClsOrderModels.ProductListNew> products = new List<ClsOrderModels.ProductListNew>();
-            List<ClsOrderModels.ConfirmOrderNewModel> model = new List<ClsOrderModels.ConfirmOrderNewModel>();
-            foreach (var item in objorder.ProductList)
+            string JurisdictionId = string.Empty;
+            if ((HttpContext.Current.Session["JurisdictionId"] != null))
             {
-                int BannerProductType = Convert.ToInt32(item.ItemType);
-                int BannerId = string.IsNullOrEmpty(item.bannerId) ? 0 : Convert.ToInt32(item.bannerId);
-                string Productid = item.ProductId;
-                int Qty = item.Quantity;
-                string ProductVariant = item.ItemType == "1" ? string.Empty : "BannerProduct";
-                bool isOfferExpired = item.isOfferExpired;
-                bool isProductAvailable = item.isProductAvailable;
+                JurisdictionId = HttpContext.Current.Session["JurisdictionId"].ToString();
+            }
+            string CustomerId = clsCommon.getCurrentCustomer().id;
 
-                int mrp = 0;int soshoprice = 0;
-                string grpid = string.Empty, Unit = string.Empty, Unitid = string.Empty;
-                bool isOutOfStock = false;
+            string apiString = clsCommon.strApiUrl + "api/CODOrder/GetProductListFromReOrder?orderid=" + orderid + "&JurisdictionId=" + JurisdictionId + "&CustomerId=" + CustomerId;
+            string data = clsCommon.GET(apiString);
 
-               
+            if (!String.IsNullOrEmpty(data))
+            {
+                ClsOrderModels.ReOrderProductList objorder = JsonConvert.DeserializeObject<ClsOrderModels.ReOrderProductList>(data);
+                string value = clsCommon.Base64Encode(objorder.AddressId);
+                //HttpContext.Current.Session["Addressid"] = value;
+                //getaddr(CustomerId, objorder.AddressId);
+                ClsOrderModels.PlaceMultipleOrderNewModel orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
+                List<ClsOrderModels.ProductListNew> products = new List<ClsOrderModels.ProductListNew>();
+                List<ClsOrderModels.ConfirmOrderNewModel> model = new List<ClsOrderModels.ConfirmOrderNewModel>();
 
-                foreach (var attributes in item.ProductAttributesList)
+                if ((HttpContext.Current.Session["ConfirmOrder"] != null))
                 {
-                    mrp = Convert.ToInt32(attributes.Mrp);
-                    soshoprice = Convert.ToInt32(attributes.soshoPrice);
-                    grpid = attributes.AttributeId;
-                    Unit = attributes.weight.Split('-')[0];
-                    Unitid = attributes.weight.Split('-')[1];
-                    isOutOfStock = attributes.isOutOfStock;
+                    orderModel = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
+
                 }
-
-                model.Add(new ClsOrderModels.ConfirmOrderNewModel
+                else
                 {
-                    BannerProductType = BannerProductType,
-                    BannerId = BannerId,
-                    Productid = Productid,
-                    Grpid = grpid,
-                    Mrp = mrp,
-                    SoshoPrice = soshoprice,
-                    Qty = Qty,
-                    Unit = Unit,
-                    UnitId = Unitid,
-                    Productvariant = ProductVariant,
-                    isOfferExpired = isOfferExpired,
-                    isProductAvailable = isProductAvailable,
-                    isOutOfStock = isOutOfStock
-
-                });
-
-
-            }
-
-            foreach (var item in model)
-            {
-                item.MrpTotal = item.Mrp * item.Qty;
-                item.SoshoTotal = item.SoshoPrice * item.Qty;
-                products.Add(new ClsOrderModels.ProductListNew
+                    orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
+                }
+                int Qty = 0;
+                if (orderModel.products != null && orderModel.products.Count > 0)
                 {
-                    productid = item.Productid,
-                    PaidAmount = item.SoshoPrice,
-                    Quantity = item.Qty.ToString(),
-                    UnitId = item.UnitId.ToString(),
-                    Unit = item.Unit.ToString(),
-                    Productvariant = item.Productvariant,
-                    AttributeId = item.Grpid,
-                    //UnitId = "Gram",
-                    //Unit = "500",
-                    couponCode = "0",
-                    refrcode = "0",
-                    BannerId = item.BannerId,
-                    BannerProductType = item.BannerProductType,
-                    Mrp = item.Mrp,
-                    isOfferExpired = item.isOfferExpired,
-                    isOutOfStock = item.isOutOfStock,
-                    isProductAvailable = item.isProductAvailable
-                });
+
+                    foreach (var item in objorder.ProductList)
+                    {
+                        var product = orderModel.products.Where(x => x.productid == item.ProductId && x.AttributeId == item.ProductAttributesList.FirstOrDefault().AttributeId).FirstOrDefault();
+                        if (product != null)
+                        {
+                            foreach (var prod in orderModel.products)
+                            {
+                                if (item.ProductId == prod.productid)
+                                {
+                                    var attribute = item.ProductAttributesList.Where(x => x.AttributeId == prod.AttributeId).FirstOrDefault();
+                                    if (attribute != null)
+                                    {
+                                        var qty = Convert.ToInt32(prod.Quantity);
+                                        qty += attribute.Quantity;
+                                        prod.Quantity = qty.ToString();
+                                    }
+
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            int BannerProductType = Convert.ToInt32(item.ItemType);
+                            int BannerId = string.IsNullOrEmpty(item.bannerId) ? 0 : Convert.ToInt32(item.bannerId);
+                            string Productid = item.ProductId;
+                            //int Qty = item.Quantity;
+                            string ProductVariant = item.ItemType == "1" ? string.Empty : "BannerProduct";
+                            bool isOfferExpired = item.isOfferExpired;
+                            bool isProductAvailable = item.isProductAvailable;
+
+                            int mrp = 0; int soshoprice = 0;
+                            string grpid = string.Empty, Unit = string.Empty, Unitid = string.Empty;
+                            bool isOutOfStock = false;
+
+
+
+                            foreach (var attributes in item.ProductAttributesList)
+                            {
+                                mrp = Convert.ToInt32(attributes.Mrp);
+                                soshoprice = Convert.ToInt32(attributes.soshoPrice);
+                                grpid = attributes.AttributeId;
+                                Unit = attributes.weight.Split('-')[0];
+                                Unitid = attributes.weight.Split('-')[1];
+                                isOutOfStock = attributes.isOutOfStock;
+                                Qty = attributes.Quantity;
+                            }
+
+                            model.Add(new ClsOrderModels.ConfirmOrderNewModel
+                            {
+                                BannerProductType = BannerProductType,
+                                BannerId = BannerId,
+                                Productid = Productid,
+                                Grpid = grpid,
+                                Mrp = mrp,
+                                SoshoPrice = soshoprice,
+                                Qty = Qty,
+                                Unit = Unit,
+                                UnitId = Unitid,
+                                Productvariant = ProductVariant,
+                                isOfferExpired = isOfferExpired,
+                                isProductAvailable = isProductAvailable,
+                                isOutOfStock = isOutOfStock
+
+                            });
+
+                        }
+
+                    }
+
+                    foreach (var item in model)
+                    {
+                        item.MrpTotal = item.Mrp * item.Qty;
+                        item.SoshoTotal = item.SoshoPrice * item.Qty;
+                        orderModel.products.Add(new ClsOrderModels.ProductListNew
+                        {
+                            productid = item.Productid,
+                            PaidAmount = item.SoshoPrice,
+                            Quantity = item.Qty.ToString(),
+                            UnitId = item.UnitId.ToString(),
+                            Unit = item.Unit.ToString(),
+                            Productvariant = item.Productvariant,
+                            AttributeId = item.Grpid,
+                            //UnitId = "Gram",
+                            //Unit = "500",
+                            couponCode = "0",
+                            refrcode = "0",
+                            BannerId = item.BannerId,
+                            BannerProductType = item.BannerProductType,
+                            Mrp = item.Mrp,
+                            isOfferExpired = item.isOfferExpired,
+                            isOutOfStock = item.isOutOfStock,
+                            isProductAvailable = item.isProductAvailable
+                        });
+                    }
+
+                    orderModel.discountamount = "0";
+                    orderModel.Redeemeamount = "0";
+                    //orderModel.CustomerId = clsCommon.getCurrentCustomer().id;
+                    orderModel.orderMRP = model.Sum(x => x.MrpTotal).ToString();
+                    orderModel.totalAmount = model.Sum(x => x.SoshoTotal).ToString();
+                    orderModel.totalQty = model.Sum(x => x.Qty).ToString();
+                    //orderModel.totalWeight = (model.Sum(x => x.Qty) * model.Sum(x => x.Weight)).ToString();
+                    orderModel.totalWeight = "0";
+
+                }
+                else
+                {
+                    foreach (var item in objorder.ProductList)
+                    {
+                        int BannerProductType = Convert.ToInt32(item.ItemType);
+                        int BannerId = string.IsNullOrEmpty(item.bannerId) ? 0 : Convert.ToInt32(item.bannerId);
+                        string Productid = item.ProductId;
+                        //int Qty = item.Quantity;
+                        string ProductVariant = item.ItemType == "1" ? string.Empty : "BannerProduct";
+                        bool isOfferExpired = item.isOfferExpired;
+                        bool isProductAvailable = item.isProductAvailable;
+
+                        int mrp = 0; int soshoprice = 0;
+                        string grpid = string.Empty, Unit = string.Empty, Unitid = string.Empty;
+                        bool isOutOfStock = false;
+
+
+
+                        foreach (var attributes in item.ProductAttributesList)
+                        {
+                            mrp = Convert.ToInt32(attributes.Mrp);
+                            soshoprice = Convert.ToInt32(attributes.soshoPrice);
+                            grpid = attributes.AttributeId;
+                            Unit = attributes.weight.Split('-')[0];
+                            Unitid = attributes.weight.Split('-')[1];
+                            isOutOfStock = attributes.isOutOfStock;
+                            Qty = attributes.Quantity;
+                        }
+
+                        model.Add(new ClsOrderModels.ConfirmOrderNewModel
+                        {
+                            BannerProductType = BannerProductType,
+                            BannerId = BannerId,
+                            Productid = Productid,
+                            Grpid = grpid,
+                            Mrp = mrp,
+                            SoshoPrice = soshoprice,
+                            Qty = Qty,
+                            Unit = Unit,
+                            UnitId = Unitid,
+                            Productvariant = ProductVariant,
+                            isOfferExpired = isOfferExpired,
+                            isProductAvailable = isProductAvailable,
+                            isOutOfStock = isOutOfStock
+
+                        });
+
+
+                    }
+
+                    foreach (var item in model)
+                    {
+                        item.MrpTotal = item.Mrp * item.Qty;
+                        item.SoshoTotal = item.SoshoPrice * item.Qty;
+                        products.Add(new ClsOrderModels.ProductListNew
+                        {
+                            productid = item.Productid,
+                            PaidAmount = item.SoshoPrice,
+                            Quantity = item.Qty.ToString(),
+                            UnitId = item.UnitId.ToString(),
+                            Unit = item.Unit.ToString(),
+                            Productvariant = item.Productvariant,
+                            AttributeId = item.Grpid,
+                            //UnitId = "Gram",
+                            //Unit = "500",
+                            couponCode = "0",
+                            refrcode = "0",
+                            BannerId = item.BannerId,
+                            BannerProductType = item.BannerProductType,
+                            Mrp = item.Mrp,
+                            isOfferExpired = item.isOfferExpired,
+                            isOutOfStock = item.isOutOfStock,
+                            isProductAvailable = item.isProductAvailable
+                        });
+                    }
+
+                    orderModel.discountamount = "0";
+                    orderModel.Redeemeamount = "0";
+                    //orderModel.CustomerId = clsCommon.getCurrentCustomer().id;
+                    orderModel.orderMRP = model.Sum(x => x.MrpTotal).ToString();
+                    orderModel.totalAmount = model.Sum(x => x.SoshoTotal).ToString();
+                    orderModel.totalQty = model.Sum(x => x.Qty).ToString();
+                    //orderModel.totalWeight = (model.Sum(x => x.Qty) * model.Sum(x => x.Weight)).ToString();
+                    orderModel.totalWeight = "0";
+
+                    orderModel.products = products;
+                }
+               
+                //getreedemamt(CustomerId, orderModel.totalAmount);
+                HttpContext.Current.Session["ConfirmOrder"] = orderModel;
+
+                return "Success";
             }
-
-            orderModel.discountamount = "0";
-            orderModel.Redeemeamount = "0";
-            //orderModel.CustomerId = clsCommon.getCurrentCustomer().id;
-            orderModel.orderMRP = model.Sum(x => x.MrpTotal).ToString();
-            orderModel.totalAmount = model.Sum(x => x.SoshoTotal).ToString();
-            orderModel.totalQty = model.Sum(x => x.Qty).ToString();
-            //orderModel.totalWeight = (model.Sum(x => x.Qty) * model.Sum(x => x.Weight)).ToString();
-            orderModel.totalWeight = "0";
-
-            orderModel.products = products;
-            getreedemamt(CustomerId, orderModel.totalAmount);
-            HttpContext.Current.Session["ConfirmOrder"] = orderModel;
+            return "";
+        }
+        catch (Exception ex)
+        {
+            throw ex;
         }
 
     }

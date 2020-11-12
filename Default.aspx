@@ -9,11 +9,17 @@
     <link href="css/CircularContentCarousel/style.css" rel="stylesheet" />
     <link href="css/CircularContentCarousel/jquery.jscrollpane.css" rel="stylesheet" />
     <link href="css/completeCss.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="slick/slick.css" />
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+    <link rel="stylesheet" href="css/swiper.min.css" />
+
     <style>
+        /*.SubCatMain {
+            visibility: hidden;
+        }
+            .SubCatMain.slick-initialized {
+                visibility: visible;
+            }*/
         #header-content1 {
-            width: 940px;
+            width: 800px;
             margin: 0 auto;
             min-height: 60px
         }
@@ -211,6 +217,9 @@
             /*width: 50%;*/
             width: 104px;
             border-radius: 50%;
+            height: 104px;
+            object-fit: scale-down;
+            cursor: pointer;
         }
 
         .CategoryText {
@@ -231,6 +240,7 @@
             /*height: 400px;
             width: 400px;*/
             width: 69%;
+            /*object-fit:scale-down;*/
         }
 
         .ProudctMRPText {
@@ -238,7 +248,7 @@
             font-size: 15px;
             width: 121px;
             /*padding-left: 27px;*/
-            padding-left: 10px;
+            /*padding-left: 10px;*/
         }
 
         .ProductName {
@@ -246,7 +256,7 @@
             font-family: 'Amazon Ember';
             font-size: 22px;
             /*padding-left: 27px;*/
-            padding-left: 10px;
+            /*padding-left: 10px;*/
             font-weight: bold;
         }
 
@@ -268,7 +278,7 @@
             font-size: 15px;
             /*width: 121px;*/
             /*padding-left: 27px;*/
-            padding-left: 10px;
+            /*padding-left: 10px;*/
             font-weight: bold;
         }
 
@@ -291,14 +301,14 @@
             font-family: 'Amazon Ember';
             border-color: #D0D0D0;
             /*padding-left: 27px;*/
-            padding-left: 10px;
+            /*padding-left: 10px;*/
         }
 
         .ProductBtn {
             color: white;
             background-color: #1DA1F2;
-            margin:3px;
-            font-size:10px;
+            margin: 3px;
+            font-size: 10px;
         }
 
         .tableheader {
@@ -312,8 +322,8 @@
             color: white;
             background-color: #B12704;
             border-radius: 50px;
-            padding: 15px;
-            width: 77px;
+            padding: 6px;
+            width: 45px;
             position: absolute;
             text-align: center;
         }
@@ -374,6 +384,7 @@
             .ProductImage {
                 height: 150px;
                 width: 150px;
+                object-fit:scale-down;
             }
 
             .tableheader {
@@ -381,19 +392,19 @@
                 /*right: 7px;*/
             }
 
-            .DiscountOffer {
+            /*.DiscountOffer {
                 padding: 5px;
                 width: 62px;
-            }
+            }*/
 
             .ProductName {
                 font-size: 14px;
-                padding-left: 10px;
+                /*padding-left: 10px;*/
             }
 
             .ProudctMRPText {
                 font-size: 14px;
-                width: 118px;
+                width: 106px;
             }
 
             .SoshoPrice {
@@ -428,9 +439,9 @@
                 width: 72px;
             }
 
-            .ProductCenter {
+            /*.ProductCenter {
                 text-align: -webkit-center;
-            }
+            }*/
 
             .BannerAddPostion {
                 left: 76%;
@@ -438,11 +449,11 @@
         }
 
         .SubCat {
-            border: 1px solid;
+            /*border: 1px solid;*/
             padding: 1px 7px 1px 7px;
             border-radius: 4px;
             border-color: #1da1f2;
-            color: #1da1f2;
+            color: #8e8e8e;
             cursor: pointer;
             margin-left: 10px;
             margin-top: 5px;
@@ -451,7 +462,7 @@
         .SubCatMain {
             height: auto;
             margin: auto auto 20px;
-            display: block;
+            /*display: block;*/
             text-align: center;
         }
         /*@media screen and (max-width: 700px) {
@@ -916,23 +927,43 @@
             <div class="unit_right1 main-unit1 topheaderlink1">
                 <div class="header-bottom1">
                     <div class="sb-searchbar1 unit_left1">
-                        <div class="search-bar-wrap">
-                            <div class="search-bar">
-                                <div class="search-bar-text-wrap">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                        <input type="text" id="small-searchterms" autocomplete="off" name="q" placeholder="Discover the Origin here" maxlength="200" class="SearchBarTextBox" />
-                                       <%-- <span onclick="ClearFilter()" style="margin-left: -27px; z-index: 100; cursor:pointer; display:none">
+                        <div class="search-bar-wrap col-sm-12">
+                            <div class="search-bar col-sm-9">
+                                <div class="search-bar-text-wrap ">
+                                    <div class="input-group col-sm-12" style="border: 1px solid #ccc;margin-bottom:1px;">
+                                        <span class="input-group-addon" style="border: none; background: white;"><i class="fa fa-search"></i></span>
+                                        <input type="text" id="small-searchterms" autocomplete="off" name="q" placeholder="Search" maxlength="200" class="SearchBarTextBox" style="border: none;" />
+                                        <%-- <span onclick="ClearFilter()" style="margin-left: -27px; z-index: 100; cursor:pointer; display:none">
                                             <i class="fa fa-times"></i>
                                         </span>--%>
                                     </div>
+
+
                                 </div>
-                                <div>
-                                    <button type="button" class="btn btn-primary" onclick="ClearFilter()" style="background: rgb(29, 161, 242); border-color: rgb(29, 161, 242);" id="BtnClear">Clear</button>
+                                <div class="col=sm-2">
+                                    <button type="button" class="btn btn-primary" onclick="ClearFilter()" style="background: rgb(29, 161, 242); border-color: rgb(29, 161, 242); height: 36px;" id="BtnClear">Clear</button>
                                 </div>
+                                <ul id="output" class="instantSearch"></ul>
                             </div>
+                            <div class="col-md-3">
+                                <div id="divSortProduct">
+                                    <select id="sort" onchange="SortProduct(this)">
+                                        <option value="0">Sort By : Default</option>
+                                        <option value="1">Price - Low to High</option>
+                                        <option value="2">Price - High to Low</option>
+                                        <option value="3">Discount</option>
+                                        <option value="4">Sosho Recommended</option>
+                                    </select>
+                                </div>
+                                <%--<a id='showPopUp' href="javascript:void(0);">
+                                    <img class="custom-sort-menu" src="images/sort.png" alt="Nav" style="width: 24px;" /></a>
+                                --%>
+
+                                <%--  <img class="custom-sort-menu" src="images/sort.png" alt="Nav" />--%>
+                            </div>
+
                         </div>
-                        <ul id="output" class="instantSearch"></ul>
+
                     </div>
                 </div>
             </div>
@@ -945,13 +976,13 @@
     </div>
     <div class="col-md-12">
         <div class="col-md-10">
-            <div id="divSubCat" class="ca-new-container SubCatMain" runat="server">
+            <div id="divSubCat" class="SubCatMain" runat="server">
                 <label class="control-label SubCat">Besan </label>
                 <label class="control-label SubCat">Maida </label>
                 <label class="control-label SubCat">Other Floors </label>
             </div>
         </div>
-        <div class="col-md-2" id="divSortProduct">
+        <%--<div class="col-md-2" id="divSortProduct">
             <select id="sort" onchange="SortProduct(this)">
                 <option value="-1">Sort By:</option>
                 <option value="1">Price - Low to High</option>
@@ -959,7 +990,7 @@
                 <option value="3">Discount</option>
                 <option value="4">Sosho Recommended</option>
             </select>
-        </div>
+        </div>--%>
     </div>
 
 
@@ -1199,18 +1230,19 @@
 
     <div id="divIntermediateBannerImage">
     </div>
+     <div id="loader">
+      </div>
     <input type="hidden" id="hdnInterBannerId" />
     <%--Pincode Modal Popup--%>
     <div id="myPinCodeModal" class="modalcenter fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form>
                         <div class="form-group">
                             <fieldset style="border: 1px groove #ddd !important; padding: 0 1.4em 1.4em 1.4em !important; margin: 0 0 1.5em 0 !important; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
                                 <legend style="font-size: 1.2em !important; font-weight: bold !important; text-align: left !important; width: auto; padding: 0 10px; border-bottom: none;">Pin code</legend>
                                 <i class="fa fa-map-marker" style="font-size: 25px; color: rgb(29, 161, 242)"></i>
-                                <input type="text" id="txtPinCodeval" placeholder="Pin Code" maxlength="6" style="padding-left: 0; padding-right: 0; border-radius: 0; border: none; border-radius: 0; box-shadow: none; border-bottom: 1px solid #d7dde4; height: 27px; width: 67px; border-color: rgb(29, 161, 242);" />
+                                <input type="text" id="txtPinCodeval" placeholder="Pin Code" maxlength="6" style="padding-left: 0; padding-right: 0; border-radius: 0; border: none; border-radius: 0; box-shadow: none; border-bottom: 1px solid #d7dde4; height: 27px; width: auto; border-color: rgb(29, 161, 242);" />
 
                                 <span id="lblpinmsg" runat="server" style="height: 16px; color: green; align-content: center; font: bold; /* size: 37px; */font-size: 14px; margin: 0"></span>
                                 <span id="lblpinnotmsg" runat="server" style="height: 16px; color: red; align-content: center; font: bold; /* size: 37px; */font-size: 14px; margin: 4px"></span>
@@ -1219,7 +1251,6 @@
                         <div style="text-align: center;">
                             <button type="button" class="btn btn-primary" onclick="Newcheckservices()" style="background: rgb(29, 161, 242); border-color: rgb(29, 161, 242);" id="BtnPinCodeApply">Confirm</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -1332,6 +1363,14 @@
         </div>
     </div>
     <script>
+        
+        $(document).keypress(function (e) {
+            if ($("#myPinCodeModal").hasClass('in') && (e.keycode == 13 || e.which == 13)) {
+               // alert("Enter is pressed");
+                e.preventDefault();
+                $("#BtnPinCodeApply").click();
+            }
+        });
         var products = [];
         var obj;
         var count = 0;
@@ -1442,7 +1481,9 @@
             if (products.length > 0) {
                 $('#count')[0].innerHTML = count + " Product Added";
                 $('#cnfrm').removeClass('hide');
+                $(".dvBtnReOrder").css('bottom', '10px');
                 $('#hdnProductCount').val(count);
+                UpdateSessionCart();
             }
         }
         function plusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType) {
@@ -1531,17 +1572,22 @@
                 if (count == 0) {
                     $('#count')[0].innerHTML = "";
                     $('#cnfrm').addClass('hide');
+                    $(".dvBtnReOrder").css('bottom', '0px');
                 }
                 else {
                     $('#count')[0].innerHTML = count + " Product Added";
                     $('#cnfrm').removeClass('hide');
+                    $(".dvBtnReOrder").css('bottom', '10px');
                     $('#hdnProductCount').val(count);
                 }
+                //UpdateSessionCart();
             }
             else {
                 $('#count')[0].innerHTML = "";
                 $('#cnfrm').addClass('hide');
+                $(".dvBtnReOrder").css('bottom', '0px');
             }
+            UpdateSessionCart();
             if (value != 0) {
                 var dataval = parent.find('input');
                 dataval[0].value = value;
@@ -1587,7 +1633,9 @@
             if (products.length > 0) {
                 $('#count')[0].innerHTML = count + " Product Added";
                 $('#cnfrm').removeClass('hide');
+                $(".dvBtnReOrder").css('bottom', '10px');
                 $('#hdnProductCount').val(count);
+                UpdateSessionCart();
             }
         }
 
@@ -1722,16 +1770,20 @@
                 if (count == 0) {
                     $('#count')[0].innerHTML = "";
                     $('#cnfrm').addClass('hide');
+                    $(".dvBtnReOrder").css('bottom', '0px');
                 }
                 else {
                     $('#count')[0].innerHTML = count + " Product Added";
                     $('#cnfrm').removeClass('hide');
+                    $(".dvBtnReOrder").css('bottom', '10px');
                     $('#hdnProductCount').val(count);
                 }
+                UpdateSessionCart();
             }
             else {
                 $('#count')[0].innerHTML = "";
                 $('#cnfrm').addClass('hide');
+                $(".dvBtnReOrder").css('bottom', '0px');
             }
             if (value != 0) {
                 var dataval = parent.find('input');
@@ -1743,7 +1795,7 @@
         function BuyFivewithFriend_Click(prodid, mrp, PWeight, el) {
             $('#count')[0].innerHTML = "";
             $('#cnfrm').addClass('hide');
-
+            $(".dvBtnReOrder").css('bottom', '0px');
             var flag = "6";
             var $this = $(el);
 
@@ -1797,12 +1849,13 @@
             if (products.length > 0) {
                 $('#count')[0].innerHTML = count + " Product Added";
                 $('#cnfrm').removeClass('hide');
+                $(".dvBtnReOrder").css('bottom', '10px');
             }
         }
         function BuyOneWithFriend_Click(prodid, mrp, PWeight, el) {
             $('#count')[0].innerHTML = "";
             $('#cnfrm').addClass('hide');
-
+            $(".dvBtnReOrder").css('bottom', '0px');
             var flag = "2";
             var $this = $(el);
 
@@ -1855,12 +1908,13 @@
             if (products.length > 0) {
                 $('#count')[0].innerHTML = count + " Product Added";
                 $('#cnfrm').removeClass('hide');
+                $(".dvBtnReOrder").css('bottom', '10px');
             }
         }
         function BuyOne_Click(prodid, mrp, PWeight, el) {
             $('#count')[0].innerHTML = "";
             $('#cnfrm').addClass('hide');
-
+            $(".dvBtnReOrder").css('bottom', '0px');
             var flag = "1";
             var $this = $(el);
 
@@ -1914,6 +1968,8 @@
             if (products.length > 0) {
                 $('#count')[0].innerHTML = count + " Product Added";
                 $('#cnfrm').removeClass('hide');
+                $(".dvBtnReOrder").css('bottom', '10px');
+
             }
         }
 
@@ -1955,7 +2011,7 @@
             Categoryimage(categoryId, el, type);
         }
         function Categoryimage(categoryId, el, type) {
-            $('#ContentPlaceHolder1_divSubCat').slick('unslick');
+            //$('#ContentPlaceHolder1_divSubCat').slick('unslick');
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $('.CategoryText').css({ 'color': '#1A1A1A' });
             $('.CategoryImagecenter').css({ 'border': 'none' });
@@ -1979,8 +2035,10 @@
 
                 success: function (response) {
                     $("#ContentPlaceHolder1_divSubCat").html(response.d);
-                    $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
-                    InitializeSlick();
+                    subCatSwiper.destroy();
+                    subCatSwiper = new Swiper('#subCatswiper', settings);
+                    $($('.SubCat')[0]).css("color", "#1da1f2");
+                    //InitializeSlick();
                     $.ajax({
                         type: 'POST',
                         url: "Default.aspx/GetProductdata",
@@ -2030,8 +2088,8 @@
             var categoryid = $('#hdnCategory').val();
             var subcategoryid = $("#hdnSubCategoryId").val();
             var JurisdictionId = $("#hdnJurisdictionId").val();
-            if (sortval == "-1")
-                sortval = "1";
+            //if (sortval == "-1")
+            //    sortval = "1";
             $.ajax({
                 type: 'POST',
                 url: "Default.aspx/GetProductdata",
@@ -2058,7 +2116,6 @@
         }
 
         function GetProduct(subcatid, catid, el) {
-            debugger
             var JurisdictionId = $("#hdnJurisdictionId").val();
             $("#hdnSubCat").val(subcatid);
             $("#hdnSubCategoryId").val(subcatid);
@@ -2072,10 +2129,11 @@
                 dataType: "json",
                 success: function (response) {
                     var $this = $(el);
-                    $this.css("background", "#1da1f2").css("color", "#ffff");
-                    $this.siblings().css("background", "#ffff").css("color", "#1da1f2");
-                    $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
-                    $("#SubCat" + subcatid).siblings().css("background", "#ffff").css("color", "#1da1f2");
+                    $('.SubCat').css('color', '#8e8e8e');
+                    $this.css("color", "#1da1f2");
+                    //$this.siblings().css("color", "#8e8e8e");
+                    $("#SubCat" + subcatid).css("color", "#1da1f2");
+                    //$("#SubCat" + subcatid).siblings().css("color", "#8e8e8e");
                     var ProductEndNo = parseInt(response.d.productcount);
                     $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
                     $("#hdnInterBannerId").val(response.d.InterBannerId);
@@ -2189,7 +2247,11 @@
 
                 success: function (response) {
                     $("#ContentPlaceHolder1_divSubCat").html(response.d);
-                    $("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
+                    ///$("#SubCat" + subcatid).css("background", "#1da1f2").css("color", "#ffff");
+                    subCatSwiper.destroy();
+                    subCatSwiper = new Swiper('#subCatswiper', settings);
+                    $('.SubCat').css('color', '#8e8e8e');
+                    $("#SubCat" + subcatid).css("color", "#1da1f2");
                     $("#hdnSubCategoryId").val(subcatid);
                     //$("#SubCat" + subcatid).css("background", "#ffff").css("color", "#1da1f2");
                     //$($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
@@ -2433,9 +2495,20 @@
         <script src="js/bootstrap.min.js"></script>
 
         <script>
+             var $contentLoadTriggered = false;
             $(document).ready(function () {
-                $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
-                InitializeSlick();
+                
+                $("#loader").hide();
+                $('#divSortMobile').dropdown();
+                $($('.SubCat')[0]).css("color", "#1da1f2");
+
+                if ($('#cnfrm').hasClass('hide')) {
+                    $(".dvBtnReOrder").css('bottom', '0px');
+                }
+                else {
+                    $(".dvBtnReOrder").css('bottom', '10px');
+                }
+                //InitializeSlick();
                 //$("#myPinCodeModal").modal('show');
                 $('.mobile-number').hide();
                 $('.offer-time').hide();
@@ -2444,6 +2517,25 @@
                 $('#lbllogout').hide();
                 $('#header_topbar1').hide();
                 var sValue = '<%=HttpContext.Current.Session["PinCode"]%>';
+
+                $.ajax({
+                    type: "POST",
+                    url: "Default.aspx/GetSessionProductData",
+                    data: '{ data: "1" }',
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.d.length > 0) {
+                            products.push(...response.d);
+                        }
+                        console.log(response);
+                    },
+                    failure: function (response) {
+
+                        alert("Something Wrong....");
+
+                    }
+                });
                 if (sValue != "") {
                     $("#txtPinCodeval").val(sValue);
                     $("#BtnPinCodeApply").click();
@@ -2452,7 +2544,7 @@
                     //$('#myPinCodeModal').modal({keyboard: true});
                 }
 
-                
+
                 $("#text" + $('#hdnCategory').val()).css({ 'color': '#1da1f2' });
                 $("#img" + $('#hdnCategory').val()).css({ 'border': '2px solid #1da1f2' });
                 $('#divSortProduct').hide();
@@ -2523,8 +2615,8 @@
                                         subcatcount++;
                                     }
                                     if (iscategory == 3) {
+                                        var productid = data1[4];
                                         if (procount == 1) {
-                                            var productid = data1[4];
                                             allstr += "<li class='instant-search-item header'><span class='text'>Product</span></li>"
                                         }
                                         allstr += "<li class='instant-search-item'><a class='singleline pname' title='" + productname + "' href='#' onClick=SearchFilterGetProduct(" + productid + "," + categoryid + "," + link + ",this);>" + productname1 + "</a></li>";
@@ -2582,6 +2674,18 @@
                         $('#output').hide();
                     }
                 });
+
+
+                //if (window.matchMedia('(max-width: 480px)').matches || window.matchMedia('(max-width: 320px)').matches || window.matchMedia('(max-width: 568px)').matches || window.matchMedia('(max-width: 393px)').matches) {
+                //    debugger
+                //    $("#divSortProduct").hide();
+                //    $("#divSortDropDown").show();
+                //    }
+                //    else if (window.matchMedia('(max-width: 768px)').matches) {
+                //    debugger
+                //    $("#divSortProduct").show();
+                //    $("#divSortDropDown").hide();
+                //}
             });
             //$(document).on('click', '#dvPackSizeModal0', function () {
             //    alert("H111led.");
@@ -2662,8 +2766,15 @@
                             $("#myPinCodeModal").modal('hide');
                             $("#hdnJurisdictionId").val(JurisdictionId);
                             //$("#spanpincode").html('Deliver to ' + pincode);
+                            var sValue = '<%=HttpContext.Current.Session["PinCode"]%>';
+                            if (pincode != sValue) {
+                                ClearSessionCart();
+                            }
                             $("#spanpincode").html(pincode);
                             $('#divSortProduct').hide();
+
+                            setCookie('JurisdictionId', JurisdictionId);
+                            setCookie('PinCode',pincode);
                             //Get Product Data Load
 
                             $("#BtnPinCodeApply").attr("disabled", false);
@@ -2703,10 +2814,11 @@
                             $("#divIntermediateBannerImage").html('');
                             $('#OtherBanner').html('');
                             var categoryid = $('#hdnCategory').val();
+                            var sortval = $("#sort").val();
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
-                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",Filter:1,SearchProductId:-1}',
+                                data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"1",EndNo:"5",BannerCount:"1",ProductId:"",CategoryId:' + categoryid + ',SubCategoryId:-1,InterBannerid:"",Filter:' + sortval + ',SearchProductId:-1}',
                                 contentType: "application/json",
                                 dataType: "json",
                                 success: function (response) {
@@ -2734,6 +2846,19 @@
                                     $("#divProductNew").append(response.d.intermediateresponse);
                                     AllProducts.push(...response.d.productdata.ProductList);
                                     $("#hdnBannerCount").val(parseInt("1"));
+                                    GetSessionProductData();
+                                    //Added By Vidhi Doshi
+                                    //let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+
+                                    //if (isMobile) {
+                                    //    $("#divSortProduct").hide();
+                                    //    $("#showPopUp").show();
+
+                                    //}
+                                    //else {
+                                    //    $("#showPopUp").hide();
+                                    //    $("#divSortProduct").show();
+                                    //}
                                 },
                                 failure: function (response) {
 
@@ -2797,6 +2922,7 @@
                             var sWeight = FilterProduct.ProductAttributesList[i].weight;
                             var sisSelected = FilterProduct.ProductAttributesList[i].isSelected;
                             var grpid = FilterProduct.ProductAttributesList[i].AttributeId;
+                            var sPackingType = FilterProduct.ProductAttributesList[i].PackingType;
                             if (sisSelected == 'true') {
                                 divsize += '<div style="border-radius: 22px; border: solid;background-Color:#c3e3f7;" id="dvPackSizeModal' + i + '">';
                             }
@@ -2823,7 +2949,7 @@
                             divsize += '</tr>';
                             divsize += '<tr>';
 
-                            divsize += '<td style="width: 22%; text-align: center">Pouch</td>';
+                            divsize += '<td style="width: 22%; text-align: center">' + sPackingType + '</td>';
                             divsize += '<td>MRP:<del><span id="spanProductMrp">' + smrp + '</span></del><input type="hidden" id="hdnPackSizeProductId' + i + '" value="' + prodid + '"><input type="hidden" id="hdnPackSizeGrpId' + i + '" value="' + grpid + '"></td>';
                             divsize += '<td></td>';
                             divsize += '<td></td>';
@@ -2915,7 +3041,12 @@
             function onScroll() {
 
                 //if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
-                if ($(window).scrollTop() >= ($(document).height() - $(window).height())) {
+                //if ($(window).scrollTop() >= ($(document).height() - $(window).height())) {
+                //if ($(window).scrollTop() == $(document).height() - $(window).height() && $contentLoadTriggered == false) {
+                //if ($(document).height() <= $(window).scrollTop() + $(window).height() && $contentLoadTriggered == false) {
+                if ($(document).height() - $('header').height() <= $(window).scrollTop() + $(window).height()  && $contentLoadTriggered == false) {
+                
+                     
                     var ProductCallCount = $('#hdnproductcallcount').val();
                     var JurisdictionId = $("#hdnJurisdictionId").val();
                     //var ProductStartNo = parseInt($('#hdnProductEndNo').val()) + 1;
@@ -2927,23 +3058,29 @@
                     //var subcategoryid = $("#hdnSubCat").val();
                     var subcategoryid = $('#hdnSubCategoryId').val();
                     var interBannerId = $("#hdnInterBannerId").val();
+                    interBannerId = interBannerId.replace(/,$/, "");
                     var searchprodid = $("#hdnSearchProductId").val();
                     var sortval = $("#sort").val();
-                    if (sortval == "-1") {
-                        sortval = "1";
-                    }
+                    //if (sortval == "-1") {
+                    //    sortval = "1";
+                    //}
+                    
                     if (ProductStartNo > 0) {
                         if (ProductCallCount != "") {
+                            $contentLoadTriggered = true;
+                            $("#loader").show();
                             $.ajax({
                                 type: 'POST',
                                 url: "Default.aspx/GetProductdata",
                                 data: '{JurisdictionId:"' + JurisdictionId + '",StartNo:"' + ProductStartNo + '",EndNo:"' + ProductEndNo + '",BannerCount:"' + bannercount + '",ProductId:"' + hdnProdId + '",CategoryId:"' + categoryid + '",SubCategoryId:"' + subcategoryid + '",InterBannerid:"' + interBannerId + '",Filter:"' + sortval + '",SearchProductId:"' + searchprodid + '"}',
                                 contentType: "application/json",
                                 dataType: "json",
+                                async: true,
                                 success: function (response) {
                                     if (response.d.productcount != "") {
                                         $('#hdnProductEndNo').val(parseInt(ProductStartNo + parseInt(response.d.productdata.BannerPosition)));
                                         $('#hdnproductcallcount').val(response.d.productcount);
+
                                         $("#hdnInterBannerId").val(interBannerId + "," + response.d.InterBannerId);
                                         //var getdata = {
                                         //    data: JSON.parse(response.d.whatsapp),
@@ -2967,8 +3104,10 @@
                                     }
                                     else {
                                         $('#hdnProductEndNo').val('0');
-                                        $('#hdnproductcallcount').val(productcount);
+                                        $('#hdnproductcallcount').val(response.d.productcount);
                                     }
+                                    $contentLoadTriggered = false;
+                                     $("#loader").hide();
                                 },
                                 failure: function (response) {
 
@@ -2980,6 +3119,15 @@
                         }
                     }
                 }
+                var rootElement = document.documentElement;
+                var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight
+                if ((rootElement.scrollTop / scrollTotal) > 0) {
+                    // Show button
+                    $(".scrollToTopBtn").addClass("showBtn");
+                } else {
+                    // Hide button
+                     $(".scrollToTopBtn").removeClass("showBtn");
+                }
             }
 
             function ClearFilter() {
@@ -2988,6 +3136,9 @@
                 $("#divProductNew").html('');
                 $("#divIntermediateBannerImage").html('');
                 $('#OtherBanner').html('');
+                $("#hdnSearchProductId").val('-1');
+                $("#hdnSubCategoryId").val('-1');
+                $("#output").html('');
                 var JurisdictionId = $("#hdnJurisdictionId").val();
                 var categoryid = $('#hdnCategory').val();
                 var sort = $("#sort").val();
@@ -3002,20 +3153,13 @@
                         $('#hdnProductEndNo').val(parseInt(ProductEndNo + 1));
                         $('#hdnproductcallcount').val(response.d.productcount);
                         $("#hdnInterBannerId").val(response.d.InterBannerId);
-                        $($('.SubCat')[0]).css("background", "#1da1f2").css("color", "#ffff");
-                        $($('.SubCat')[0]).siblings().css("background", "#ffff").css("color", "#1da1f2");
-
-                        $('.mobile-number').show();
-                        $('.offer-time').show();
-                        $('#ContentPlaceHolder1_divCategory').show();
-                        $('#ContentPlaceHolder1_divSubCat').show();
-                        $('#lbllogout').show();
-                        $("#btnsendMessage").text(response.d.whatsapp);
-                        //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
+                        subCatSwiper.destroy();
+                        subCatSwiper = new Swiper('#subCatswiper', settings);
+                        $('.SubCat').css("color", "#8e8e8e");
+                        $($('.SubCat')[0]).css("color", "#1da1f2");
                         $("#divProductNew").append(response.d.response);
                         $("#divBannerImage").append(response.d.bannerresponse);
 
-                        //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);
                         $("#divProductNew").append(response.d.intermediateresponse);
                         AllProducts.push(...response.d.productdata.ProductList);
                         $("#hdnBannerCount").val(parseInt("1"));
@@ -3042,6 +3186,10 @@
                             $('#AddShow' + value.Grpid).find('input').val(value.Qty);
                         }
                     });
+                    $('#count')[0].innerHTML = products.length + " Product Added";
+                    $('#cnfrm').removeClass('hide');
+                    $(".dvBtnReOrder").css('bottom', '10px');
+                    $('#hdnProductCount').val(products.length);
                 }
 
                 //$.ajax({
@@ -3059,48 +3207,7 @@
 
             }
 
-            function InitializeSlick() {
-                $('#ContentPlaceHolder1_divSubCat').slick({
-                    vertical: false,
-                    dots: false,
-                    infinite: true,
-                    speed: 300,
-                    slidesToShow: 5,
-                    slidesToScroll: 1,
-                    initialSlide: 1,
-                    responsive: [
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                vertical: false,
-                                slidesToShow: 3,
-                                slidesToScroll: 1,
-                                infinite: true,
-                                dots: false
-                            }
-                        },
-                        {
-                            breakpoint: 600,
-                            settings: {
-                                vertical: false,
-                                slidesToShow: 3,
-                                slidesToScroll: 1
-                            }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                vertical: false,
-                                slidesToShow: 3,
-                                slidesToScroll: 1
-                            }
-                        }
-                        // You can unslick at a given breakpoint now by adding:
-                        // settings: "unslick"
-                        // instead of a settings object
-                    ]
-                });
-            }
+
             //$(".SearchBarTextBox").change(function () {
             //    var val = $(this).val();
             //    if (val != "") {
@@ -3150,14 +3257,163 @@
     <!-- the jScrollPane script -->
     <%--<script src="js/CircularContentCarousel/jquery.mousewheel.js"></script>--%>
     <script src="js/CircularContentCarousel/jquery.contentcarousel.js"></script>
-    <script type="text/javascript" src="slick/slick.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+
     <script type="text/javascript">
         //$('#ca-container').contentcarousel();
         $('#ContentPlaceHolder1_divCategory').contentcarousel();
+        var mySwiper = new Swiper('#catswiper', {
+            freeMode: true,
+            slidesPerView: 10,
+             navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            //grabCursor: true,
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                    slidesPerView: 3
+                },
+                // when window width is >= 480px
+                480: {
+                    slidesPerView: 4
+                },
+                // when window width is >= 640px
+                640: {
+                    slidesPerView: 5
+                },
+                // when window width is >= 1024px
+                1024: {
+                    slidesPerView: 9
+                }
+            }
+        });
+        var settings = {
+            freeMode: true,
+            slidesPerView: 7,
+            centerInsufficientSlides: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            //grabCursor: true
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                    slidesPerView: 3
+                },
+                // when window width is >= 480px
+                480: {
+                    slidesPerView: 4
+                },
+                // when window width is >= 640px
+                640: {
+                    slidesPerView: 5
+                },
+                // when window width is >= 1024px
+                1024: {
+                    slidesPerView: 7
+                }
+            }
+        };
+        var subCatSwiper = new Swiper('#subCatswiper', settings);
+
 
         //function CarouselCategory() {
         //    debugger
         //    $('#ContentPlaceHolder1_divCategory').contentcarousel();
         //}
+
+        function UpdateSessionCart() {
+            console.log(products);
+            $("#divMainloader").attr("display", "block");
+            $("#cnfrm").attr("disabled", true);
+            $.ajax({
+
+                type: "POST",
+                url: "Default.aspx/ConfirmOrder",
+                data: JSON.stringify({ model: products, "WhatsAppNo": $("#btnsendMessage").text(), "PinCode": $("#spanpincode").html() }),
+                contentType: "application/json",
+                dataType: "json",
+
+                success: function (response) {
+                    var querystring = window.location.search;
+                    $("#divMainloader").attr("display", "none");
+                    $("#cnfrm").attr("disabled", false);
+                    //window.location = "OrderSummery.aspx";
+                },
+                failure: function (response) {
+                    alert("Something Wrong....");
+                }
+            });
+        }
+        function ClearSessionCart() {
+            $.ajax({
+                type: "POST",
+                url: "Default.aspx/ClearSessionCart",
+                data: '{ data: "1" }',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    products = [];
+                    $('#count')[0].innerHTML = "";
+                    $('#cnfrm').addClass('hide');
+                    $(".dvBtnReOrder").css('bottom', '0px');
+                },
+                failure: function (response) {
+
+                    alert("Something Wrong....");
+
+                }
+            });
+        }
+
+        //$(function () {
+        //    debugger
+        //    let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+
+        //    if (isMobile) {
+        //        $("#divSortProduct").hide();
+        //        //$("#divSortProduct").css('display','none')
+        //        $("#showPopUp").show();
+        //    }
+        //    else {
+        //        $("#showPopUp").hide();
+        //        $("#divSortProduct").show();
+        //    }
+        //});
+
+        function setCookie(cname, cvalue) {
+            document.cookie = cname + "=" + cvalue + ";path=/";
+        }
+        //function getCookie(cname) {
+        //    var name = cname + "=";
+        //    var decodedCookie = decodeURIComponent(document.cookie);
+        //    var ca = decodedCookie.split(';');
+        //    for (var i = 0; i < ca.length; i++) {
+        //        var c = ca[i];
+        //        while (c.charAt(0) == ' ') {
+        //            c = c.substring(1);
+        //        }
+        //        if (c.indexOf(name) == 0) {
+        //            return c.substring(name.length, c.length);
+        //        }
+        //    }
+        //    return "";
+        //}
+
+        //function checkCookie() {
+        //    var JurisdictionId = getCookie("JurisdictionId");
+        //    if (username != "") {
+        //        alert("Welcome again " + username);
+        //    } else {
+        //        username = prompt("Please enter your name:", "");
+        //        if (username != "" && username != null) {
+        //            setCookie("username", username, 365);
+        //        }
+        //    }
+        //}
     </script>
+
 </asp:Content>

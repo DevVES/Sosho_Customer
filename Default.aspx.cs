@@ -24,10 +24,30 @@ public partial class Default : System.Web.UI.Page
             //Getdata();
             GetCategoryData();
 
-            var custid = clsCommon.getCurrentCustomer().id;
-            string walletHistory = clsCommon.strApiUrl + "/api/Wallet/GetWalletHistory?CustomerId=" + custid;
-            string data = clsCommon.GET(walletHistory);
+            var customer = clsCommon.getCurrentCustomer();
+            if(customer != null){
+                string walletHistory = clsCommon.strApiUrl + "/api/Wallet/GetWalletHistory?CustomerId=" + customer.id;
+                string data = clsCommon.GET(walletHistory);
+            }
+            
+            string JurisdictionId = string.Empty;
+            string PinCode = string.Empty;
+            var CJurisdictionId = Request.Cookies["JurisdictionId"];
+            var CPinCode = Request.Cookies["PinCode"];
+            if (CJurisdictionId != null && CPinCode != null)
+            {
+                JurisdictionId = CJurisdictionId.Value;
+                PinCode = CPinCode.Value;
+                if (!string.IsNullOrEmpty(JurisdictionId) && !string.IsNullOrEmpty(PinCode))
+                {
+                    HttpContext.Current.Session["PinCode"] = PinCode;
+                    HttpContext.Current.Session["JurisdictionId"] = JurisdictionId;
 
+                }
+
+            }
+           
+            //dropdown1.InnerHtml = "<li><a href=\"PersonalInfo.aspx\" style=\"color:#1DA1F2;\">Personal Information</a></li><li><a href=\"MyWallet.aspx\" style=\"color:#1DA1F2;\">My Wallet</a></li>  <li><a href=\"MyOrder.aspx\" style=\"color:#1DA1F2;\">My Orders</a></li><li><a href=\"Franchisee.aspx\" style=\"color:#1DA1F2;\">Become a Franchisee</a></li><li><p><span><a href=\"Logout.aspx\" id=\"logoutiddd\" style=\"color:#1DA1F2;\">LogOut</a></span></p></a></li>";
             //GetProductdataTest("1","1","5");
             //if (!IsPostBack)
             //{
@@ -277,6 +297,11 @@ public partial class Default : System.Web.UI.Page
                 ClsOrderModels.CheckPincodeModel objpin = JsonConvert.DeserializeObject<ClsOrderModels.CheckPincodeModel>(res);
                 if (objpin.resultflag == "1")
                 {
+                    //HttpCookie jurisdictionInfo = new HttpCookie("jurisdictionInfo");
+                    //jurisdictionInfo["JurisdictionId"] = objpin.JurisdictionID;
+                    //jurisdictionInfo["Pincode"] = Pincode;
+                    //Response.Cookies.Add(jurisdictionInfo);
+
                     HttpContext.Current.Session["PinCode"] = Pincode;
                     HttpContext.Current.Session["JurisdictionId"] = objpin.JurisdictionID;
                     HttpContext.Current.Session["CountryId"] = objpin.CountryID;
@@ -365,7 +390,10 @@ public partial class Default : System.Web.UI.Page
                 refrcode = "0",
                 BannerId = item.BannerId,
                 BannerProductType = item.BannerProductType,
-                Mrp = item.Mrp
+                Mrp = item.Mrp,
+                isOfferExpired = item.isOfferExpired,
+                isProductAvailable = item.isProductAvailable,
+                isOutOfStock = item.isOutOfStock
             });
         }
 
@@ -394,6 +422,7 @@ public partial class Default : System.Web.UI.Page
         orderModel.totalWeight = "0";
 
         orderModel.products = products;
+        HttpContext.Current.Session["ConfirmOrder"] = null;
         HttpContext.Current.Session["ConfirmOrder"] = orderModel;
 
         HttpContext.Current.Session["IsCheckOut"] = "true";
@@ -549,7 +578,7 @@ public partial class Default : System.Web.UI.Page
                     sWhatsAppNo = objproduct.WhatsAppNo;
                     string sDiscount = "", sProductVariant = "", sMrp = "", sSoshoPrice = "", sWeight = "", sIsProductDescription = "", sAImageName = "";
                     decimal dMrp = 0, dSoshoPrice = 0, dSavePrice = 0;
-                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "", sMinQty = string.Empty, sIsOutofStock = "";
+                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "", sMinQty = string.Empty, sIsOutofStock = "", sPackingType = string.Empty;
                     string sisSelected = "", sProductName = "", sProductDesc = "", sProductKeyFeatures = "";
                     int iIndex = 0;
                     string  sBannerActionId = "", sOpenUrlLink = "", sBannerCategoryId = "", sCategoryName = "", sBannerMinQty = string.Empty;
@@ -751,6 +780,7 @@ public partial class Default : System.Web.UI.Page
                                     sIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[h].isQtyFreeze;
                                     sIsOutofStock = objproduct.ProductList[j].ProductAttributesList[h].isOutOfStock;
                                     sMinQty = objproduct.ProductList[j].ProductAttributesList[h].MinQty;
+                                    sPackingType = objproduct.ProductList[j].ProductAttributesList[h].PackingType;
 
 
 
@@ -792,7 +822,7 @@ public partial class Default : System.Web.UI.Page
                                     else
                                         html += "<td style='padding-top:5px;width:50%;text-align:center;' id='td" + iIndex + "' >";
 
-                                    html += "<div><img src=\'" + sAImageName + "'\" class='ProductImage'/></div>";
+                                    html += "<div><img src=\'" + sAImageName + "'\" alt=\"Image not found\" onerror=\"this.onerror=null; this.src='../images/no_image_available.png';\" class='ProductImage'/></div>";
                                     //}
                                     html += "</td>";
                                     html += "<td style='width:50%;'>";
@@ -815,7 +845,7 @@ public partial class Default : System.Web.UI.Page
 
                                     html += "<td class='ProductCenter' colspan='3'>";
 
-                                    html += "<span class='ProductName'>" + sProductName + "</span>";
+                                    html += "<span class='ProductName'>" + (string.IsNullOrEmpty(sPackingType) ? sProductName : string.Concat(sProductName,',',' ',sPackingType)) + "</span>";
                                     html += "</td>";
                                     html += "</tr>";
                                     html += "<tr>";
@@ -868,7 +898,7 @@ public partial class Default : System.Web.UI.Page
                                     //html += "<tr id='BtnAdd" + iIndex + "'>";
                                     html += "<tr id='BtnAdd" + sGrpId + "'>";
                                     //html += "<td style='padding-top:15px;padding-left:27px;'>";
-                                    html += "<td style='padding-top:6px;padding-left:10px;' colspan='3'>";
+                                    html += "<td style='padding-top:6px;' colspan='3'>";
                                     if (Convert.ToBoolean(sIsOutofStock))
                                     {
                                         html += "<label style=\"border: 2px solid red; text-align: center; color: red; font-size: large; font-weight: 600; border-radius:8px; padding: 4px;\">Out of stock</label>";
@@ -1948,29 +1978,36 @@ public partial class Default : System.Web.UI.Page
             clsModals.getCategory objcategory = JsonConvert.DeserializeObject<clsModals.getCategory>(databanner);
             string html = "";
 
-            html = "<div id='ca-container' class='ca-new-container'>";
-            html += "<div class='ca-nav'>";
-            html += "<span class='ca-nav-prev' style='background: transparent url(../images/arrows.png) no-repeat top left;'>Previous</span>";
-            html += "<span class='ca-nav-next' style='background: transparent url(../images/arrows.png) no-repeat top left; background-position:top right;'>Next</span>";
-            html += "</div>";
-            html += "<div class='ca-wrapper' style='overflow: hidden; '>";
+            //html = "<div id='ca-container' class='ca-new-container'>";
+            //html += "<div class='ca-nav'>";
+            //html += "<span class='ca-nav-prev' style='background: transparent url(../images/arrows.png) no-repeat top left;'>Previous</span>";
+            //html += "<span class='ca-nav-next' style='background: transparent url(../images/arrows.png) no-repeat top left; background-position:top right;'>Next</span>";
+            //html += "</div>";
+            //html += "<div class='ca-wrapper' style='overflow: hidden; '>";
+            html += "<div class=\"swiper-container\" id=\"catswiper\"><div class=\"swiper-wrapper\">";
             if (!String.IsNullOrEmpty(databanner))
             {
                 if (objcategory.response.Equals("1"))
                 {
                     for (int i = 0; i < objcategory.CategoryList.Count; i++)
                     {
-                        html += "<div class='ca-item' style=' left: 0px;cursor:pointer;'>";
-                        html += "<div>";
-                        html += "<img src='" + objcategory.CategoryList[i].CategoryImage + "' class='CategoryImagecenter' id=\"img"+ objcategory.CategoryList[i].Id + "\" onclick=\"Categoryimage(" + objcategory.CategoryList[i].Id + ",this,'category')\" />";
+                        //html += "<div class='ca-item' style=' left: 0px;cursor:pointer;'>";
+                        //html += "<div>";
+                        //html += "<img src='" + objcategory.CategoryList[i].CategoryImage + "' class='CategoryImagecenter' id=\"img"+ objcategory.CategoryList[i].Id + "\" onclick=\"Categoryimage(" + objcategory.CategoryList[i].Id + ",this,'category')\" />";
+                        //html += "<span class='CategoryText' id=\"text" + objcategory.CategoryList[i].Id + "\" >" + objcategory.CategoryList[i].CategoryName + "</span>";
+                        //html += "</div>";
+                        //html += "</div>";
+
+                        html += "<div class=\"swiper-slide\" style=\"text-align: center;\">";
+                        html += "<img src='" + objcategory.CategoryList[i].CategoryImage + "' class='CategoryImagecenter' alt=\"Image not found\" onerror=\"this.onerror=null; this.src='../images/no_image_available.png';\"  id=\"img" + objcategory.CategoryList[i].Id + "\" onclick=\"Categoryimage(" + objcategory.CategoryList[i].Id + ",this,'category')\" />";
                         html += "<span class='CategoryText' id=\"text" + objcategory.CategoryList[i].Id + "\" >" + objcategory.CategoryList[i].CategoryName + "</span>";
-                        html += "</div>";
                         html += "</div>";
                     }
 
                 }
             }
             html += "</div>";
+            html += "<div class=\"swiper-button-next\"></div><div class=\"swiper-button-prev\"></div>";
             html += "</div>";
 
             divCategory.InnerHtml = html;
@@ -1980,13 +2017,19 @@ public partial class Default : System.Web.UI.Page
             {
                 if (objcategory.response.Equals("1"))
                 {
+                    html += "<div class=\"swiper-container\" id=\"subCatswiper\"><div class=\"swiper-wrapper\">";
                     html += "<input type='hidden' id='hdnCategory' value='" + objcategory.CategoryList[0].Id + "'/>";
                     html += "<input type='hidden' id='hdnSubCat' value='-1'/>";
-                    html += "<label class='control-label SubCat'  onclick='GetProduct(-1," + objcategory.CategoryList[0].Id + ",this)'   >All</label>";
+                    html += "<div class=\"swiper-slide\">";
+                    html += "<label class='control-label SubCat'  onclick='GetProduct(-1," + objcategory.CategoryList[0].Id + ",this)'   >All</label></div>";
                     for (int i = 0; i < objcategory.CategoryList[0].SubCategoryList.Count; i++)
                     {
-                        html += "<label class='control-label SubCat' id='SubCat" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "' onclick='GetProduct(" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "," + objcategory.CategoryList[0].SubCategoryList[i].CategoryId + ",this)'>" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryName + "</label>";
+                        html += "<div class=\"swiper-slide\">";
+                        html += "<label class='control-label SubCat' id='SubCat" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "' onclick='GetProduct(" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "," + objcategory.CategoryList[0].SubCategoryList[i].CategoryId + ",this)'>" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryName + "</label></div>";
                     }
+                    html += "</div>";
+                    html += "<div class=\"swiper-button-next\"></div><div class=\"swiper-button-prev\"></div>";
+                    html += "</div>";
 
                 }
             }
@@ -2244,13 +2287,19 @@ public partial class Default : System.Web.UI.Page
                 if (objcategory.response.Equals("1"))
                 {
                     var SubCatList = objcategory.CategoryList.Where(x => x.Id == categoryid).FirstOrDefault().SubCategoryList;
+                    html += "<div class=\"swiper-container\" id=\"subCatswiper\"><div class=\"swiper-wrapper\">";
                     html += "<input type='hidden' id='hdnCategory' value='" + categoryid + "'/>";
                     html += "<input type='hidden' id='hdnSubCat' value='-1'/>";
-                    html += "<label class='control-label SubCat' onclick='GetProduct(-1," + categoryid + ",this)'  >All</label>";
+                    html += "<div class=\"swiper-slide\">";
+                    html += "<label class='control-label SubCat' onclick='GetProduct(-1," + categoryid + ",this)'  >All</label></div>";
                     for (int i = 0; i < SubCatList.Count; i++)
                     {
-                        html += "<label class='control-label SubCat' id='SubCat" + SubCatList[i].SubCategoryId  + "'  onclick ='GetProduct(" + SubCatList[i].SubCategoryId + "," + SubCatList[i].CategoryId + ",this)'>" + SubCatList[i].SubCategoryName + "</label>";
+                        html += "<div class=\"swiper-slide\">";
+                        html += "<label class='control-label SubCat' id='SubCat" + SubCatList[i].SubCategoryId  + "'  onclick ='GetProduct(" + SubCatList[i].SubCategoryId + "," + SubCatList[i].CategoryId + ",this)'>" + SubCatList[i].SubCategoryName + "</label></div>";
                     }
+                    html += "</div>";
+                    html += "<div class=\"swiper-button-next\"></div><div class=\"swiper-button-prev\"></div>";
+                    html += "</div>";
 
                 }
             }
@@ -2287,9 +2336,10 @@ public partial class Default : System.Web.UI.Page
     }
 
     [System.Web.Services.WebMethod]
-    public static object GetSessionProductData()
+    public static object GetSessionProductData(string data = "")
     {
         ClsOrderModels.PlaceMultipleOrderNewModel orderModel;
+        List<ClsOrderModels.ConfirmOrderNewModel> model = new List<ClsOrderModels.ConfirmOrderNewModel>();
         if ((HttpContext.Current.Session["ConfirmOrder"] != null))
         {
             orderModel = (ClsOrderModels.PlaceMultipleOrderNewModel)HttpContext.Current.Session["ConfirmOrder"];
@@ -2299,8 +2349,40 @@ public partial class Default : System.Web.UI.Page
         {
             orderModel = new ClsOrderModels.PlaceMultipleOrderNewModel();
         }
+        if (orderModel != null && orderModel.products != null)
+        {
+            foreach (var item in orderModel.products)
+            {
+                model.Add(new ClsOrderModels.ConfirmOrderNewModel
+                {
+                    BannerId = item.BannerId,
+                    BannerProductType = item.BannerProductType,
+                    Productid = item.productid,
+                    Grpid = item.AttributeId,
+                    Productvariant = item.Productvariant,
+                    Mrp = Convert.ToInt32(item.Mrp),
+                    SoshoPrice = Convert.ToInt32(item.PaidAmount),
+                    Qty = Convert.ToInt32(item.Quantity),
+                    Unit = item.Unit,
+                    UnitId = item.UnitId,
+                    isOfferExpired = item.isOfferExpired,
+                    isOutOfStock = item.isOutOfStock,
+                    isProductAvailable = item.isProductAvailable
+                });
 
-        return orderModel;
+            }
+
+        }
+
+            return model;
 
     }
+
+    [System.Web.Services.WebMethod]
+    public static void ClearSessionCart(string data = "")
+    {
+        HttpContext.Current.Session["ConfirmOrder"] = null;
+    }
+
+  
 }

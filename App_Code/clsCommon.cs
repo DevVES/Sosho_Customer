@@ -182,13 +182,13 @@ public class clsCommon
         {
             edate = dt.Rows[0]["dateprod"].ToString();
 
-            string timeeeee = "";
+            //string timeeeee = "";
 
-            string timeee = dt.Rows[0]["timeprod"].ToString();
-            string[] time = timeee.Split(' ');
-            int t1 = time.Length;
-            timeeeee = time[t1 - 1];
-            edate = edate + ' ' + timeeeee;
+            //string timeee = dt.Rows[0]["timeprod"].ToString();
+            //string[] time = timeee.Split(' ');
+            //int t1 = time.Length;
+            //timeeeee = time[t1 - 1];
+            //edate = edate + ' ' + timeeeee;
         }
         return edate;
     }

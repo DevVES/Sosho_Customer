@@ -265,15 +265,30 @@ public class ClsOrderModels
         public int MrpTotal { get; set; }
         public int SoshoTotal { get; set; }
         public string Productvariant { get; set; }
-        public bool isOfferExpired { get; set; }
-        public bool isProductAvailable { get; set; }
-        public bool isOutOfStock { get; set; }
+        public bool isOfferExpired = false;
+        public bool isProductAvailable = true;
+        public bool isOutOfStock = false;
     }
 
     public class OrderSummeryModel
     {
+        //public string Productid { get; set; }
+        //public int Qty { get; set; }
+        public int BannerProductType { get; set; }
+        public int BannerId { get; set; }
         public string Productid { get; set; }
+        public string Grpid { get; set; }
+        public int Mrp { get; set; }
+        public int SoshoPrice { get; set; }
         public int Qty { get; set; }
+        public string Unit { get; set; }
+        public string UnitId { get; set; }
+        public int MrpTotal { get; set; }
+        public int SoshoTotal { get; set; }
+        public string Productvariant { get; set; }
+        public bool isOfferExpired { get; set; }
+        public bool isProductAvailable { get; set; }
+        public bool isOutOfStock { get; set; }
         public int Weight { get; set; }
     }
 
@@ -469,7 +484,7 @@ public class ClsOrderModels
         public string CategoryName;
         public string ProductId;
         public string ProductName;
-        public int Quantity;
+        //public int Quantity;
         public string OfferEndDate;
         public string ItemType;
         public string Title;
@@ -493,6 +508,7 @@ public class ClsOrderModels
         public bool isBestBuy;
         public int MinQty;
         public int MaxQty;
+        public int Quantity;
         public string AttributeId;
         public string AImageName;
     }

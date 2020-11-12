@@ -173,7 +173,7 @@
 
                         </div>
                         <div class="redeem" id="divRedeem">
-                            <p id="lblredeemtext" runat="server">(-) Wallet Redeem Amount: ₹<span id="lblredeem" runat="server">0</span></p>
+                            <p id="lblredeemtext" runat="server">(-) Wallet Redeemed Amount: ₹<span id="lblredeem" runat="server">0</span></p>
 
                         </div>
                         <div class="redeem hide" id="divPromo">
@@ -281,17 +281,17 @@
         </div>
                 <div class="modal-body">
            <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="padding:0px;">
                             <div class="form-horizontal">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-6">
+                                    <div class="col-md-12" style="padding:0px;">
+                                        <div class="col-md-6" style="float:left;padding:0px;">
                                             <input name="discountcouponcode" id="_discountcouponcode" placeholder="Have a promocode? Enter here" class="text-box form-control" style="width: 233px;" type="text"/>
                                              <div id="_redeemerrmsg1" class="hint formlabel" style="color: red; text-transform: none; white-space: inherit;">
                                 </div>
                                         </div>
                                         
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="padding:0px;">
                                         <input type="button" id="_btndiscount" style="font-size: 13px; background: rgb(29, 161, 242);border-color: rgb(29, 161, 242);" name="applydiscountcouponcode" value="Apply" class="btn btn-primary" onclick="Applypromocode(0)"/>
                                     </div>
                                     </div>
@@ -303,7 +303,7 @@
                                 <div id="promolist" runat="server">
 
                                
-                                <div class="row">
+<%--                                <div class="row">
                                     <div class="col-md-12">
                                         <div class="col-md-6">
                                             <label class="control-label"><strong>FLAT50</strong></label>
@@ -315,7 +315,7 @@
                                     </div>
                                     </div>
                                 </div>
-                                <hr />
+                                <hr />--%>
                                      </div>
                             </div>
                              
@@ -345,6 +345,24 @@
             $("#cancelpromo").hide();
             $("#ContentPlaceHolder1_spnsaving").html($("#ContentPlaceHolder1_spntotDiscount").html());
             //$('#myPromoCodeModal').modal({ backdrop: true});
+            $.ajax({
+                type: "POST",
+                url: "Default.aspx/GetSessionProductData",
+                data: '{ data: "1" }',
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    if (response.d.length > 0) {
+                        products.push(...response.d);
+                    }
+                    console.log(response);
+                },
+                failure: function (response) {
+
+                    alert("Something Wrong....");
+
+                }
+            });
 
         });
         function OpenModal() {
@@ -362,7 +380,7 @@
 
         function saveitem(flag) {
             if (flag == 0) {
-
+                $("#ContentPlaceHolder1_punchamt").removeAttr('disabled');
                  var ptotprice = $('#ContentPlaceHolder1_lbltotpayamt').html();
 
                 var reedam = $('#ContentPlaceHolder1_lblredeem').html();
@@ -406,7 +424,17 @@
                 discount = Number(discount);
 
                 document.getElementById("<%=spnsaving.ClientID %>").innerHTML = Number(document.getElementById("<%=spnsaving.ClientID %>").innerHTML) - reedam;
+                var walletmoney = Number($("#ContentPlaceHolder1_reeamt").html());
 
+                $("#ContentPlaceHolder1_reeamt").html(walletmoney + reedam);
+
+                if ($('#ContentPlaceHolder1_reedemableAmount').val() == "0") {
+                    var orderAmnt = document.getElementById("<%=totwtshipping.ClientID %>").innerHTML;
+                    GetReedemableAmount(orderAmnt);
+                } else {
+                    $('#ContentPlaceHolder1_punchamt').val($('#ContentPlaceHolder1_reedemableAmount').val());
+                    $('#ContentPlaceHolder1_lblshowmsgwallet').hide();
+                }
                
                 return;
             }
@@ -443,6 +471,10 @@
 
             finalprice = 0;
 
+            var walletmoney = Number($("#ContentPlaceHolder1_reeamt").html());
+
+            $("#ContentPlaceHolder1_reeamt").html(walletmoney - reedam);
+            $("#ContentPlaceHolder1_punchamt").val('0');
         }
 
 
@@ -484,7 +516,7 @@
 
         }--%>
 
-        function PriceMinus(prodid, el) {
+        function PriceMinus(prodid,Grpid,soshoprice,mrp,bannerid,producttype,el) {
 
             $this = $(el);
             var elprice = $this.parents('.single-product').find('#lblproprice');
@@ -493,8 +525,10 @@
             var proqty = $this.parents('.single-product').find('#txtqty').val();
             var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
             //var PWeight = prweight.substr(0, prweight.indexOf('-'));
+            var unitvalue = prweight.substring(prweight.indexOf(':') + 1);
+            var parts = unitvalue.split('-');
             var PWeight = prweight.substring(prweight.indexOf(':') + 1, prweight.indexOf('-'));
-
+            
             var pmrp = $this.parents('.single-product').find('#lblmrp')[0].innerHTML;
 
             var qty = Number(proqty);
@@ -538,30 +572,69 @@
                     var product = products.find(x => x.Productid == prodid);
                     if (product != null && product != undefined) {
                         products.splice(products.findIndex(x => x.Productid == prodid), 1);
-
                         obj = {
                             Productid: prodid,
+                            Grpid: Grpid,
+                            Mrp: parseInt(mrp),
+                            SoshoPrice: parseInt(soshoprice),
                             Qty: parseInt(qty),
+                            Unit: parts[0],
+                            UnitId: parts[1],
+                            Productvariant: "",
+                            BannerProductType: producttype,
+                            BannerId: bannerid,
                             Weight: parseInt(PWeight)
                         }
+                        //obj = {
+                        //    Productid: prodid,
+                        //    Qty: parseInt(qty),
+                        //    Weight: parseInt(PWeight)
+                        //}
                         products.push(obj);
                     }
                     else {
                         obj = {
                             Productid: prodid,
+                            Grpid: Grpid,
+                            Mrp: parseInt(mrp),
+                            SoshoPrice: parseInt(soshoprice),
                             Qty: parseInt(qty),
+                            Unit: parts[0],
+                            UnitId: parts[1],
+                            Productvariant: "",
+                            BannerProductType: producttype,
+                            BannerId: bannerid,
                             Weight: parseInt(PWeight)
                         }
+                        //obj = {
+                        //    Productid: prodid,
+                        //    Qty: parseInt(qty),
+                        //    Weight: parseInt(PWeight)
+                        //}
                         products.push(obj);
                     }
                 } else {
                     obj = {
                         Productid: prodid,
+                        Grpid: Grpid,
+                        Mrp: parseInt(mrp),
+                        SoshoPrice: parseInt(soshoprice),
                         Qty: parseInt(qty),
+                        Unit: parts[0],
+                        UnitId: parts[1],
+                        Productvariant: "",
+                        BannerProductType: producttype,
+                        BannerId: bannerid,
                         Weight: parseInt(PWeight)
                     }
+                    //obj = {
+                    //    Productid: prodid,
+                    //    Qty: parseInt(qty),
+                    //    Weight: parseInt(PWeight)
+                    //}
                     products.push(obj);
                 }
+                UpdateSessionCart();
                 var minOrderAmnt = $("#ContentPlaceHolder1_minOrderAmount").val();
                 minOrderAmnt = Number(minOrderAmnt);
 
@@ -584,19 +657,23 @@
                 }
             }
             else {
-                Remove(prodid, el);
+                Remove(prodid,Grpid, el);
             }
 
 
             console.log(products);
         }
 
-        function Priceplus(prodid, el) {
+        function Priceplus(prodid,Grpid,soshoprice,mrp,bannerid,producttype, el) {
             $this = $(el);
             var elprice = $this.parents('.single-product').find('#lblproprice');
             var price = elprice[0].firstElementChild.innerText.substring(elprice[0].firstElementChild.innerText.indexOf(":") + 2);
             var proqty = $this.parents('.single-product').find('#txtqty').val();
             var prweight = $this.parents('.single-product').find('#lbldisplayunit')[0].innerHTML;
+
+             var unitvalue = prweight.substring(prweight.indexOf(':') + 1);
+            var parts = unitvalue.split('-');
+
             //var PWeight = prweight.substr(0, prweight.indexOf('-'));
             var PWeight = prweight.substring(prweight.indexOf(':') + 1, prweight.indexOf('-'));
 
@@ -645,28 +722,67 @@
 
                     obj = {
                         Productid: prodid,
+                        Grpid: Grpid,
+                        Mrp: parseInt(mrp),
+                        SoshoPrice: parseInt(soshoprice),
                         Qty: parseInt(qty),
+                        Unit: parts[0],
+                        UnitId: parts[1],
+                        Productvariant: "",
+                        BannerProductType: producttype,
+                        BannerId: bannerid,
                         Weight: parseInt(PWeight)
                     }
+                    //obj = {
+                    //    Productid: prodid,
+                    //    Qty: parseInt(qty),
+                    //    Weight: parseInt(PWeight)
+                    //}
                     products.push(obj);
                 }
                 else {
                     obj = {
                         Productid: prodid,
+                        Grpid: Grpid,
+                        Mrp: parseInt(mrp),
+                        SoshoPrice: parseInt(soshoprice),
                         Qty: parseInt(qty),
+                        Unit: parts[0],
+                        UnitId: parts[1],
+                        Productvariant: "",
+                        BannerProductType: producttype,
+                        BannerId: bannerid,
                         Weight: parseInt(PWeight)
                     }
+                    //obj = {
+                    //    Productid: prodid,
+                    //    Qty: parseInt(qty),
+                    //    Weight: parseInt(PWeight)
+                    //}
                     products.push(obj);
                 }
             } else {
                 obj = {
                     Productid: prodid,
+                    Grpid: Grpid,
+                    Mrp: parseInt(mrp),
+                    SoshoPrice: parseInt(soshoprice),
                     Qty: parseInt(qty),
+                    Unit: parts[0],
+                    UnitId: parts[1],
+                    Productvariant: "",
+                    BannerProductType: producttype,
+                    BannerId: bannerid,
                     Weight: parseInt(PWeight)
                 }
+                //obj = {
+                //    Productid: prodid,
+                //    Qty: parseInt(qty),
+                //    Weight: parseInt(PWeight)
+                //}
                 products.push(obj);
             }
-
+             UpdateSessionCart();
             var minOrderAmnt = $("#ContentPlaceHolder1_minOrderAmount").val();
             minOrderAmnt = Number(minOrderAmnt);
 
@@ -688,7 +804,7 @@
             console.log(products);
         }
 
-        function Remove(prodid, el) {
+        function Remove(prodid,Grpid, el) {
             //alert("ProductId: " + prodid);
             var $this = $(el);
             var r = confirm("Are you sure you want to remove this item?");
@@ -698,7 +814,7 @@
 
                     type: "POST",
                     url: "OrderSummery.aspx/Remove",
-                    data: '{productid:"' + prodid + '"}',
+                    data: '{productid:"' + prodid +'",attributeid:"' + Grpid+ '"}',
                     contentType: "application/json;charset=utf-8",
                     datatype: "json",
                     success: function (ResponseData) {
@@ -706,6 +822,10 @@
                         ResponseData.d = ResponseData.d.split(",");
                         //alert(ResponseData.d);
                         if (ResponseData.d[0] == "Success") {
+                             var product = products.find(x => x.Productid == prodid);
+                            if (product != null && product != undefined) {
+                                products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == Grpid), 1);
+                            }
                             $("#ContentPlaceHolder1_productstatus").val(ResponseData.d[1]);
                             var price = $this.parents('.single-product').find('#lbltotprices')[0].innerHTML;
                             var prtotalamunt = Number(document.getElementById("<%=totwtshipping.ClientID %>").innerHTML);
@@ -805,12 +925,10 @@
         //Directly Apply Redeem pass amt 1
         //Save Button Click and Call Redeem amt 0 and pass value payamt 0 
         function reedemwallet(amt) {
-            debugger
-          
             $("#ContentPlaceHolder1_lblredeemtext").show();
             $('#ContentPlaceHolder1_lblshowmsgwallet').show();
             var reedamamt = document.getElementById('<%= punchamt.ClientID %>').value;
-
+            $("#ContentPlaceHolder1_punchamt").removeAttr('disabled');
             //Redeem Amount Section Hide Show amount and Change
             if (reedamamt == "" || reedamamt == "0" || reedamamt == "0.00") {
                 $("#divRedeem").hide();
@@ -855,6 +973,7 @@
                             $("#btnredem").hide();
                             $("#cancel_redeemamount").show();
                             $('#ContentPlaceHolder1_lblshowmsgwallet').html(bar_data.data.ValidationMessage);
+                            $("#ContentPlaceHolder1_punchamt").attr('disabled',true);
                             saveitem(1);
                         }
 
@@ -867,12 +986,12 @@
                         }
 
                         //If Value Null to Hide Lable 
-                        var valuenullcheck = document.getElementById('<%= punchamt.ClientID %>').value;
+                       <%-- var valuenullcheck = document.getElementById('<%= punchamt.ClientID %>').value;
                         if (valuenullcheck == "0") {
                             $("#ContentPlaceHolder1_punchamt").val('');
                             $("#ContentPlaceHolder1_lblredeemtext").hide();
 
-                        }
+                        }--%>
 
                     }
                     else {
@@ -915,7 +1034,7 @@
             var pstatus = $("#ContentPlaceHolder1_productstatus").val();
 
             if (pstatus == "true" || pstatus == true) {
-                alert("Please remove the items which are not serviceable or out of stock or offer expire first from the list.");
+                alert("Please remove the items from the list which are marked as not serviceable, out of stock or offer expired.");
                 $("#btnplaceorder").attr("disabled", false);
                 return;
             }
@@ -1235,6 +1354,31 @@
                 },
                 failure: function (ResponseData) {
                     alert("Somthing Wrong");
+                }
+            });
+        }
+
+        function UpdateSessionCart() {
+            console.log(products);
+            $("#divMainloader").attr("display", "block");
+            $("#cnfrm").attr("disabled", true);
+            var sValue = '<%=HttpContext.Current.Session["PinCode"]%>';
+            $.ajax({
+
+                type: "POST",
+                url: "Default.aspx/ConfirmOrder",
+                data: JSON.stringify({ model: products, "WhatsAppNo": $("#btnsendMessage").text(), "PinCode": sValue }),
+                contentType: "application/json",
+                dataType: "json",
+
+                success: function (response) {
+                    var querystring = window.location.search;
+                    $("#divMainloader").attr("display", "none");
+                    $("#cnfrm").attr("disabled", false);
+                    //window.location = "OrderSummery.aspx";
+                },
+                failure: function (response) {
+                    alert("Something Wrong....");
                 }
             });
         }

@@ -18,7 +18,15 @@ public partial class MasterPage : System.Web.UI.MasterPage
             //{
 
             HttpContext.Current.Cache.Remove("MasterPage.master");
-                string Customerid = "";
+            HttpContext.Current.Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));
+            HttpContext.Current.Response.Cache.SetValidUntilExpires(false);
+            HttpContext.Current.Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            HttpContext.Current.Response.Cache.SetNoStore();
+
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            string Customerid = "";
                 //if (HttpContext.Current.Request.Cookies.AllKeys.Contains("TUser"))
                 //{
                 currentCustomer objcust = clsCommon.getCurrentCustomer();

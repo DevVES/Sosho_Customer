@@ -31,10 +31,10 @@
                         </tbody>
                     </table>--%>
                     <div class="list-group" runat="server" id="wallethistory">
-                        <a href="#" class="list-group-item">
+                        <%--<a href="#" class="list-group-item">
                             <h5 class="list-group-item-heading" >Black Friday Sale Booster <span class="pull-right" style="color:green">+₹ 50.00</span></h5>
                             <p class="list-group-item-text">10/09/2020 11:24:13 PM <span class="pull-right">Closing Balance:₹ 150.00 </span></p>
-                        </a>
+                        </a>--%>
                     </div>
                 </div>
             </div>

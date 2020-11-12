@@ -157,7 +157,9 @@
     </div>
       <script>
           $(document).ready(function () {
-          $('.offer-time').css('display','none');
+              $('.offer-time').css('display', 'none');
+              var sValue = '<%=HttpContext.Current.Session["WhatsAppNo"]%>';
+              $("#btnsendMessage").text(sValue);
       });
             var fbButton = document.getElementById('fb-share-button');
             var url = window.location.href;

@@ -964,7 +964,7 @@
             var Deliverypincode = pincode;
             var Pincodecheck = $('#ContentPlaceHolder1_lblPinCode').html();
             if (Deliverypincode != Pincodecheck) {
-                alert('Pincode is differet as you have selected.Please select same pincode which you have selected at home page.');
+                alert('Please select the address which has same pin code as selected on home page or add a new address.');
                 return;
             }
             $.ajax({
@@ -1202,12 +1202,12 @@
          function DeleteAddr(Addid) {
 
              //alert(Addid);
-             swal({
-                 title: "Sucessully!",
-                 text: "Sucessfully Deleted Address!",
-                 icon: "success",
-                 button: "Ok",
-             });
+             //swal({
+             //    title: "Sucessully!",
+             //    text: "Sucessfully Deleted Address!",
+             //    icon: "success",
+             //    button: "Ok",
+             //});
              var c = confirm("Do You to Want To Delete Address?")
 
              if (c == true) {
@@ -1523,7 +1523,7 @@
                  return false;
              }
              else {
-                 alert('Pincode is differet as you have selected.Please select same pincode which you have selected at home page else add new address');
+                 alert('Please select the address which has same pin code as selected on home page or add a new address.');
                  return false;
              }
         }

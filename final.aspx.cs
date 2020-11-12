@@ -56,6 +56,7 @@ public partial class final : System.Web.UI.Page
                     if (orderId > 0)
                     {
                         getOrderData(orderId);
+                        HttpContext.Current.Session["ConfirmOrder"] = null;
                         //string Querypaymenttype = "select top 1 Id,Name from payment_methods where id=(select PaymentGatewayId from [Order] where [Order].Id=" + orderId + ")";
                         //DataTable dtpayment = dbc.GetDataTable(Querypaymenttype);
 
@@ -304,7 +305,7 @@ public partial class final : System.Web.UI.Page
 
                 if(Convert.ToDecimal(objfs.ReedeemAmount) > 0)
                 {
-                    wallethtml += "<tr><td style=\"font-size:16px\">Wallet Redeem Amount:</td><td style=\"font-size:16px\">"+ objfs.ReedeemAmount + "</td>";
+                    wallethtml += "<tr><td style=\"font-size:16px\">Wallet Redeemed Amount:</td><td style=\"font-size:16px\">"+ objfs.ReedeemAmount + "</td>";
                 }
                 if (Convert.ToDecimal(objfs.CashbackAmount) > 0 && !string.IsNullOrEmpty(objfs.PromoCode))
                 {

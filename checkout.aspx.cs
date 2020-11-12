@@ -588,15 +588,15 @@ public partial class checkout : System.Web.UI.Page
 
     public static void ConfirmOrder()
     {
-        List<ClsOrderModels.OrderSummeryModel> summeryModel;
+        List<ClsOrderModels.ConfirmOrderNewModel> summeryModel;
         if ((HttpContext.Current.Session["summeryModel"] != null))
         {
-            summeryModel = (List<ClsOrderModels.OrderSummeryModel>)HttpContext.Current.Session["summeryModel"];
+            summeryModel = (List<ClsOrderModels.ConfirmOrderNewModel>)HttpContext.Current.Session["summeryModel"];
 
         }
         else
         {
-            summeryModel = new List<ClsOrderModels.OrderSummeryModel>();
+            summeryModel = new List<ClsOrderModels.ConfirmOrderNewModel>();
         }
 
 

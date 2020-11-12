@@ -15,6 +15,9 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Sosho</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <%--<meta name="title" content="Nadiad's Famous Aaswad  Green Chilli Mathiya at ₹90/500g" />--%>
@@ -32,7 +35,8 @@
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link href="css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/responsive.css" />
-    
+    <%--<link rel="stylesheet" type="text/css" href="slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />--%>
 
     
     <%--<script src="https://code.jquery.com/jquery-3.4.1.js"></script>--%>
@@ -96,7 +100,7 @@
                                 <%--<img src="images/whatsapp_tiny.png" /><span><button onclick="sendMessage(this)" type="button" style="background:#1DA1F2;color:#FFFFFF;border:none" id="btnsendMessage">6359408097</button></span>--%>
                                 <img src="images/whatsapp_tiny.png" /><span class="WhatsApp-mobile" id="btnsendMessage"></span>
                                 <input type="hidden" id="hdnJurisdictionId" />
-                                <input type="hidden" id="hdnProductEndNo"/>
+                                <input type="hidden" id="hdnProductEndNo" value="0"/>
                                 <input type="hidden" id="hdnBannerCount" />
                                 <input type="hidden" id="hdnSubCategoryId" value="-1" />
                                 <input type="hidden" id="hdnSearchProductId" value="-1"/>
@@ -122,14 +126,14 @@
 
                 <div class="row offer-time" style="background:#1DA1F2;color:#FFFFFF;font-size:16px;">
                     <div class="col-md-12">
-                        <div class="col-md-6 col-sm-6 col-xs-5 padding setfontsize" >
+                        <div class="col-md-4 col-sm-6 col-xs-5 padding setfontsize" id="divPin">
                             <%--<i class="fa fa-map-marker" style="font-size: 25px; color: red"></i>--%>
-                            <i class="fa fa-map-marker" style="vertical-align:-webkit-baseline-middle;"></i>
-                            <span style="color:#FFFFFF;font-family:'Amazon Ember';vertical-align:-webkit-baseline-middle;">Deliver to </span>
-                            <span id="spanpincode" style="color:#FFFFFF;font-family:'Amazon Ember';cursor:pointer;vertical-align:-webkit-baseline-middle;" onclick="CallPinCodePopup()"></span>
+                            <i class="fa fa-map-marker dvhidePincode" style="vertical-align:-webkit-baseline-middle;"></i>
+                            <span class="dvhidePincode" style="color:#FFFFFF;font-family:'Amazon Ember';vertical-align:-webkit-baseline-middle;">Deliver to </span>
+                            <span id="spanpincode" class="dvhidePincode" style="color:#FFFFFF;font-family:'Amazon Ember';cursor:pointer;vertical-align:-webkit-baseline-middle;" onclick="CallPinCodePopup()"></span>
                         </div>
                          
-                             <div class="col-md-6 col-sm-6 col-xs-5 padding setfontsize">
+                             <div class="col-md-4 col-sm-6 col-xs-5 padding setfontsize">
                                 <div class="offer-zone" style="margin-top:3px;">
                                     <%--<p id="count" style="font-family:'Amazon Ember';text-align:right;"></p>--%>
                                     <span id="count"  style="color:#FFFFFF;font-family:'Amazon Ember'"></span>
@@ -137,6 +141,12 @@
                                     <input type="hidden" id="hdnProductCount" />
                                     <input type="hidden" id="hdnproductcallcount" />
                                 </div>
+                                 </div>
+                        
+                             <div class="col-md-4 col-sm-6 col-xs-3 padding setfontsize dvBtnReOrder" style="float:right;bottom:10px;">
+                                 <div class="offer-zone">
+                                    <a id="reorder" class="button" style="text-transform:none" href="Reorder.aspx"> Reorder </a> 
+                                     </div>
                                  </div>
                             <%-- <div class="col-md-3 col-sm-3 col-xs-4 padding">
                                  <div class="offer-zone">
@@ -382,6 +392,9 @@
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
+            <%--<button type="button" onclick="scrollToTop()" class="scrollToTopBtn">☝️</button>--%>
+            <%--<button type="button" onclick="scrollToTop()" class="scrollToTopBtn"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>--%>
+            <a  onclick="scrollToTop()" class="scrollToTopBtn"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
         </div>
             <div class="row hide">
         <div id="top-footer">
@@ -414,6 +427,11 @@
             var $this = $(el);
             var no = $this.find('span').html();
             window.open('https://api.whatsapp.com/send?phone=91'+ no.trim());
+        }
+        function scrollToTop() {
+            $('html, body').animate({ scrollTop: 0 }, 'slow', function () {
+                //alert("reached top");
+            });
         }
     </script>
     <script>
@@ -478,6 +496,7 @@
      //}
  </script>
     <script>
+       
         (function () {
             document.querySelector('.custom-header-toggle-button').addEventListener('click', function () {
                 document.querySelector('.custom-header').classList.toggle("custom-header-navbar-expanded");
@@ -487,6 +506,7 @@
 
 
     </script>
-    
+    <%--<script type="text/javascript" src="slick/slick.min.js"></script>
+    <script src="js/InitializeSlick.js"></script>--%>
 </body>
 </html>
