@@ -215,9 +215,9 @@
             margin-left: auto;
             margin-right: auto;
             /*width: 50%;*/
-            width: 104px;
+            width: 75px;
             border-radius: 50%;
-            height: 104px;
+            height: 75px;
             object-fit: scale-down;
             cursor: pointer;
         }
@@ -239,7 +239,9 @@
         .ProductImage {
             /*height: 400px;
             width: 400px;*/
-            width: 69%;
+            /*width: 69%;*/
+            width: 150px;
+            height: 150px;
             /*object-fit:scale-down;*/
         }
 
@@ -391,6 +393,14 @@
                 width: 100%;
                 /*right: 7px;*/
             }
+            .CategoryImagecenter {
+                width: 60px;
+                height: 60px;
+            }
+
+            .CategoryText {
+                font-size: 10px;
+            }
 
             /*.DiscountOffer {
                 padding: 5px;
@@ -464,6 +474,13 @@
             margin: auto auto 20px;
             /*display: block;*/
             text-align: center;
+        }
+        .swiper-button-prev {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%234c71ae'%2F%3E%3C%2Fsvg%3E") !important;
+        }
+
+        .swiper-button-next {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%234c71ae'%2F%3E%3C%2Fsvg%3E") !important;
         }
         /*@media screen and (max-width: 700px) {
            
@@ -1608,7 +1625,13 @@
 
 
             var grpId = grpid;
-            var productvariant = "BannerProduct";
+            var productvariant;
+            if (bannerProductType == "3") {
+                productvariant = "BannerProduct";
+            } else {
+                productvariant = "HomeBannerProduct";
+            }
+            
             //var unitId = $('#hdnddlUnit' + rowindex).val();
             //var unitvalue = $('#hdnddlUnit' + rowindex).val();
 
@@ -1690,7 +1713,12 @@
 
         function Bannerplusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType, BannerId) {
             var grpId = grpid;
-            var productvariant = "BannerProduct";
+            var productvariant;
+            if (bannerProductType == "3") {
+                productvariant = "BannerProduct";
+            } else {
+                productvariant = "HomeBannerProduct";
+            }
             var unitId = $('#hdnddlUnit' + grpid).val();
             var unitvalue = $('#hdnddlUnit' + grpid).val();
             var parts = unitvalue.split(' - ');
@@ -1778,13 +1806,14 @@
                     $(".dvBtnReOrder").css('bottom', '10px');
                     $('#hdnProductCount').val(count);
                 }
-                UpdateSessionCart();
+                
             }
             else {
                 $('#count')[0].innerHTML = "";
                 $('#cnfrm').addClass('hide');
                 $(".dvBtnReOrder").css('bottom', '0px');
             }
+            UpdateSessionCart();
             if (value != 0) {
                 var dataval = parent.find('input');
                 dataval[0].value = value;
@@ -3273,11 +3302,11 @@
             breakpoints: {
                 // when window width is >= 320px
                 320: {
-                    slidesPerView: 3
+                    slidesPerView: 5
                 },
                 // when window width is >= 480px
                 480: {
-                    slidesPerView: 4
+                    slidesPerView: 5
                 },
                 // when window width is >= 640px
                 640: {

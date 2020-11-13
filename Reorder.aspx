@@ -25,7 +25,8 @@
         .ProductImage {
             /*height: 400px;
             width: 400px;*/
-            width: 69%;
+           width: 150px;
+            height: 150px;
         }
 
         .ProudctMRPText {

@@ -190,29 +190,38 @@ public partial class OrderSummery : System.Web.UI.Page
                     //}
                     //else
                     //{
-                        if (item.Productvariant.ToString() == "BannerProduct")
-                        {
+                    if (item.Productvariant.ToString() == "BannerProduct")
+                    {
                         //imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
                         imgquery = "select pm.ProductImage as ImageFileName, Product.Name, pm.PackingType,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
                         dtimg = dbc.GetDataTable(imgquery);
 
                         querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
                         dtpathimg = dbc.GetDataTable(querydata);
-                        }
-                        else
-                        {
-                            //imgquery = "select ProductImages.ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from ProductImages inner join Product ON Product.Id = ProductImages.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where ProductImages.ProductId =" + item.productid + " and isnull(ProductImages.Isdeleted,0)=0";
-                            //dtimg = dbc.GetDataTable(imgquery);
+                    }
+                    else if (item.Productvariant.ToString() == "HomeBannerProduct")
+                    {
+                        //imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
+                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name, pm.PackingType,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze from HomepageBanner HomeBanner inner join Product ON Product.Id = HomeBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where HomeBanner.ProductId =" + item.productid + " and isnull(HomeBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
+                        dtimg = dbc.GetDataTable(imgquery);
 
-                            //querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
-                            //dtpathimg = dbc.GetDataTable(querydata);
+                        querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
+                        dtpathimg = dbc.GetDataTable(querydata);
+                    }
+                    else
+                    {
+                        //imgquery = "select ProductImages.ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from ProductImages inner join Product ON Product.Id = ProductImages.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where ProductImages.ProductId =" + item.productid + " and isnull(ProductImages.Isdeleted,0)=0";
+                        //dtimg = dbc.GetDataTable(imgquery);
 
-                            imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,Product_ProductAttribute_Mapping.PackingType,UnitMaster.UnitName,Product.Unit,Product_ProductAttribute_Mapping.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
-                            dtimg = dbc.GetDataTable(imgquery);
+                        //querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
+                        //dtpathimg = dbc.GetDataTable(querydata);
 
-                            querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
-                            dtpathimg = dbc.GetDataTable(querydata);
-                        }
+                        imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,Product_ProductAttribute_Mapping.PackingType,UnitMaster.UnitName,Product.Unit,Product_ProductAttribute_Mapping.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
+                        dtimg = dbc.GetDataTable(imgquery);
+
+                        querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
+                        dtpathimg = dbc.GetDataTable(querydata);
+                    }
                     //}
                     string urlpathimg = "";
                     Boolean IsQtyFreeze = false;

@@ -600,9 +600,79 @@ public partial class Default : System.Web.UI.Page
                     {
                         if (objproduct.ProductList[j].ItemType == "2")
                         {
+                            sInterBannerId = objproduct.ProductList[j].bannerId;
+                            sBannerActionId = objproduct.ProductList[j].ActionId.ToString();
+
                             BannerHtml += "<div class='offer-banner'>";
-                            BannerHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
-                            //BannerHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
+                            if (sBannerActionId == "1") // Action Id = 1 (Open Url)
+                            {
+                                sOpenUrlLink = objproduct.ProductList[j].openUrlLink.ToString();
+
+                                BannerIntermediateHtml += "<a href='" + sOpenUrlLink + "' target='_blank'>";
+                                BannerIntermediateHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
+                                BannerIntermediateHtml += "</a>";
+                                BannerIntermediateHtml += "</div>";
+                                BannerIntermediateHtml += "</div>";
+                            }
+                            else if (sBannerActionId == "2") // Action Id =2 (Navigate To Category)
+                            {
+                                sBannerCategoryId = objproduct.ProductList[j].ActionCategoryId.ToString();
+                                sCategoryName = objproduct.ProductList[j].ActionCategoryName.ToString();
+
+                                BannerIntermediateHtml += "<img class='img' style='cursor:pointer;' src='" + objproduct.ProductList[j].bannerURL + "' onclick='Categoryimage(" + sBannerCategoryId + ",this)'/>";
+                                BannerIntermediateHtml += "</div>";
+                                BannerIntermediateHtml += "</div>";
+                            }
+                            else if (sBannerActionId == "3") // Action Id =3 (Add To Cart)
+                            {
+                                sBannerProductId = objproduct.ProductList[j].ProductId.ToString();
+
+                                sBannerProductSoshoPrice = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
+                                sBannerWeight = objproduct.ProductList[j].ProductAttributesList[0].weight.ToString();
+                                sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
+                                sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
+                                //sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
+                                sBannerIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[0].isQtyFreeze;
+                                sBannerMinQty = objproduct.ProductList[j].ProductAttributesList[0].MinQty;
+
+                                BannerHtml += "<div class='offer-banner'>";
+                                BannerHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
+                                BannerHtml += "<input type='hidden' id='hdnBannerPosition' value='" + sBannerPosition + "'>";
+                                BannerHtml += "</div>";
+                                BannerHtml += "<div id='divBannerAdd" + sBannerProductId + "'>";
+                                BannerHtml += "<button type='button' class='btn BlueText BtnAddText BannerAddPostion' onclick='BannerAddClick(" + 0 + "," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,2," + sInterBannerId + ")'>Buy Now</button>";
+                                BannerHtml += "<input type='hidden' id='hdnddlUnit" + sGrpId + "' value='" + sBannerWeight + "'>";
+                                BannerHtml += "</div>";
+                                BannerHtml += "<div id='divBannerAddShow" + sBannerProductId + "' class='AmazonFont BannerAddPostion' style='display:none;'>";
+                                //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-minus'></i></button>";
+                                if (Convert.ToBoolean(sBannerIsQtyFreeze))
+                                {
+                                    BannerHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,2," + sInterBannerId + ")'><i class='fa fa-minus'></i></button>";
+                                    BannerHtml += "<input id='txtqty' runat='server' value='" + sBannerMinQty + "' style='font-weight:bold;width:30px;text-align: center;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                    //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                    BannerHtml += "<button class='ProductBtn' type='button' id='btnplus' style='background: #a5a5a5;' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,2," + sInterBannerId + ") disabled'><i class='fa fa-plus'></i></button>";
+                                }
+                                else
+                                {
+                                    BannerHtml += "<button class='ProductBtn' type='button' id='btnminus' runat='server' onclick='Bannerplusqty(0," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,2," + sInterBannerId + ")'><i class='fa fa-minus'></i></button>";
+                                    BannerHtml += "<input id='txtqty' runat='server' value='1' style='font-weight:bold;width:30px;text-align: center;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                    //BannerIntermediateHtml += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sBannerProductId + ",this)'><i class='fa fa-plus'></i></button>";
+                                    BannerHtml += "<button class='ProductBtn' type='button' id='btnplus' runat='server' onclick='Bannerplusqty(1," + sBannerProductId + "," + sGrpId + "," + sBannerProductMrp + "," + sBannerProductSoshoPrice + ",this,2," + sInterBannerId + ")'><i class='fa fa-plus'></i></button>";
+                                }
+                                BannerHtml += "</div>";
+                                BannerHtml += "</div>";
+                                BannerHtml += "</div>";
+
+                            }
+                            else if (sBannerActionId == "-1") // Action Id =-1 (None)
+                            {
+                                BannerHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
+                                BannerHtml += "</div>";
+                                BannerHtml += "</div>";
+                            }
+
+                            BannerHtml += "</div>";
+                            //BannerHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
                             BannerHtml += "</div>";
 
 
