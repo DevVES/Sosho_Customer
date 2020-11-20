@@ -232,7 +232,7 @@
         .BlueText {
             background: #1DA1F2;
             color: #FFFFFF;
-            font-size: 16px;
+            font-size: 15px;
             font-family: 'Amazon Ember'
         }
 
@@ -324,10 +324,13 @@
             color: white;
             background-color: #B12704;
             border-radius: 50px;
-            padding: 6px;
-            width: 45px;
+            padding: 10px 5px 5px 5px;
+            width: 48px;
             position: absolute;
             text-align: center;
+            height:48px;
+            font-family:'Amazon Ember Bold';
+            font-size:11px;
         }
 
         .SoldCount {
@@ -384,8 +387,8 @@
             }
             /* For mobile phones: */
             .ProductImage {
-                height: 150px;
-                width: 150px;
+                height: 110px;
+                width: 110px;
                 object-fit:scale-down;
             }
 
@@ -394,18 +397,19 @@
                 /*right: 7px;*/
             }
             .CategoryImagecenter {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 50px;
             }
 
             .CategoryText {
-                font-size: 10px;
+                font-size: 11px;
             }
 
-            /*.DiscountOffer {
-                padding: 5px;
-                width: 62px;
-            }*/
+            .DiscountOffer {
+               font-size:10px;
+               width: 45px;
+               height: 45px;
+            }
 
             .ProductName {
                 font-size: 14px;
@@ -434,7 +438,7 @@
             }
 
             .BlueText {
-                font-size: 13px;
+                font-size: 10px;
             }
 
             .ProductDropDown {
@@ -456,6 +460,9 @@
             .BannerAddPostion {
                 left: 76%;
             }
+            .ca-new-container {
+                margin: 10px auto -5px auto;
+            }
         }
 
         .SubCat {
@@ -467,11 +474,12 @@
             cursor: pointer;
             margin-left: 10px;
             margin-top: 5px;
+            font-size: 13px;
         }
 
         .SubCatMain {
             height: auto;
-            margin: auto auto 20px;
+            margin: auto auto 5px;
             /*display: block;*/
             text-align: center;
         }
@@ -992,7 +1000,7 @@
     <div id="divCategory" class="ca-new-container" runat="server">
     </div>
     <div class="col-md-12">
-        <div class="col-md-10">
+        <div>
             <div id="divSubCat" class="SubCatMain" runat="server">
                 <label class="control-label SubCat">Besan </label>
                 <label class="control-label SubCat">Maida </label>
@@ -3298,6 +3306,14 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            on: {
+                init: function () {
+                    checkCatArrow();
+                },
+                resize: function () {
+                    checkCatArrow();
+                }
+            },
             //grabCursor: true,
             breakpoints: {
                 // when window width is >= 320px
@@ -3325,6 +3341,14 @@
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
+            },
+            on: {
+                init: function () {
+                    checkSubCatArrow();
+                },
+                resize: function () {
+                    checkSubCatArrow();
+                }
             },
             //grabCursor: true
             breakpoints: {
@@ -3415,6 +3439,30 @@
 
         function setCookie(cname, cvalue) {
             document.cookie = cname + "=" + cvalue + ";path=/";
+        }
+        function checkCatArrow() {
+            var swiperPrev = document.querySelector('.swiper-button-prev');
+            var swiperNext = document.querySelector('.swiper-button-next');
+            if (window.innerWidth < 1024) {
+                console.log('Success', window.innerWidth);
+                swiperPrev.style.display = 'none';
+                swiperNext.style.display = 'none';
+            } else {
+                swiperPrev.style.display = 'block';
+                swiperNext.style.display = 'block';
+            }
+        }
+         function checkSubCatArrow() {
+            var swiperPrev = document.querySelector('#SubCatprev');
+            var swiperNext = document.querySelector('#SubCatnext');
+            if (window.innerWidth < 1024) {
+                console.log('Success', window.innerWidth);
+                swiperPrev.style.display = 'none';
+                swiperNext.style.display = 'none';
+            } else {
+                swiperPrev.style.display = 'block';
+                swiperNext.style.display = 'block';
+            }
         }
         //function getCookie(cname) {
         //    var name = cname + "=";

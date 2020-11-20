@@ -901,10 +901,10 @@ public partial class Default : System.Web.UI.Page
                                     //    html += "<table class='tableheader' id='tbl" + iIndex + "' style='display:none;'>";
                                     //else
                                     html += "<table class='tableheader' id='tbl" + iIndex + "'>";
-                                    if (objproduct.ProductList[j].IsSoshoRecommended.ToString() == "true")
+                                    if (Convert.ToBoolean(objproduct.ProductList[j].IsSoshoRecommended))
                                     {
                                         html += "<tr>";
-                                        html += "<td colspan='3' class='BlueText' style='border-radius:22px;padding:7px;padding-top:5px;text-align:center;'>" + objproduct.ProductList[j].SoshoRecommended + "</td>";
+                                        html += "<td colspan='3'><span class='BlueText' style='border-radius:22px;padding:7px;padding-top:5px;text-align:center;'>" + objproduct.ProductList[j].SoshoRecommended + "</span></td>";
                                         html += "</tr>";
                                     }
 
@@ -2098,7 +2098,7 @@ public partial class Default : System.Web.UI.Page
                         html += "<label class='control-label SubCat' id='SubCat" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "' onclick='GetProduct(" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryId + "," + objcategory.CategoryList[0].SubCategoryList[i].CategoryId + ",this)'>" + objcategory.CategoryList[0].SubCategoryList[i].SubCategoryName + "</label></div>";
                     }
                     html += "</div>";
-                    html += "<div class=\"swiper-button-next\"></div><div class=\"swiper-button-prev\"></div>";
+                    html += "<div class=\"swiper-button-next\" id=\"SubCatnext\"></div><div class=\"swiper-button-prev\" id=\"SubCatprev\"></div>";
                     html += "</div>";
 
                 }
@@ -2368,7 +2368,7 @@ public partial class Default : System.Web.UI.Page
                         html += "<label class='control-label SubCat' id='SubCat" + SubCatList[i].SubCategoryId  + "'  onclick ='GetProduct(" + SubCatList[i].SubCategoryId + "," + SubCatList[i].CategoryId + ",this)'>" + SubCatList[i].SubCategoryName + "</label></div>";
                     }
                     html += "</div>";
-                    html += "<div class=\"swiper-button-next\"></div><div class=\"swiper-button-prev\"></div>";
+                    html += "<div class=\"swiper-button-next\" id=\"SubCatnext\"></div><div class=\"swiper-button-prev\" id=\"SubCatprev\"></div>";
                     html += "</div>";
 
                 }

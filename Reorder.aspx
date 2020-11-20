@@ -18,7 +18,7 @@
         .BlueText {
             background: #1DA1F2;
             color: #FFFFFF;
-            font-size: 16px;
+            font-size: 15px;
             font-family: 'Amazon Ember'
         }
 
@@ -108,10 +108,13 @@
             color: white;
             background-color: #B12704;
             border-radius: 50px;
-            padding: 6px;
-            width: 45px;
+            padding: 10px 5px 5px 5px;
+            width: 48px;
             position: absolute;
             text-align: center;
+            height:48px;
+            font-family:'Amazon Ember Bold';
+            font-size:11px;
         }
 
         .SoldCount {
@@ -142,8 +145,8 @@
         @media only screen and (max-width: 600px) {
             /* For mobile phones: */
             .ProductImage {
-                height: 150px;
-                width: 150px;
+                height: 110px;
+                width: 110px;
                 object-fit:scale-down;
             }
 
@@ -152,10 +155,11 @@
                 /*right: 7px;*/
             }
 
-            /*.DiscountOffer {
-                padding: 5px;
-                width: 62px;
-            }*/
+            .DiscountOffer {
+               font-size:10px;
+               width: 45px;
+               height: 45px;
+            }
 
             .ProductName {
                 font-size: 14px;
@@ -184,7 +188,7 @@
             }
 
             .BlueText {
-                font-size: 13px;
+                font-size: 10px;
             }
 
             .ProductDropDown {

@@ -4088,6 +4088,10 @@ font-size:15px;
     #loader {
         left: 60%;
     }
+
+    .searchBtn {
+        display: block !important;
+    }
 }
 
 .scrollToTopBtn {
@@ -4121,6 +4125,11 @@ font-size:15px;
 .scrollToTopBtn:hover {
     color: white;
     text-decoration:none;
+}
+.searchBtn {
+    display: none !important;
+    background-color: #1da1f2 !important;
+    border: 1px solid #1da1f2 !important;
 }
 
 

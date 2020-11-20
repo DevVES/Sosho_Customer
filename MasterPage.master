@@ -106,6 +106,9 @@
                                 <input type="hidden" id="hdnSearchProductId" value="-1"/>
                             </p>
                         </div>
+                        <div id="search">
+                            <button type="button" class="btn btn-primary searchBtn"><i class="fa fa-search"></i></button>
+                        </div>
                         <div id="lblshow" runat="server" style="background:#1DA1F2 !important;">
                         <a class="custom-header-toggle-button" href="javascript:void(0);" id="Menulist1" >
                             <img class="custom-header-menu-nav-icon" src="images/align-justify1.png" alt="Nav" />

@@ -16,6 +16,10 @@
     font-family: 'Amazon Ember';
     src: url('../fonts/Amazon-Ember-Regular.woff');
 }
+@font-face {
+    font-family: 'Amazon Ember Bold';
+    src: url('../fonts/Amazon-Ember-Bold.woff');
+}
 
 
 .fa {
