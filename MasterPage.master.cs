@@ -63,15 +63,15 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
 
 
-                HtmlMeta tag = new HtmlMeta();
-                tag.Name = "description";
-                tag.Content = clsCommon.getMataData();
-                Page.Header.Controls.Add(tag);
+                //HtmlMeta tag = new HtmlMeta();
+                //tag.Name = "description";
+                //tag.Content = clsCommon.getMataData();
+                //Page.Header.Controls.Add(tag);
 
-                HtmlMeta tag1 = new HtmlMeta();
-                tag1.Name = "keywords";
-                tag1.Content = clsCommon.getMataDesc();
-                Page.Header.Controls.Add(tag1);
+                //HtmlMeta tag1 = new HtmlMeta();
+                //tag1.Name = "keywords";
+                //tag1.Content = clsCommon.getMataDesc();
+                //Page.Header.Controls.Add(tag1);
 
                 HtmlMeta tag2 = new HtmlMeta();
                 tag2.Name = "title";

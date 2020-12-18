@@ -120,7 +120,8 @@ public class clsCommon
             desc = dt.Rows[0]["Name"].ToString();
         }
         //desc = "SoSho: consumer offers directly to consumers (CODC)";
-        desc = "SoSho: Consumer Offers Directly To Consumers: Unique platform for everyday products at throwaway prices with easy checkout";
+        //desc = "SoSho: Consumer Offers Directly To Consumers: Unique platform for everyday products at throwaway prices with easy checkout";
+        desc = "SoSho: One stop solution for all household needs.";
         return desc;
     }
     public static string getMataDesc()

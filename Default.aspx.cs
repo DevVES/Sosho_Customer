@@ -627,13 +627,24 @@ public partial class Default : System.Web.UI.Page
                             {
                                 sBannerProductId = objproduct.ProductList[j].ProductId.ToString();
 
-                                sBannerProductSoshoPrice = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
-                                sBannerWeight = objproduct.ProductList[j].ProductAttributesList[0].weight.ToString();
-                                sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
-                                sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
-                                //sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
-                                sBannerIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[0].isQtyFreeze;
-                                sBannerMinQty = objproduct.ProductList[j].ProductAttributesList[0].MinQty;
+                                var Attributes = objproduct.ProductList[j].ProductAttributesList.Where(x => x.isSelected == "true").FirstOrDefault();
+                                if(Attributes != null)
+                                {
+                                    sBannerProductSoshoPrice = Attributes.soshoPrice.ToString();
+                                    sBannerWeight = Attributes.weight.ToString();
+                                    sGrpId = Attributes.AttributeId;
+                                    sBannerProductMrp = Attributes.Mrp.ToString();
+                                    sBannerIsQtyFreeze = Attributes.isQtyFreeze;
+                                    sBannerMinQty = Attributes.MinQty;
+
+                                }
+                                //sBannerProductSoshoPrice = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
+                                //sBannerWeight = objproduct.ProductList[j].ProductAttributesList[0].weight.ToString();
+                                //sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
+                                //sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
+                                ////sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
+                                //sBannerIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[0].isQtyFreeze;
+                                //sBannerMinQty = objproduct.ProductList[j].ProductAttributesList[0].MinQty;
 
                                 BannerHtml += "<div class='offer-banner'>";
                                 BannerHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
@@ -996,7 +1007,7 @@ public partial class Default : System.Web.UI.Page
                                     if (!string.IsNullOrEmpty(sIsQtyFreeze) && Convert.ToBoolean(sIsQtyFreeze))
                                     {
                                         html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-minus'></i></button>";
-                                        html += "<input id='txtqty' runat='server' value='"+ sMinQty + "' style='font-weight:bold;width:40px;text-align: center;'  onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                        html += "<input id='txtqty' readonly=true runat='server' value='" + sMinQty + "' style='font-weight:bold;width:40px;text-align: center;'  onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
                                         html += "<button class='btn ProductBtn' type='button' id='btnplus' style='background: #a5a5a5;' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1) disabled'><i class='fa fa-plus'></i></button>";
                                     }
                                     else
@@ -1068,13 +1079,24 @@ public partial class Default : System.Web.UI.Page
                             {
                                 sBannerProductId = objproduct.ProductList[j].ProductId.ToString();
 
-                                sBannerProductSoshoPrice = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
-                                sBannerWeight = objproduct.ProductList[j].ProductAttributesList[0].weight.ToString();
-                                sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
-                                sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
-                                //sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
-                                sBannerIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[0].isQtyFreeze;
-                                sBannerMinQty = objproduct.ProductList[j].ProductAttributesList[0].MinQty;
+                                var Attributes = objproduct.ProductList[j].ProductAttributesList.Where(x => x.isSelected == "true").FirstOrDefault();
+                                if (Attributes != null)
+                                {
+                                    sBannerProductSoshoPrice = Attributes.soshoPrice.ToString();
+                                    sBannerWeight = Attributes.weight.ToString();
+                                    sGrpId = Attributes.AttributeId;
+                                    sBannerProductMrp = Attributes.Mrp.ToString();
+                                    sBannerIsQtyFreeze = Attributes.isQtyFreeze;
+                                    sBannerMinQty = Attributes.MinQty;
+
+                                }
+                                //sBannerProductSoshoPrice = objproduct.ProductList[j].ProductAttributesList[0].soshoPrice.ToString();
+                                //sBannerWeight = objproduct.ProductList[j].ProductAttributesList[0].weight.ToString();
+                                //sGrpId = objproduct.ProductList[j].ProductAttributesList[0].AttributeId;
+                                //sBannerProductMrp = objproduct.ProductList[j].ProductAttributesList[0].Mrp.ToString();
+                                ////sBannerWeight = objbanner.IntermediateBannerImages[0].Weight.ToString();
+                                //sBannerIsQtyFreeze = objproduct.ProductList[j].ProductAttributesList[0].isQtyFreeze;
+                                //sBannerMinQty = objproduct.ProductList[j].ProductAttributesList[0].MinQty;
 
                                 BannerIntermediateHtml += "<div class='offer-banner'>";
                                 BannerIntermediateHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
