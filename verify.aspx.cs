@@ -80,9 +80,18 @@ public partial class verify : System.Web.UI.Page
                         if (objSendOtpResponse.response.Equals("1"))
                         {
 
-                            if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
+                            //if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
+                            //{
+                            //    Response.Redirect("~/verify.aspx?offercode=" + Request.QueryString["offercode"]);
+                            //}
+                            //else
+                            //{
+                            //    Response.Redirect("~/verify.aspx");
+                            //}
+
+                            if (!string.IsNullOrWhiteSpace(Request.QueryString["fcode"]))
                             {
-                                Response.Redirect("~/verify.aspx?offercode=" + Request.QueryString["offercode"]);
+                                Response.Redirect("~/verify.aspx?fcode=" + Request.QueryString["fcode"]);
                             }
                             else
                             {
@@ -94,9 +103,18 @@ public partial class verify : System.Web.UI.Page
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
+                //if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
+                //{
+                //    Response.Redirect("~/register.aspx?offercode=" + Request.QueryString["offercode"]);
+                //}
+                //else
+                //{
+                //    Response.Redirect("~/register.aspx");
+                //}
+
+                if (!string.IsNullOrWhiteSpace(Request.QueryString["fcode"]))
                 {
-                    Response.Redirect("~/register.aspx?offercode=" + Request.QueryString["offercode"]);
+                    Response.Redirect("~/register.aspx?fcode=" + Request.QueryString["fcode"]);
                 }
                 else
                 {
@@ -113,7 +131,12 @@ public partial class verify : System.Web.UI.Page
     {
         if (!String.IsNullOrWhiteSpace(Request.QueryString["m"]))
         {
-            string aa = clsCommon.strApiUrl + "/api/Login/GetOtpVerify?mobile_number=" + clsCommon.Base64Decode(Request.QueryString["m"]) + "&otp=" + otp.Value;// + jobcard + "&UserId=" + userId;
+            string  fcode = string.Empty;
+            if (!String.IsNullOrWhiteSpace(Request.QueryString["fcode"]))
+            {
+                fcode = Request.QueryString["fcode"];
+            }
+            string aa = clsCommon.strApiUrl + "/api/Login/GetOtpVerify?mobile_number=" + clsCommon.Base64Decode(Request.QueryString["m"]) + "&otp=" + otp.Value + "&fcode=" + fcode;// + jobcard + "&UserId=" + userId;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(aa);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             if (response.StatusCode == HttpStatusCode.OK)

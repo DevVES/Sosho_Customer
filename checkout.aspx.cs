@@ -134,6 +134,13 @@ public partial class checkout : System.Web.UI.Page
                     //lblbuyflag.Text = BuyFlag;
                 }
 
+                var CJurisdictionId = Request.Cookies["JurisdictionId"];
+
+                if (CJurisdictionId != null)
+                {
+                    lblJurisdictionId.Text = CJurisdictionId.Value;
+                }
+
                string Customerid = clsCommon.getCurrentCustomer().id;
 
                //string query = "select (select top 1 CountryMaster.CountryName from CountryMaster where CountryMaster.Id=CustomerAddress.CountryId)as addr,CustomerAddress.Id as addrid,CustomerAddress.Id as addrid,FirstName,LastName,MobileNo,(select TagName from TagMaster where TagMaster.Id=CustomerAddress.TagId and TagMaster.IsActive=1)as tagName,Address,(select CityName from CityMaster where CityMaster.IsActive=1 and CityMaster.id=CustomerAddress.CityId) as City,(select statename from StateMaster where StateMaster.id=CustomerAddress.StateId and StateMaster.IsActive=1)as statename,PinCode  from CustomerAddress where CustomerId=" + custid + " and CustomerAddress.IsActive=1 and CustomerAddress.IsDeleted=0 and len(PinCode)>=6";
@@ -535,7 +542,7 @@ public partial class checkout : System.Web.UI.Page
                     {
                         string dataaa = clsCommon.Base64Encode(iddd.ToString());
                         HttpContext.Current.Session["Addressid"] = dataaa;
-                        ConfirmOrder();
+                        //ConfirmOrder();
                     }
                 }
 
@@ -568,7 +575,7 @@ public partial class checkout : System.Web.UI.Page
                     string value = addrid;
                     string value1 = clsCommon.Base64Encode(value);
                     HttpContext.Current.Session["Addressid"] = value1;
-                    ConfirmOrder();
+                    //ConfirmOrder();
                     return str;
 
                 }
@@ -578,7 +585,7 @@ public partial class checkout : System.Web.UI.Page
 
             return str;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
             return null;
@@ -643,7 +650,7 @@ public partial class checkout : System.Web.UI.Page
         OrderDetail.WalletCrAmount = walletHistory.CrAmount;
         OrderDetail.WalletCrDate = walletHistory.CrDate;
         OrderDetail.WalletCrDescription = walletHistory.CrDescription;
-
+        
         //OrderDetail.PromoCodeamount = PromoAmount;
         OrderDetail.PromoCodebalance = PromoHistory.PromoCodebalance;
         OrderDetail.PromoCodeCrAmount = PromoHistory.PromoCodeCrAmount;
@@ -714,6 +721,10 @@ public partial class checkout : System.Web.UI.Page
                 refercode = HttpContext.Current.Session["ReferCode"].ToString();
             }
 
+            if ((HttpContext.Current.Session["fcode"] != null) && (HttpContext.Current.Session["fcode"].ToString() != ""))
+            {
+                refercode = HttpContext.Current.Session["fcode"].ToString();
+            }
 
             if ((HttpContext.Current.Session["JurisdictionId"] != null) && (HttpContext.Current.Session["JurisdictionId"].ToString() != ""))
             {
@@ -825,5 +836,34 @@ public partial class checkout : System.Web.UI.Page
             
         }
         
+    }
+
+    [WebMethod]
+    public static object CheckJurisdiction(string Pincode, string JurisdictionId)
+    {
+        clsModals.CheckJurisdictionModel model = new clsModals.CheckJurisdictionModel();
+        try
+        {
+    
+            string apiUrl = clsCommon.strApiUrl + "api/CheckPincode/CheckJurisdiction?JurisdictionId="+ JurisdictionId + "&PinCode="+ Pincode;
+            var data = clsCommon.GET(apiUrl);
+            if (!string.IsNullOrWhiteSpace(data))
+            {
+                model = JsonConvert.DeserializeObject<clsModals.CheckJurisdictionModel>(data);
+            }
+            else {
+                model.Response = "0";
+                model.Message = "Something went wrong. Please try after sometime.";
+            }
+
+            return model;
+        }
+        catch (Exception ex)
+        {
+            model.Response = "0";
+            model.Message = ex.StackTrace;
+            return model;
+        }
+
     }
 }

@@ -71,6 +71,7 @@
              }
       });
         $("#ContentPlaceHolder1_Button1").click(function () {
+            $('#spinner').show();
             var name = $("#ContentPlaceHolder1_txtname").val();
             var email = $("#ContentPlaceHolder1_txtemail").val();
             var mobile = $("#ContentPlaceHolder1_txtmob").val();
@@ -86,22 +87,27 @@
             var flag = true;
 
             if (name == "") {
+                 $('#spinner').hide();
                 $("#spnname").removeClass('hide');
                 flag = false;
             }
             if (email == "") {
+                 $('#spinner').hide();
                 $("#spnemail").removeClass('hide');
                 flag = false;
             }
             if (mobile == "") {
+                 $('#spinner').hide();
                 $("#spnmob").removeClass('hide');
                 flag = false;
             }
             if (pin == "") {
+                 $('#spinner').hide();
                 $("#spnpin").removeClass('hide');
                 flag = false;
             }
             if (addr == "") {
+                 $('#spinner').hide();
                 $("#spnaddr").removeClass('hide');
                 flag = false;
             }
@@ -126,6 +132,7 @@
 
                     success: function (response) {
                         if (response.d.response == "1") {
+                             $('#spinner').hide();
                             swal({
                                 title: "Successful!",
                                 text: response.d.message,
@@ -135,6 +142,7 @@
                                 window.location = "Default.aspx";
                             });
                         } else {
+                             $('#spinner').hide();
                             swal({
                                 title: "Error!",
                                 text: response.d.message,
@@ -144,10 +152,12 @@
                         }
                     },
                     failure: function (response) {
+                         $('#spinner').hide();
                         alert("err");
                     }
                 });
             } else {
+                 $('#spinner').hide();
                 $("#ContentPlaceHolder1_txtname").focus();
             }
 

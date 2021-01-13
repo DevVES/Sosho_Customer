@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -19,10 +20,24 @@ public partial class Default : System.Web.UI.Page
     {
         try
         {
-            //object data = clsCommon.custdetails("1");
+            if (Request.QueryString.Count > 0)
+            {
+                string referralcode = Request.QueryString["fcode"];
+                HttpContext.Current.Session["fcode"] = referralcode;
 
-            //Getdata();
-            GetCategoryData();
+                //string categoryid = Request.QueryString["categoryid"];
+                //if (!string.IsNullOrEmpty(categoryid))
+                //{
+                //    ClientScript.RegisterStartupScript(GetType(), "Javascript", "javascript:Categoryimage("+ categoryid + "); ", true);
+
+                //}
+                //NameValueCollection filtered = new NameValueCollection(Request.QueryString);
+                //filtered.Remove("fcode");
+            }
+                //object data = clsCommon.custdetails("1");
+
+                //Getdata();
+                GetCategoryData();
 
             var customer = clsCommon.getCurrentCustomer();
             if(customer != null){

@@ -60,6 +60,10 @@
                                 <td colspan="1">Order Amount</td>
                                 <td class="pleft" id="lbltotordeamt" runat="server">Rs.550</td>
                             </tr>
+                            <tr>
+                                <td colspan="1">Order Status:</td>
+                                <td class="pleft" id="lblstatus" runat="server">Placed</td>
+                            </tr>
                         </table>
                     </div>
                     <%--<p>Order Id:<span>102114</span></p>

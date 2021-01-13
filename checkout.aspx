@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <%--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>--%>
     <%--<link href="css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />--%>
     <style>
@@ -40,6 +40,7 @@
             top: 20px;
             color: #BEEE62;
         }
+
         ul.ui-autocomplete {
             z-index: 1100;
         }
@@ -124,13 +125,13 @@
                                         <asp:DropDownList ID="Tag" runat="server">
                                         </asp:DropDownList>
                                     </div>
-                                 <%--   <div class="col-md-6 form-group">
+                                    <%--   <div class="col-md-6 form-group">
                                         <strong class="required">Country:</strong>
                                         <asp:DropDownList ID="Country" runat="server" class="section2" AutoPostBack="false" onChange="return GetState(this)">
                                         </asp:DropDownList>
 
                                     </div>--%>
-                                      <div class="col-md-6 form-group">
+                                    <div class="col-md-6 form-group">
                                         <strong class="required">Mobile Number:</strong>
                                         <input type="text" name="phone_number" class="form-control" value="" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="10" runat="server" id="mobileno" placeholder="Mobil No" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
@@ -139,24 +140,24 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-6 form-group">
-                                        <strong >Email:</strong>
-                                        <input type="text" name="email" class="form-control" value=""  runat="server" id="Text1" placeholder="Email" />
+                                        <strong>Email:</strong>
+                                        <input type="text" name="email" class="form-control" value="" runat="server" id="Text1" placeholder="Email" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <strong class="required">Pin Code:</strong>
-                                        <input type="text" name="address" class="form-control" value="" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" onchange="checkservices(0)" maxlength="6" id="Text2" runat="server" readonly="true" placeholder="Ahmedabad Only"  />
+                                        <input type="text" name="address" class="form-control" value="" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" onchange="checkservices(0)" maxlength="6" id="Text2" runat="server" placeholder="Ahmedabad Only" />
                                         <%-- <p style="color:cadetblue;padding:0px 12px 0">Service Available</p>--%>
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                         <small id="alert-pin"></small>
-                                        <small style="display:none;" id="alert-pin-service">Service not available.</small>
+                                        <small style="display: none;" id="alert-pin-service">Service not available.</small>
                                     </div>
-                                   
 
-                                  
+
+
                                 </div>
                                 <div class="form-group">
-                                     <div class="col-md-6 form-group">
+                                    <div class="col-md-6 form-group">
                                         <strong class="required">State:</strong>
                                         <asp:DropDownList ID="state" runat="server" class="select2" AutoPostBack="false" onChange="return GetCity(this)">
                                         </asp:DropDownList>
@@ -167,50 +168,50 @@
                                         </asp:DropDownList>
                                     </div>
 
-                                    
-                                 
+
+
 
 
                                 </div>
                                 <div class="form-group">
-                                  <%--  <div class="col-md-6 form-group">
+                                    <%--  <div class="col-md-6 form-group">
                                         <strong class="required">Location:</strong>
                                         <input type="text" name="location" class="form-control" value=""  runat="server" id="txtLocation" placeholder="Location" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                         <small id="alert-location"></small>
                                     </div>--%>
-                                       <div class="col-md-6 form-group">
+                                    <div class="col-md-6 form-group">
                                         <strong class="required">Area:</strong>
-                                        <input type="text" name="area" class="form-control" value=""  id="txtArea"  placeholder="Area"  />
-                                        <input type="hidden" name="areaid" class="form-control" value="-1"  id="AreaId"   />
+                                        <input type="text" name="area" class="form-control" value="" id="txtArea" placeholder="Area" />
+                                        <input type="hidden" name="areaid" class="form-control" value="-1" id="AreaId" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                         <small id="alert-Area"></small>
                                     </div>
-                                      <div class="col-md-6 form-group">
+                                    <div class="col-md-6 form-group">
                                         <strong class="required">Building/Society:</strong>
-                                        <input type="text" name="building" class="form-control" value=""   id="txtBuilding" placeholder="Building/Society" />
-                                          <input type="hidden" name="buildingid" class="form-control" value="-1"  id="BuildingId" />
+                                        <input type="text" name="building" class="form-control" value="" id="txtBuilding" placeholder="Building/Society" />
+                                        <input type="hidden" name="buildingid" class="form-control" value="-1" id="BuildingId" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                         <small id="alert-building"></small>
                                     </div>
-                                      
+
 
 
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-6 form-group">
                                         <strong class="required">Building/Society#:</strong>
-                                        <input type="text" name="buildingno" class="form-control" value=""  id="txtBuildingNo" placeholder="Building/Society#" />
+                                        <input type="text" name="buildingno" class="form-control" value="" id="txtBuildingNo" placeholder="Building/Society#" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                         <small id="alert-buildingno"></small>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <strong class="required">Landmark:</strong>
-                                        <input type="text" name="landmark" class="form-control" value=""  runat="server" id="txtLandmark" placeholder="Landmark" />
+                                        <input type="text" name="landmark" class="form-control" value="" runat="server" id="txtLandmark" placeholder="Landmark" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                         <small id="alert-landmark"></small>
                                     </div>
-                                   
+
                                     <%--<div class="col-md-12"><strong class="required">Address:</strong></div>
                                     <div class="col-md-12 form-group ">
                                         <textarea style="width: 100%;" id="txtaddr" class="form-control" runat="server" placeholder="Address"></textarea>
@@ -218,10 +219,10 @@
                                         <%--<input type="text" name="address" class="form-control" value="" id="txtaddr" runat="server" />--%>
                                     <%--</div>--%>
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <div class="col-md-6 form-group">
                                         <strong>Other Details:</strong>
-                                        <input type="text" name="other" class="form-control" value=""  id="txtOther" placeholder="Other Details" />
+                                        <input type="text" name="other" class="form-control" value="" id="txtOther" placeholder="Other Details" />
                                         <i class="fa fa-check complete" aria-hidden="true"></i>
                                     </div>
                                 </div>
@@ -237,7 +238,7 @@
                                 <div class="form-group" style="text-align: center">
                                     <div class="col-md-12">
                                         <%--<button onclick="storedata()" id="DeliverHere" runat="server" class="deliver-btn">Deliver Here</button>--%>
-                                        <button onclick="pincodetest(0)" id="DeliverHere" runat="server" class="deliver-btn">Confirm And Deliver Here</button>
+                                        <button onclick="pincodetest(0)" id="DeliverHere" runat="server" class="deliver-btn">Save Address</button>
                                     </div>
                                 </div>
                                 <asp:Literal ID="ltrerr123" runat="server"></asp:Literal>
@@ -247,7 +248,8 @@
                                     <asp:Label ID="lbladdressid" runat="server"></asp:Label>
                                     <asp:Label ID="lblWhatsAppNo" runat="server"></asp:Label>
                                     <asp:Label ID="lblPinCode" runat="server"></asp:Label>
-                                     <asp:Label ID="lblCountryId" runat="server"></asp:Label>
+                                    <asp:Label ID="lblJurisdictionId" runat="server"></asp:Label>
+                                    <asp:Label ID="lblCountryId" runat="server"></asp:Label>
                                 </div>
                             </div>
                         </div>
@@ -298,12 +300,12 @@
                                 <i class="fa fa-check complete" aria-hidden="true"></i>
                                 <small id="alert-editmbno"></small>
                             </div>
-                                <div class="col-md-4 col-xs-12">
-                                                        
-                                                            <label> <strong >Email.</strong></label>
-                                                             <asp:TextBox CssClass="form-control" ID="ppemail" runat="server"></asp:TextBox>
-                                                        <i class="fa fa-check complete" aria-hidden="true"></i>
-                                                    </div>
+                            <div class="col-md-4 col-xs-12">
+
+                                <label><strong>Email.</strong></label>
+                                <asp:TextBox CssClass="form-control" ID="ppemail" runat="server"></asp:TextBox>
+                                <i class="fa fa-check complete" aria-hidden="true"></i>
+                            </div>
                             <div class="col-md-4 col-xs-12 hide">
 
                                 <label><strong class="required">Country Name.</strong></label>
@@ -312,14 +314,14 @@
 
                             </div>
 
-                             <div class="col-md-4 col-xs-12">
+                            <div class="col-md-4 col-xs-12">
 
                                 <label><strong class="required">Pincode.</strong></label>
-                                <asp:TextBox CssClass="form-control" ID="pppincode" runat="server"  MaxLength="6"></asp:TextBox>
-                             
+                                <asp:TextBox CssClass="form-control" ID="pppincode" runat="server" MaxLength="6"></asp:TextBox>
+
                                 <i class="fa fa-check complete" aria-hidden="true"></i>
-                                <small style="display:none;" id="alert-editpin">Service not available.</small>
-                                <small style="display:none;" id="alert-editpin1">Service not available.</small>
+                                <small style="display: none;" id="alert-editpin">Service not available.</small>
+                                <small style="display: none;" id="alert-editpin1">Service not available.</small>
                             </div>
 
                             <div class="col-md-4 col-xs-12">
@@ -338,12 +340,12 @@
 
                             </div>
 
-                            
-                           <div class="col-md-4 col-xs-12">
+
+                            <div class="col-md-4 col-xs-12">
 
                                 <label><strong class="required">Area.</strong></label>
                                 <asp:TextBox CssClass="form-control" ID="pparea" runat="server"></asp:TextBox>
-                               <input type="hidden" value="-1" id="ppareaid" />
+                                <input type="hidden" value="-1" id="ppareaid" />
                                 <i class="fa fa-check complete" aria-hidden="true"></i>
                                 <small id="alert-pparea"></small>
                             </div>
@@ -357,7 +359,7 @@
                                 <small id="alert-ppbuilding"></small>
                             </div>
 
-                             <div class="col-md-4 col-xs-12">
+                            <div class="col-md-4 col-xs-12">
 
                                 <label><strong class="required">Building/Society#</strong></label>
                                 <asp:TextBox CssClass="form-control" ID="ppbuildingno" runat="server"></asp:TextBox>
@@ -365,7 +367,7 @@
                                 <small id="alert-ppbuildingno"></small>
                             </div>
 
-                             <div class="col-md-4 col-xs-12">
+                            <div class="col-md-4 col-xs-12">
 
                                 <label><strong class="required">Landmark.</strong></label>
                                 <asp:TextBox CssClass="form-control" ID="pplandmark" runat="server"></asp:TextBox>
@@ -373,22 +375,21 @@
                                 <small id="alert-pplandmark"></small>
                             </div>
 
-                             <div class="col-md-4 col-xs-12">
+                            <div class="col-md-4 col-xs-12">
 
                                 <label><strong>Other Details.</strong></label>
                                 <asp:TextBox CssClass="form-control" ID="ppother" runat="server"></asp:TextBox>
                                 <i class="fa fa-check complete" aria-hidden="true"></i>
                                 <small id="alert-ppother"></small>
                             </div>
-                          
-                           <%-- <div class="col-md-12 col-xs-12">
+
+                            <%-- <div class="col-md-12 col-xs-12">
 
                                 <label><strong class="required">Address.</strong></label>
                                 <asp:TextBox CssClass="form-control" ID="ppaddr" runat="server"></asp:TextBox>
                                 <i class="fa fa-check complete" aria-hidden="true"></i>
                                 <small id="alert-editaddr"></small>
                             </div>--%>
-
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px; padding-bottom: 10px;">
@@ -400,7 +401,7 @@
                                     border-color: #46b8da !important;
                                 }
                             </style>
-                            <button id="Button1" runat="server" class="btn btn-block btn-info" onclick="pincodetest(1)">SAVE AND DELIVER HERE</button>
+                            <button id="Button1" runat="server" class="btn btn-block btn-info deliver-btn" onclick="pincodetest(1)">Update Address</button>
                         </div>
                         <div class="col-md-4"></div>
 
@@ -420,7 +421,7 @@
             $('#ContentPlaceHolder1_Text2').val($('#ContentPlaceHolder1_lblPinCode').html());
             $("#btnsendMessage").text($('#ContentPlaceHolder1_lblWhatsAppNo').text());
             SearchArea();
-      });
+        });
         let checkmark = document.getElementsByClassName('complete');
         function alphanumeric(data) {
             let letters = /^[0-9a-zA-Z]+$/;
@@ -445,24 +446,24 @@
         function enableButton() {
             document.getElementById('ContentPlaceHolder1_DeliverHere').disabled = false;
         }
-        function  SearchArea() {  
-            $("#txtArea").autocomplete({  
-                source: function(request, response) {  
-                    $.ajax({  
-                        type: "POST",  
+        function SearchArea() {
+            $("#txtArea").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
                         contentType: "application/json",
-                        url: "checkout.aspx/GetArea",  
-                        data: '{zipcode:"' + document.getElementById('ContentPlaceHolder1_Text2').value + '",term:"'+$('#txtArea').val()+'"}',  
-                        dataType: "json",  
-                        success: function(data) {  
+                        url: "checkout.aspx/GetArea",
+                        data: '{zipcode:"' + document.getElementById('ContentPlaceHolder1_Text2').value + '",term:"' + $('#txtArea').val() + '"}',
+                        dataType: "json",
+                        success: function (data) {
                             response($.map(data.d, function (item) {
                                 return { label: item.AreaName, value: item.AreaName, AreaId: item.AreaId };
                             }));
-                        },  
-                        error: function(result) {  
-                            alert("No Match");  
-                        }  
-                    });  
+                        },
+                        error: function (result) {
+                            alert("No Match");
+                        }
+                    });
                 },
                 select: function (event, ui) {
                     $("#AreaId").val(ui.item.AreaId);
@@ -471,27 +472,27 @@
                 messages: {
                     noResults: ""
                 }
-            });  
-        }  
+            });
+        }
 
-         function  SearchBuilding() {  
-            $("#txtBuilding").autocomplete({  
-                source: function(request, response) {  
-                    $.ajax({  
-                        type: "POST",  
-                        contentType: "application/json",  
-                        url: "checkout.aspx/GetBuilding",  
-                        data: '{areaId:"' + $("#AreaId").val() + '",term:"'+$('#txtBuilding').val()+'"}',  
-                        dataType: "json",  
-                        success: function(data) {  
+        function SearchBuilding() {
+            $("#txtBuilding").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "checkout.aspx/GetBuilding",
+                        data: '{areaId:"' + $("#AreaId").val() + '",term:"' + $('#txtBuilding').val() + '"}',
+                        dataType: "json",
+                        success: function (data) {
                             response($.map(data.d, function (item) {
                                 return { label: item.BuildingName, value: item.BuildingName, BuildingId: item.BuildingId };
                             }));
-                        },  
-                        error: function(result) {  
-                            alert("No Match");  
-                        }  
-                    });  
+                        },
+                        error: function (result) {
+                            alert("No Match");
+                        }
+                    });
                 },
                 select: function (event, ui) {
                     $("#BuildingId").val(ui.item.BuildingId);
@@ -499,27 +500,27 @@
                 messages: {
                     noResults: ""
                 }
-            });  
-        } 
+            });
+        }
 
-        function  SearchAreaInPopup() {  
-            $("#ContentPlaceHolder1_pparea").autocomplete({  
-                source: function(request, response) {  
-                    $.ajax({  
-                        type: "POST",  
+        function SearchAreaInPopup() {
+            $("#ContentPlaceHolder1_pparea").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
                         contentType: "application/json",
-                        url: "checkout.aspx/GetArea",  
-                        data: '{zipcode:"' + document.getElementById('ContentPlaceHolder1_pppincode').value + '",term:"'+$('#ContentPlaceHolder1_pparea').val()+'"}',  
-                        dataType: "json",  
-                        success: function(data) {  
+                        url: "checkout.aspx/GetArea",
+                        data: '{zipcode:"' + document.getElementById('ContentPlaceHolder1_pppincode').value + '",term:"' + $('#ContentPlaceHolder1_pparea').val() + '"}',
+                        dataType: "json",
+                        success: function (data) {
                             response($.map(data.d, function (item) {
                                 return { label: item.AreaName, value: item.AreaName, AreaId: item.AreaId };
                             }));
-                        },  
-                        error: function(result) {  
-                            alert("No Match");  
-                        }  
-                    });  
+                        },
+                        error: function (result) {
+                            alert("No Match");
+                        }
+                    });
                 },
                 select: function (event, ui) {
                     $("#ppareaid").val(ui.item.AreaId);
@@ -528,27 +529,27 @@
                 messages: {
                     noResults: ""
                 }
-            });  
+            });
         }
 
-        function  SearchBuildingInPopup() {  
-            $("#ContentPlaceHolder1_ppbuilding").autocomplete({  
-                source: function(request, response) {  
-                    $.ajax({  
-                        type: "POST",  
-                        contentType: "application/json",  
-                        url: "checkout.aspx/GetBuilding",  
-                        data: '{areaId:"' + $("#ppareaid").val() + '",term:"'+$('#ContentPlaceHolder1_ppbuilding').val()+'"}',  
-                        dataType: "json",  
-                        success: function(data) {  
+        function SearchBuildingInPopup() {
+            $("#ContentPlaceHolder1_ppbuilding").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "checkout.aspx/GetBuilding",
+                        data: '{areaId:"' + $("#ppareaid").val() + '",term:"' + $('#ContentPlaceHolder1_ppbuilding').val() + '"}',
+                        dataType: "json",
+                        success: function (data) {
                             response($.map(data.d, function (item) {
                                 return { label: item.BuildingName, value: item.BuildingName, BuildingId: item.BuildingId };
                             }));
-                        },  
-                        error: function(result) {  
-                            alert("No Match");  
-                        }  
-                    });  
+                        },
+                        error: function (result) {
+                            alert("No Match");
+                        }
+                    });
                 },
                 select: function (event, ui) {
                     $("#ppbuildingid").val(ui.item.BuildingId);
@@ -556,7 +557,7 @@
                 messages: {
                     noResults: ""
                 }
-            });  
+            });
         }
 
         document.getElementById('ContentPlaceHolder1_txtfname').onblur = function () {
@@ -566,11 +567,11 @@
                 checkmark[0].classList.remove('active');
                 disableButton();
             }
-                //else if (!alphanumeric(status)) {
-                //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
-                //    checkmark[0].classList.remove('active');
-                //    disableButton();
-                //}
+            //else if (!alphanumeric(status)) {
+            //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
+            //    checkmark[0].classList.remove('active');
+            //    disableButton();
+            //}
             else {
                 document.getElementById('alert-name').innerHTML = '';
                 checkmark[0].classList.add('active');
@@ -612,6 +613,7 @@
             if (status.length < 6) {
                 document.getElementById('alert-pin').innerHTML = "Please put 6 digit of pincode";
                 checkmark[3].classList.remove('active');
+                $("#alert-pin-service").hide();
                 disableButton();
             } else {
                 document.getElementById('alert-pin').innerHTML = '';
@@ -638,9 +640,9 @@
             }
         });
 
-         $('#txtBuilding').blur(function () {
-             let val = $('#txtBuilding').val();
-             if (val == "" || val == undefined || val == null) {
+        $('#txtBuilding').blur(function () {
+            let val = $('#txtBuilding').val();
+            if (val == "" || val == undefined || val == null) {
                 $('#BuildingId').val('-1');
             }
             if (val.length < 5) {
@@ -653,19 +655,19 @@
                 checkmark[5].classList.add('active');
                 enableButton();
             }
-         });
-         document.getElementById('ContentPlaceHolder1_txtLandmark').onblur = function () {
+        });
+        document.getElementById('ContentPlaceHolder1_txtLandmark').onblur = function () {
             let status = document.getElementById('ContentPlaceHolder1_txtLandmark').value;
             if (status.length < 3) {
                 document.getElementById('alert-landmark').innerHTML = 'Landmark field is empty or less than 3 characters!';
                 checkmark[6].classList.remove('active');
                 disableButton();
             }
-                //else if (!alphanumeric(status)) {
-                //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
-                //    checkmark[0].classList.remove('active');
-                //    disableButton();
-                //}
+            //else if (!alphanumeric(status)) {
+            //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
+            //    checkmark[0].classList.remove('active');
+            //    disableButton();
+            //}
             else {
                 document.getElementById('alert-landmark').innerHTML = '';
                 checkmark[6].classList.add('active');
@@ -680,11 +682,11 @@
                 checkmark[7].classList.remove('active');
                 disableButton();
             }
-                //else if (!alphanumeric(status)) {
-                //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
-                //    checkmark[0].classList.remove('active');
-                //    disableButton();
-                //}
+            //else if (!alphanumeric(status)) {
+            //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
+            //    checkmark[0].classList.remove('active');
+            //    disableButton();
+            //}
             else {
                 document.getElementById('alert-buildingno').innerHTML = '';
                 checkmark[7].classList.add('active');
@@ -753,11 +755,11 @@
                 checkmark[0].classList.remove('active');
                 disableButtonedit();
             }
-                //else if (!alphanumeric(status)) {
-                //    document.getElementById('alert-editname').innerHTML = 'Invalid characters!';
-                //    checkmark[0].classList.remove('active');
-                //    disableButtonedit();
-                //}
+            //else if (!alphanumeric(status)) {
+            //    document.getElementById('alert-editname').innerHTML = 'Invalid characters!';
+            //    checkmark[0].classList.remove('active');
+            //    disableButtonedit();
+            //}
             else {
                 document.getElementById('alert-editname').innerHTML = '';
                 checkmark[0].classList.add('active');
@@ -800,12 +802,13 @@
                 $("#alert-editpin").show();
                 document.getElementById('alert-editpin').innerHTML = "Please put 6 digit of pincode";
                 checkmark[3].classList.remove('active');
+                 $("#alert-editpin1").hide();
                 disableButtonedit();
             } else {
                 checkservices(1);
                 document.getElementById('alert-editpin').innerHTML = '';
                 checkmark[3].classList.add('active');
-               
+
             }
         }
         //document.getElementById('ContentPlaceHolder1_ppaddr').onblur = function () {
@@ -837,9 +840,9 @@
             }
         });
 
-         $('#ContentPlaceHolder1_ppbuilding').blur(function () {
-             let val = $('#ContentPlaceHolder1_ppbuilding').val();
-             if (val == "" || val == undefined || val == null) {
+        $('#ContentPlaceHolder1_ppbuilding').blur(function () {
+            let val = $('#ContentPlaceHolder1_ppbuilding').val();
+            if (val == "" || val == undefined || val == null) {
                 $('#ppbuildingid').val('-1');
             }
             if (val.length < 5) {
@@ -852,9 +855,9 @@
                 checkmark[5].classList.add('active');
                 enableButtonedit();
             }
-         });
+        });
 
-         
+
         document.getElementById('ContentPlaceHolder1_pplandmark').onblur = function () {
             let status = document.getElementById('ContentPlaceHolder1_pplandmark').value;
             if (status.length < 3) {
@@ -862,11 +865,11 @@
                 checkmark[6].classList.remove('active');
                 disableButtonedit();
             }
-                //else if (!alphanumeric(status)) {
-                //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
-                //    checkmark[0].classList.remove('active');
-                //    disableButton();
-                //}
+            //else if (!alphanumeric(status)) {
+            //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
+            //    checkmark[0].classList.remove('active');
+            //    disableButton();
+            //}
             else {
                 document.getElementById('alert-pplandmark').innerHTML = '';
                 checkmark[6].classList.add('active');
@@ -881,11 +884,11 @@
                 checkmark[7].classList.remove('active');
                 disableButtonedit();
             }
-                //else if (!alphanumeric(status)) {
-                //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
-                //    checkmark[0].classList.remove('active');
-                //    disableButton();
-                //}
+            //else if (!alphanumeric(status)) {
+            //    document.getElementById('alert-name').innerHTML = 'Invalid characters!';
+            //    checkmark[0].classList.remove('active');
+            //    disableButton();
+            //}
             else {
                 document.getElementById('alert-ppbuildingno').innerHTML = '';
                 checkmark[7].classList.add('active');
@@ -948,9 +951,9 @@
         //    }
         //}
 
-        function pincodetest(val)
-        {
-            
+        function pincodetest(val) {
+            $('#spinner').show();
+            $(".deliver-btn").prop('disabled', true);
             var pincode = "";
             if (val == 0) {
                 pincode = $("#ContentPlaceHolder1_Text2").val();
@@ -963,10 +966,11 @@
             var strlen = pincode.length;
             var Deliverypincode = pincode;
             var Pincodecheck = $('#ContentPlaceHolder1_lblPinCode').html();
-            if (Deliverypincode != Pincodecheck) {
-                alert('Please select the address which has same pin code as selected on home page or add a new address.');
-                return;
-            }
+            //if (Deliverypincode != Pincodecheck) {
+            //    $(".deliver-btn").prop('disabled', false);
+            //    alert('Please select the address which has same pin code as selected on home page or add a new address.');
+            //    return;
+            //}
             $.ajax({
 
                 type: "POST",
@@ -998,11 +1002,12 @@
 
                     }
                     else {
+                        $(".deliver-btn").prop('disabled', false);
                         return;
                     }
                 },
                 failure: function (response) {
-
+                    $(".deliver-btn").prop('disabled', false);
                     alert("Something Wrong....");
                     return;
                 }
@@ -1054,10 +1059,17 @@
                     }
                     else {
                         //$("#alert-editpin").show();
-                        $("#alert-editpin1").show();
-                        //$("#alert-pin-service").show();
-                        //$("#ContentPlaceHolder1_Text2").val('');
-                        $("#ContentPlaceHolder1_pppincode").val('');
+                        if (val == 1) {
+                            $("#alert-editpin1").show();
+                            $("#ContentPlaceHolder1_pppincode").val('');
+                        }
+                        if (val == 0) {
+                            $("#alert-pin-service").show();
+                            $("#ContentPlaceHolder1_Text2").val('');
+                        }
+
+
+
                         disableButtonedit();
                         return;
                     }
@@ -1072,460 +1084,508 @@
 
         }
 
-         //Show popup
+        //Show popup
         function ShowPopup() {
             SearchAreaInPopup();
             SearchBuildingInPopup();
-             $("#MyPopup").modal("show");
-         }
+            $("#MyPopup").modal("show");
+        }
 
-         //get State Select On Country
-         function GetState(e) {
-             var id = e.options[e.selectedIndex].value;
+        //get State Select On Country
+        function GetState(e) {
+            var id = e.options[e.selectedIndex].value;
 
-             document.getElementById("ContentPlaceHolder1_state").innerHTML = "";
-             document.getElementById("ContentPlaceHolder1_ppstate").innerHTML = "";
+            document.getElementById("ContentPlaceHolder1_state").innerHTML = "";
+            document.getElementById("ContentPlaceHolder1_ppstate").innerHTML = "";
 
-             $.ajax({
-                 type: "POST",
-                 url: "checkout.aspx/GetMainCourse",
-                 data: '{id: "' + id + '"}',
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 success: function (response) {
+            $.ajax({
+                type: "POST",
+                url: "checkout.aspx/GetMainCourse",
+                data: '{id: "' + id + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
 
-                     var products = response.d.split("###");
-                     var dropdown = document.getElementById("ContentPlaceHolder1_state");
-                     var pdropdown = document.getElementById("ContentPlaceHolder1_ppstate");
-                     for (var i = 0; i < products.length; i++) {
-                         var listoption = products[i].split(',');
-                         dropdown[dropdown.length] = new Option(listoption[1], listoption[0]);
-                         pdropdown[dropdown.length] = new Option(listoption[1], listoption[0]);
-                     }
-                     //Default Selected
-                     //$("#ContentPlaceHolder1_ppstate").val("1".statename).select;
-                     //$("#ContentPlaceHolder1_ppstate").select("1".statename.selectedIndex);
-                 },
-                 failure: function (response) {
-                     alert(response.d);
-                 }
-             });
-             return false;
-         }
+                    var products = response.d.split("###");
+                    var dropdown = document.getElementById("ContentPlaceHolder1_state");
+                    var pdropdown = document.getElementById("ContentPlaceHolder1_ppstate");
+                    for (var i = 0; i < products.length; i++) {
+                        var listoption = products[i].split(',');
+                        dropdown[dropdown.length] = new Option(listoption[1], listoption[0]);
+                        pdropdown[dropdown.length] = new Option(listoption[1], listoption[0]);
+                    }
+                    //Default Selected
+                    //$("#ContentPlaceHolder1_ppstate").val("1".statename).select;
+                    //$("#ContentPlaceHolder1_ppstate").select("1".statename.selectedIndex);
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+            return false;
+        }
 
-         //Get City Select On State
-         function GetCity(e) {
-             var id = e.options[e.selectedIndex].value;
+        //Get City Select On State
+        function GetCity(e) {
+            var id = e.options[e.selectedIndex].value;
 
-             document.getElementById("ContentPlaceHolder1_city").innerHTML = "";
-             document.getElementById("ContentPlaceHolder1_ppcity").innerHTML = "";
+            document.getElementById("ContentPlaceHolder1_city").innerHTML = "";
+            document.getElementById("ContentPlaceHolder1_ppcity").innerHTML = "";
 
-             $.ajax({
-                 type: "POST",
-                 url: "checkout.aspx/GetCityList",
-                 data: '{id: "' + id + '"}',
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 success: function (response) {
-                     var products = response.d.split("###");
-                     var dropdown = document.getElementById("ContentPlaceHolder1_city");
-                     var dropdownpop = document.getElementById("ContentPlaceHolder1_ppcity");
-                     for (var i = 0; i < products.length; i++) {
-                         var listoption = products[i].split(',');
-                         dropdown[dropdown.length] = new Option(listoption[1], listoption[0]);
-                         dropdownpop[dropdown.length] = new Option(listoption[1], listoption[0]);
-                     }
-                 },
-                 failure: function (response) {
-                     alert(response.d);
-                 }
-             });
-             return false;
-         }
+            $.ajax({
+                type: "POST",
+                url: "checkout.aspx/GetCityList",
+                data: '{id: "' + id + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var products = response.d.split("###");
+                    var dropdown = document.getElementById("ContentPlaceHolder1_city");
+                    var dropdownpop = document.getElementById("ContentPlaceHolder1_ppcity");
+                    for (var i = 0; i < products.length; i++) {
+                        var listoption = products[i].split(',');
+                        dropdown[dropdown.length] = new Option(listoption[1], listoption[0]);
+                        dropdownpop[dropdown.length] = new Option(listoption[1], listoption[0]);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+            return false;
+        }
 
-         //Edit Address Details
-         function Editaddr(Addid) {
-             document.getElementById('alert-ppbuilding').innerHTML = '';
-             document.getElementById('alert-pparea').innerHTML = '';
-             document.getElementById('alert-editpin').innerHTML = '';
-             document.getElementById('alert-editmbno').innerHTML = '';
-             document.getElementById('alert-editname').innerHTML = '';
-             document.getElementById('alert-pplandmark').innerHTML = '';
-             document.getElementById('alert-ppbuildingno').innerHTML = '';
-             $("#alert-editpin1").hide();
-             $("#ContentPlaceHolder1_lbladdressid").html(Addid);
-            
-             $.ajax({
-                 type: "POST",
-                 url: "checkout.aspx/EditAddress",
-                 data: '{id: "' + Addid + '"}',
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 success: function (ResponseData) {
-                     // alert(ResponseData.d.OrderCustomerList[0].Cfname);
-                     $("#ContentPlaceHolder1_ppfname").val(ResponseData.d.OrderCustomerList[0].Cfname);
-                     $("#ContentPlaceHolder1_pplastname").val(ResponseData.d.OrderCustomerList[0].Clname);
-                     $("#ContentPlaceHolder1_ppmobil").val(ResponseData.d.OrderCustomerList[0].cph);
-                     $("#ContentPlaceHolder1_pppincode").val(ResponseData.d.OrderCustomerList[0].pincode);
-                     $("#ContentPlaceHolder1_ppemail").val(ResponseData.d.OrderCustomerList[0].Email);
-                     $("#ContentPlaceHolder1_ppaddr").val(ResponseData.d.OrderCustomerList[0].addr);
+        //Edit Address Details
+        function Editaddr(Addid) {
+            document.getElementById('alert-ppbuilding').innerHTML = '';
+            document.getElementById('alert-pparea').innerHTML = '';
+            document.getElementById('alert-editpin').innerHTML = '';
+            document.getElementById('alert-editmbno').innerHTML = '';
+            document.getElementById('alert-editname').innerHTML = '';
+            document.getElementById('alert-pplandmark').innerHTML = '';
+            document.getElementById('alert-ppbuildingno').innerHTML = '';
+            $("#alert-editpin1").hide();
+            $("#ContentPlaceHolder1_lbladdressid").html(Addid);
 
-                     $("#ContentPlaceHolder1_ppddltag").val(ResponseData.d.OrderCustomerList[0].tag).select;
-                     $("#ContentPlaceHolder1_ppddltag").select(ResponseData.d.OrderCustomerList[0].tag.selectedIndex);
+            $.ajax({
+                type: "POST",
+                url: "checkout.aspx/EditAddress",
+                data: '{id: "' + Addid + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (ResponseData) {
+                    // alert(ResponseData.d.OrderCustomerList[0].Cfname);
+                    $("#ContentPlaceHolder1_ppfname").val(ResponseData.d.OrderCustomerList[0].Cfname);
+                    $("#ContentPlaceHolder1_pplastname").val(ResponseData.d.OrderCustomerList[0].Clname);
+                    $("#ContentPlaceHolder1_ppmobil").val(ResponseData.d.OrderCustomerList[0].cph);
+                    $("#ContentPlaceHolder1_pppincode").val(ResponseData.d.OrderCustomerList[0].pincode);
+                    $("#ContentPlaceHolder1_ppemail").val(ResponseData.d.OrderCustomerList[0].Email);
+                    $("#ContentPlaceHolder1_ppaddr").val(ResponseData.d.OrderCustomerList[0].addr);
 
-                     $("#ContentPlaceHolder1_ppcounty").val(1).select;
-                     $("#ContentPlaceHolder1_ppcounty").select("1".selectedIndex);
+                    $("#ContentPlaceHolder1_ppddltag").val(ResponseData.d.OrderCustomerList[0].tag).select;
+                    $("#ContentPlaceHolder1_ppddltag").select(ResponseData.d.OrderCustomerList[0].tag.selectedIndex);
 
-                     $("#ContentPlaceHolder1_ppstate").val(ResponseData.d.OrderCustomerList[0].statename).select;
-                     $("#ContentPlaceHolder1_ppstate").select(ResponseData.d.OrderCustomerList[0].statename.selectedIndex);
+                    $("#ContentPlaceHolder1_ppcounty").val(1).select;
+                    $("#ContentPlaceHolder1_ppcounty").select("1".selectedIndex);
 
-                     $("#ContentPlaceHolder1_ppcity").val(ResponseData.d.OrderCustomerList[0].Cityname).select;
-                     $("#ContentPlaceHolder1_ppcity").select(ResponseData.d.OrderCustomerList[0].Cityname.selectedIndex);
-                     $("#ContentPlaceHolder1_pparea").val(ResponseData.d.OrderCustomerList[0].AreaName);
-                     $("#ContentPlaceHolder1_ppbuilding").val(ResponseData.d.OrderCustomerList[0].BuildingName);
-                     $("#ContentPlaceHolder1_ppbuildingno").val(ResponseData.d.OrderCustomerList[0].BuildingNo);
-                     $("#ContentPlaceHolder1_pplandmark").val(ResponseData.d.OrderCustomerList[0].Landmark);
-                     $("#ContentPlaceHolder1_ppother").val(ResponseData.d.OrderCustomerList[0].OtherDetails);
-                     $("#ppareaid").val(ResponseData.d.OrderCustomerList[0].AreaId);
-                     $("#ppbuildingid").val(ResponseData.d.OrderCustomerList[0].BuildingId);
-                     //$("#ContentPlaceHolder1_lbladdressid").val(ResponseData.d.OrderCustomerList[0].Caddrid);
-                     ShowPopup();
-                 },
-                 failure: function (response) {
-                     alert(response.d);
-                 }
-             });
-             return false;
-         }
+                    $("#ContentPlaceHolder1_ppstate").val(ResponseData.d.OrderCustomerList[0].statename).select;
+                    $("#ContentPlaceHolder1_ppstate").select(ResponseData.d.OrderCustomerList[0].statename.selectedIndex);
 
-         //Deleted Address
-         function DeleteAddr(Addid) {
+                    $("#ContentPlaceHolder1_ppcity").val(ResponseData.d.OrderCustomerList[0].Cityname).select;
+                    $("#ContentPlaceHolder1_ppcity").select(ResponseData.d.OrderCustomerList[0].Cityname.selectedIndex);
+                    $("#ContentPlaceHolder1_pparea").val(ResponseData.d.OrderCustomerList[0].AreaName);
+                    $("#ContentPlaceHolder1_ppbuilding").val(ResponseData.d.OrderCustomerList[0].BuildingName);
+                    $("#ContentPlaceHolder1_ppbuildingno").val(ResponseData.d.OrderCustomerList[0].BuildingNo);
+                    $("#ContentPlaceHolder1_pplandmark").val(ResponseData.d.OrderCustomerList[0].Landmark);
+                    $("#ContentPlaceHolder1_ppother").val(ResponseData.d.OrderCustomerList[0].OtherDetails);
+                    $("#ppareaid").val(ResponseData.d.OrderCustomerList[0].AreaId);
+                    $("#ppbuildingid").val(ResponseData.d.OrderCustomerList[0].BuildingId);
+                    //$("#ContentPlaceHolder1_lbladdressid").val(ResponseData.d.OrderCustomerList[0].Caddrid);
+                    ShowPopup();
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+            return false;
+        }
 
-             //alert(Addid);
-             //swal({
-             //    title: "Sucessully!",
-             //    text: "Sucessfully Deleted Address!",
-             //    icon: "success",
-             //    button: "Ok",
-             //});
-             var c = confirm("Do You to Want To Delete Address?")
+        //Deleted Address
+        function DeleteAddr(Addid) {
 
-             if (c == true) {
-                 $.ajax({
-                     type: "POST",
-                     url: "checkout.aspx/DeleteAddress",
-                     data: '{id: "' + Addid + '"}',
-                     contentType: "application/json; charset=utf-8",
-                     dataType: "json",
-                     success: function (response) {
-                         //alert(response.d);
+            //alert(Addid);
+            //swal({
+            //    title: "Sucessully!",
+            //    text: "Sucessfully Deleted Address!",
+            //    icon: "success",
+            //    button: "Ok",
+            //});
+            var c = confirm("Are you sure you want to delete address?")
 
-                         location.reload();
-                     },
-                     failure: function (response) {
-                         alert(response.d);
-                     }
-                 });
-             }
+            if (c == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "checkout.aspx/DeleteAddress",
+                    data: '{id: "' + Addid + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        //alert(response.d);
 
-             return false;
-         }
-         //New Address Save
-         function storedata() {
+                        location.reload();
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
+            }
 
-             var pincode = $('#ContentPlaceHolder1_Text2').val();
-             if (pincode == "") {
-                 $("#alert-pin-service").show();
-                 return;
-             }
-             var countryid = $('#ContentPlaceHolder1_lblCountryId').html();
-             var sid = $('#ContentPlaceHolder1_state').children("option:selected").val();
-             var cid = $('#ContentPlaceHolder1_city').children("option:selected").val();
-             var tag = $('#ContentPlaceHolder1_Tag').children("option:selected").val();
-             //var addr = $('#ContentPlaceHolder1_txtaddr').val();
-             var ph = $('#ContentPlaceHolder1_mobileno').val();
-             //var lname = $('#ContentPlaceHolder1_txtlname').val();
-             var fname = $('#ContentPlaceHolder1_txtfname').val();
-             var custid = $('#ContentPlaceHolder1_lblCustid1').html();
-             var email = $('#ContentPlaceHolder1_Text1').val();
-             var areaid = $("#AreaId").val();
-             var area = $("#txtArea").val();
-             var buildingid = $("#BuildingId").val();
-             var building = $("#txtBuilding").val();
-             var landmark = $("#ContentPlaceHolder1_txtLandmark").val();
-             var buildingNo = $("#txtBuildingNo").val();
-              var other =  $("#txtOther").val();
+            return false;
+        }
+        //New Address Save
+        function storedata() {
 
-             
-
-             var tagid = Number(tag);
-             var statid = Number(sid);
-             var ciiid = Number(cid);
-             var couid = Number(countryid);
-             areaid = Number(areaid);
-             buildingid = Number(buildingid);
-             
-             if (tagid == "0") {
-                
-                 return;
-             }
-             if (couid == "0") {
-                
-                 return;
-             }
-             if (statid == "0") {
-                
-                 return;
-             }
-             if (ciiid == "0") {
-                 
-                 return;
-             }
-             
-            
-             
-
-             //if (addr == "") {
-                
-             //    return;
-             //}
-
-             if (fname == "") {
-                
-                 return;
-             }
+            var pincode = $('#ContentPlaceHolder1_Text2').val();
+            if (pincode == "") {
+                $("#alert-pin-service").show();
+                $('#spinner').hide();
+                return;
+            }
+            var countryid = $('#ContentPlaceHolder1_lblCountryId').html();
+            var sid = $('#ContentPlaceHolder1_state').children("option:selected").val();
+            var cid = $('#ContentPlaceHolder1_city').children("option:selected").val();
+            var tag = $('#ContentPlaceHolder1_Tag').children("option:selected").val();
+            //var addr = $('#ContentPlaceHolder1_txtaddr').val();
+            var ph = $('#ContentPlaceHolder1_mobileno').val();
+            //var lname = $('#ContentPlaceHolder1_txtlname').val();
+            var fname = $('#ContentPlaceHolder1_txtfname').val();
+            var custid = $('#ContentPlaceHolder1_lblCustid1').html();
+            var email = $('#ContentPlaceHolder1_Text1').val();
+            var areaid = $("#AreaId").val();
+            var area = $("#txtArea").val();
+            var buildingid = $("#BuildingId").val();
+            var building = $("#txtBuilding").val();
+            var landmark = $("#ContentPlaceHolder1_txtLandmark").val();
+            var buildingNo = $("#txtBuildingNo").val();
+            var other = $("#txtOther").val();
 
 
-             if (ph == "") {
-               
-                 return;
-             }
 
-              if (area == "") {
-               
-                 return;
-             }
+            var tagid = Number(tag);
+            var statid = Number(sid);
+            var ciiid = Number(cid);
+            var couid = Number(countryid);
+            areaid = Number(areaid);
+            buildingid = Number(buildingid);
 
-             if (building == "") {
-               
-                 return;
-             }
-             if (landmark == "") {
-               
-                 return;
-             }
-              if (buildingNo == "") {
-               
-                 return;
-             }
+            if (tagid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (couid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (statid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (ciiid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
 
-           
 
-             $.ajax({
-                 type: "POST",
-                 //url: "checkout.aspx/GetURL",
-                 url: "checkout.aspx/SaveAddress",
-                 //data: '{custid: "' + custid + '",fname1:"' + fname + '",lname:"' + lname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid + '",addr1:"' + addr + '",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '"}',
-                  data: '{custid: "' + custid + '",fname1:"' + fname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid +'",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '",areaid:"' + areaid + '",area:"' + area + '",buildingid:"' + buildingid + '",building:"' + building + '",buildingNo:"' + buildingNo + '",landmark:"' + landmark + '",other:"' + other + '"}',
 
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 success: function (response) {
 
-                     //alert(response.d.LastId);
-                     //var bar_data =
-                     //  {
-                     //      data: JSON.parse(response.d),
-                     //  };
+            //if (addr == "") {
 
-                     //var data123 = bar_data.data.LastId;
-                     //var orderid = getUrlVars()["orderid"];
-                     //if (orderid != undefined && orderid != "" && orderid != "undefined") {
-                     //    window.location.href = "OrderSummery.aspx?orderid=" + orderid;
-                     //} else {
-                     //    window.location.href = "OrderSummery.aspx"
-                     //}
-                     //window.location = "OrderSummery.aspx";
-                     window.location = "final.aspx";
+            //    return;
+            //}
 
-                 },
-                 failure: function (response) {
-                     alert(response.d);
-                 }
-             });
-             return false;
-         }
+            if (fname == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
 
-         //Save Edited Addresss
-         function Saveanddeliver() {
-             //checkservices(1);
-             //checkservices(0);
+
+            if (ph == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+
+            if (area == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+
+            if (building == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (landmark == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (buildingNo == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+
+
+
+            $.ajax({
+                type: "POST",
+                //url: "checkout.aspx/GetURL",
+                url: "checkout.aspx/SaveAddress",
+                //data: '{custid: "' + custid + '",fname1:"' + fname + '",lname:"' + lname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid + '",addr1:"' + addr + '",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '"}',
+                data: '{custid: "' + custid + '",fname1:"' + fname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid + '",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '",areaid:"' + areaid + '",area:"' + area + '",buildingid:"' + buildingid + '",building:"' + building + '",buildingNo:"' + buildingNo + '",landmark:"' + landmark + '",other:"' + other + '"}',
+
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    //alert(response.d.LastId);
+                    //var bar_data =
+                    //  {
+                    //      data: JSON.parse(response.d),
+                    //  };
+
+                    //var data123 = bar_data.data.LastId;
+                    //var orderid = getUrlVars()["orderid"];
+                    //if (orderid != undefined && orderid != "" && orderid != "undefined") {
+                    //    window.location.href = "OrderSummery.aspx?orderid=" + orderid;
+                    //} else {
+                    //    window.location.href = "OrderSummery.aspx"
+                    //}
+                    //window.location = "OrderSummery.aspx";
+                    //window.location = "final.aspx";
+                    $('#spinner').hide();
+                    location.reload();
+
+                },
+                failure: function (response) {
+                    $('#spinner').hide();
+                    alert(response.d);
+                }
+            });
+            return false;
+        }
+
+        //Save Edited Addresss
+        function Saveanddeliver() {
+            //checkservices(1);
+            //checkservices(0);
             // var countryid = $('#ContentPlaceHolder1_ppcounty').children("option:selected").val();
-             var countryid = $('#ContentPlaceHolder1_lblCountryId').html();
-             var sid = $('#ContentPlaceHolder1_ppstate').children("option:selected").val();
-             var cid = $('#ContentPlaceHolder1_ppcity').children("option:selected").val();
-             var tag = $('#ContentPlaceHolder1_ppddltag').children("option:selected").val();
-             var areaid = $("#ppareaid").val();
-             var area = $("#ContentPlaceHolder1_pparea").val();
-             var buildingid = $("#ppbuildingid").val();
-             var building = $("#ContentPlaceHolder1_ppbuilding").val();
-             var landmark = $("#ContentPlaceHolder1_pplandmark").val();
-             var buildingNo = $("#ContentPlaceHolder1_ppbuildingno").val();
-             var other = $("#ContentPlaceHolder1_ppother").val();
+            var countryid = $('#ContentPlaceHolder1_lblCountryId').html();
+            var sid = $('#ContentPlaceHolder1_ppstate').children("option:selected").val();
+            var cid = $('#ContentPlaceHolder1_ppcity').children("option:selected").val();
+            var tag = $('#ContentPlaceHolder1_ppddltag').children("option:selected").val();
+            var areaid = $("#ppareaid").val();
+            var area = $("#ContentPlaceHolder1_pparea").val();
+            var buildingid = $("#ppbuildingid").val();
+            var building = $("#ContentPlaceHolder1_ppbuilding").val();
+            var landmark = $("#ContentPlaceHolder1_pplandmark").val();
+            var buildingNo = $("#ContentPlaceHolder1_ppbuildingno").val();
+            var other = $("#ContentPlaceHolder1_ppother").val();
 
-             var tagid = Number(tag);
-             var statid = Number(sid);
-             var ciiid = Number(cid);
-             var couid = Number(countryid);
-             areaid = Number(areaid);
-             buildingid = Number(buildingid);
+            var tagid = Number(tag);
+            var statid = Number(sid);
+            var ciiid = Number(cid);
+            var couid = Number(countryid);
+            areaid = Number(areaid);
+            buildingid = Number(buildingid);
 
-             if (tagid == "0") {
-                
-                 return;
-             }
-             if (couid == "0") {
-                
-                 return;
-             }
-             if (statid == "0") {
-                 
-                 return;
-             }
-             if (ciiid == "0") {
-                
-                 return;
-             }
-
-
-
-
-             //var addr = $('#ContentPlaceHolder1_ppaddr').val();
-             var ph = $('#ContentPlaceHolder1_ppmobil').val();
-             //var lname = $('#ContentPlaceHolder1_pplastname').val();
-             var fname = $('#ContentPlaceHolder1_ppfname').val();
-             var custid = $('#ContentPlaceHolder1_lblCustid1').html();
-
-             var email = $('#ContentPlaceHolder1_ppemail').val();
-             var pincode = $('#ContentPlaceHolder1_pppincode').val();
-             var addessid = $('#ContentPlaceHolder1_lbladdressid').html();
-
-             if (fname == "") {
-
-                 return;
-             }
-             if (ph == "") {
-
-                 return;
-             }
-             if (pincode == "") {
-
-                 return;
-             }
-             if (area == "") {
-
-                 return;
-             }
-
-             if (building == "") {
-               
-                 return;
-             }
-             if (landmark == "") {
-               
-                 return;
-             }
-             if (buildingNo == "") {
-
-                 return;
-             }
-
-             
-
-             $.ajax({
-                 type: "POST",
-                 url: "checkout.aspx/UpdateAddress",
-                 //url: "checkout.aspx/saveandeditaddress",
-                 //data: '{custid: "' + custid + '",fname1:"' + fname + '",lname:"' + lname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid + '",addr1:"' + addr + '",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '",Addressid:"' + addessid + '"}',
-                 data: '{custid: "' + custid + '",addrid:"' + addessid + '",fname1:"' + fname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid +'",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '",areaid:"' + areaid + '",area:"' + area + '",buildingid:"' + buildingid + '",building:"' + building + '",buildingNo:"' + buildingNo + '",landmark:"' + landmark + '",other:"' + other + '"}',
-
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 success: function (Repose) {
-
-                     //alert(Repose.d);
-
-                     if (Repose.d.Response = "1") {
-
-
-                         //var orderid = getUrlVars()["orderid"];
-                         //if (orderid != undefined && orderid != "" && orderid != "undefined") {
-                         //    window.location.href = "OrderSummery.aspx?orderid=" + orderid;
-                         //} else {
-                         //    window.location.href = "OrderSummery.aspx"
-                         //}
+            if (tagid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (couid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (statid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (ciiid == "0") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
 
 
 
-                         //window.location = "OrderSummery.aspx";
-                         window.location = "final.aspx";
-                     }
-                     else {
-                         alert("Data Not Found");
-                     }
-                 },
-                 failure: function (response) {
-                     alert("Something Wrong...");
-                 }
-             });
-             return false;
-         }
 
-         function Deliverydone(addrid, pincode) {
-             //disableButton();
-             //document.getElementById('ContentPlaceHolder1_btnsave').disabled = true;
-             $(".deliver-btn").prop('disabled', true);
-             //alert(addrid);
-             var addresssid = addrid;
-             var addr = Number(addresssid);
-             var Deliverypincode = pincode;
-             var Pincodecheck = $('#ContentPlaceHolder1_lblPinCode').html();
-             if (Deliverypincode == Pincodecheck) {
-                 $.ajax({
+            //var addr = $('#ContentPlaceHolder1_ppaddr').val();
+            var ph = $('#ContentPlaceHolder1_ppmobil').val();
+            //var lname = $('#ContentPlaceHolder1_pplastname').val();
+            var fname = $('#ContentPlaceHolder1_ppfname').val();
+            var custid = $('#ContentPlaceHolder1_lblCustid1').html();
 
-                     type: "POST",
-                     url: "checkout.aspx/passaddressid",
-                     data: '{AddressIdd:"' + addr + '"}',
-                     contentType: "application/json;charset=utf-8",
-                     datatype: "json",
-                     success: function (ResponseData) {
-                         //alert(ResponseData.d);
-                         if (ResponseData.d == "1") {
-                             //var orderid = getUrlVars()["orderid"];
-                             //if (orderid != undefined && orderid != "" && orderid != "undefined") {
-                             //    window.location.href = "OrderSummery.aspx?orderid=" + orderid;
-                             //} else {
-                             //    window.location.href = "OrderSummery.aspx"
-                             //}
+            var email = $('#ContentPlaceHolder1_ppemail').val();
+            var pincode = $('#ContentPlaceHolder1_pppincode').val();
+            var addessid = $('#ContentPlaceHolder1_lbladdressid').html();
 
-                             //window.location = "OrderSummery.aspx";
-                             window.location = "final.aspx";
-                         }
-                         else {
-                             alert("Data Not Found");
-                         }
+            if (fname == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (ph == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (pincode == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (area == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
 
-                     },
-                     failure: function (ResponseData) {
-                         alert("Somthing Wrong");
-                     }
-                 });
-                 return false;
-             }
-             else {
-                 alert('Please select the address which has same pin code as selected on home page or add a new address.');
-                 return false;
-             }
+            if (building == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (landmark == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+            if (buildingNo == "") {
+                $(".deliver-btn").prop('disabled', false);
+                $('#spinner').hide();
+                return;
+            }
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "checkout.aspx/UpdateAddress",
+                //url: "checkout.aspx/saveandeditaddress",
+                //data: '{custid: "' + custid + '",fname1:"' + fname + '",lname:"' + lname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid + '",addr1:"' + addr + '",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '",Addressid:"' + addessid + '"}',
+                data: '{custid: "' + custid + '",addrid:"' + addessid + '",fname1:"' + fname + '",tagid1:"' + tag + '",Countryid1:"' + countryid + '",sid:"' + sid + '",cid:"' + cid + '",pinid1:"' + pincode + '",mobile1:"' + ph + '",Email:"' + email + '",areaid:"' + areaid + '",area:"' + area + '",buildingid:"' + buildingid + '",building:"' + building + '",buildingNo:"' + buildingNo + '",landmark:"' + landmark + '",other:"' + other + '"}',
+
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (Repose) {
+
+                    //alert(Repose.d);
+                    if (Repose.d.Response = "1") {
+
+
+                        //var orderid = getUrlVars()["orderid"];
+                        //if (orderid != undefined && orderid != "" && orderid != "undefined") {
+                        //    window.location.href = "OrderSummery.aspx?orderid=" + orderid;
+                        //} else {
+                        //    window.location.href = "OrderSummery.aspx"
+                        //}
+
+
+
+                        //window.location = "OrderSummery.aspx";
+                        //window.location = "final.aspx";
+                        location.reload();
+                    }
+                    else {
+                        $(".deliver-btn").prop('disabled', false);
+                        $('#spinner').hide();
+                        alert("Data Not Found");
+                    }
+                },
+                failure: function (response) {
+                    $(".deliver-btn").prop('disabled', false);
+                    $('#spinner').hide();
+                    alert("Something Wrong...");
+                }
+            });
+            return false;
+        }
+
+        function Deliverydone(addrid, pincode) {
+            $('#spinner').show();
+            $(".deliver-btn").prop('disabled', true);
+            var addresssid = addrid;
+            var addr = Number(addresssid);
+            var Deliverypincode = pincode;
+            var Pincodecheck = $('#ContentPlaceHolder1_lblPinCode').html();
+            var JurisdictionId = $('#ContentPlaceHolder1_lblJurisdictionId').html();
+
+            $.ajax({
+
+                type: "POST",
+                url: "checkout.aspx/CheckJurisdiction",
+                data: '{Pincode:"' + pincode + '",JurisdictionId:"'+JurisdictionId+'"}',
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: function (ResponseData) {
+                    debugger
+                    if (ResponseData.d.Response == "1") {
+                        $.ajax({
+
+                            type: "POST",
+                            url: "checkout.aspx/passaddressid",
+                            data: '{AddressIdd:"' + addr + '"}',
+                            contentType: "application/json;charset=utf-8",
+                            datatype: "json",
+                            success: function (ResponseData) {
+                                if (ResponseData.d == "1") {
+                                    $('#spinner').hide();
+                                    window.location = "final.aspx";
+                                }
+                                else {
+                                    $('#spinner').hide();
+                                    $(".deliver-btn").prop('disabled', false);
+                                    alert("Data Not Found");
+                                }
+
+                            },
+                            failure: function (ResponseData) {
+                                $('#spinner').hide();
+                                $(".deliver-btn").prop('disabled', false);
+                                alert("Somthing Wrong");
+                            }
+                        });
+                    }
+                    else {
+                        $('#spinner').hide();
+                        $(".deliver-btn").prop('disabled', false);
+                        //alert(ResponseData.d.Message);
+                        swal({
+                            title: "Information!",
+                            text: ResponseData.d.Message,
+                            icon: "info",
+                            button: "Ok",
+                        });
+                    }
+
+                },
+                failure: function (ResponseData) {
+                    $('#spinner').hide();
+                    $(".deliver-btn").prop('disabled', false);
+                    alert("Somthing Wrong");
+                }
+            });
         }
         function getUrlVars() {
             var vars = [], hash;

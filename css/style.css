@@ -2752,10 +2752,11 @@ margin:0;
 #my-order .olist-name p{
     font-size:14px;
 }
-#my-order .olist-expired{
-        color: #b41919;
-    font-weight: 600;
-}
+    #my-order .olist-expired {
+        /*color: #b41919;*/
+        color: black;
+        font-weight: 600;
+    }
 #my-order .details{
     text-align:right;
 }
@@ -4062,6 +4063,26 @@ font-size:15px;
     height: 60px;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
+}
+
+#Mainloader {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 9999;
+    width: 100px;
+    height: 100px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #9a9898;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    border-bottom: 16px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+.spinoverlay {
+    z-index:9999;
+    display:none;
 }
 
 @-webkit-keyframes spin {

@@ -49,6 +49,7 @@ public partial class final : System.Web.UI.Page
                     Porderid = Session["PlaceOrderId"].ToString();
                     data = clsCommon.Base64Decode(Porderid);
                     lblorderid.InnerHtml = data;
+                    encodedorderid.Value = Porderid;
                     Porderid = data;
                     //lbldeliveryline.InnerHtml = clsCommon.DeliveryTimeLine;
                     int orderId = 0;

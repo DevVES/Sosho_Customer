@@ -2011,6 +2011,7 @@
         }
 
         function ConfirmOrder() {
+            $('#spinner').show();
             console.log(products);
             //var productstring = JSON.stringify(products);
             $("#divMainloader").attr("display", "block");
@@ -2033,7 +2034,13 @@
                     //} else {
                     //    window.location = "checkout.aspx";
                     //}
-                    window.location = "OrderSummery.aspx";
+                    $('#spinner').hide();
+                    if (querystring != "") {
+                        window.location = "OrderSummery.aspx/" + querystring;
+                    } else {
+                        window.location = "OrderSummery.aspx";
+                    }
+                    //window.location = "OrderSummery.aspx";
 
                 },
                 failure: function (response) {
@@ -2534,7 +2541,11 @@
         <script>
              var $contentLoadTriggered = false;
             $(document).ready(function () {
-                
+                var urlParams = new URLSearchParams(window.location.search);
+                var qurystringcatid = urlParams.get('categoryid');
+                if (qurystringcatid != null && qurystringcatid != "" ) {
+                    $('#hdnCategory').val(qurystringcatid);
+                }
                 $("#loader").hide();
                 $('#divSortMobile').dropdown();
                 $($('.SubCat')[0]).css("color", "#1da1f2");
@@ -2581,9 +2592,11 @@
                     //$('#myPinCodeModal').modal({keyboard: true});
                 }
 
-
+              
                 $("#text" + $('#hdnCategory').val()).css({ 'color': '#1da1f2' });
                 $("#img" + $('#hdnCategory').val()).css({ 'border': '2px solid #1da1f2' });
+                
+                
                 $('#divSortProduct').hide();
                 //$(document).on('click', '#dvPackSizeModal0', function () {
                 //    alert("H111led.");

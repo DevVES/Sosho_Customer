@@ -274,15 +274,17 @@ public partial class MyOrder : System.Web.UI.Page
                                 {
 
 
-                                    if (produstatus == false)
-                                    {
+                                    //if (produstatus == false)
+                                    //{
 
-                                        Orderdetails += "<table class=\"table table-bordered\"> <tbody> <tr> <td> <div class=\"left olist-img\"> <a href=\"\"> <img src=\"" + item.productimg + "\" /></a> </div> <div class=\"left olist-name\"> <p>" + item.productname + "</p><p class=\"olist-expired\">Expiring on " + getdate + "</p>  </div> <div class=\"right\"> <div class=\"details\"> <a href=\"order_details.aspx?Orderid=" + orderid64 + "\"> <p>View Details</p></a>";
-                                    }
-                                    else
-                                    {
-                                        Orderdetails += "<table class=\"table table-bordered\"> <tbody> <tr> <td> <div class=\"left olist-img\"> <a href=\"\"> <img src=\"" + item.productimg + "\" /></a> </div> <div class=\"left olist-name\"> <p>" + item.productname + "</p><p class=\"olist-expired\">Expired on " + getdate + "</p>  </div> <div class=\"right\"> <div class=\"details\"> <a href=\"order_details.aspx?Orderid=" + orderid64 + "\"> <p>View Details</p></a>";
-                                    }
+                                    //    Orderdetails += "<table class=\"table table-bordered\"> <tbody> <tr> <td> <div class=\"left olist-img\"> <a href=\"\"> <img src=\"" + item.productimg + "\" /></a> </div> <div class=\"left olist-name\"> <p>" + item.productname + "</p><p class=\"olist-expired\">Expiring on " + getdate + "</p>  </div> <div class=\"right\"> <div class=\"details\"> <a href=\"order_details.aspx?Orderid=" + orderid64 + "\"> <p>View Details</p></a>";
+                                    //}
+                                    //else
+                                    //{
+                                    //    Orderdetails += "<table class=\"table table-bordered\"> <tbody> <tr> <td> <div class=\"left olist-img\"> <a href=\"\"> <img src=\"" + item.productimg + "\" /></a> </div> <div class=\"left olist-name\"> <p>" + item.productname + "</p><p class=\"olist-expired\">Expired on " + getdate + "</p>  </div> <div class=\"right\"> <div class=\"details\"> <a href=\"order_details.aspx?Orderid=" + orderid64 + "\"> <p>View Details</p></a>";
+                                    //}
+
+                                    Orderdetails += "<table class=\"table table-bordered\"> <tbody> <tr> <td> <div class=\"left olist-img\"> <a href=\"\"> <img src=\"" + item.productimg + "\" /></a> </div> <div class=\"left olist-name\"> <p>" + item.productname + "</p><p class=\"olist-expired\">Order " + item.OrderStatusText + "</p>  </div> <div class=\"right\"> <div class=\"details\"> <a href=\"order_details.aspx?Orderid=" + orderid64 + "\"> <p>View Details</p></a>";
 
                                     if (flag1 < 1)
                                     {

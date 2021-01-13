@@ -1009,6 +1009,7 @@
         //CustomerId, PaidAmount, AddressId, Quantity, buywith, discountamount, Redeemeamount, couponCode
 
         function Placeorder() {
+            $('#spinner').show();
             $("#divMainloaderplace").attr("display", "block");
             $("#btnplaceorder").attr("disabled", true);
             var CustId = $("#ContentPlaceHolder1_lblCustid").html();
@@ -1035,11 +1036,13 @@
 
             if (pstatus == "true" || pstatus == true) {
                 alert("Please remove the items from the list which are marked as not serviceable, out of stock or offer expired.");
+                $('#spinner').hide();
                 $("#btnplaceorder").attr("disabled", false);
                 return;
             }
             if (addrBtntxt == "Select Address") {
                 alert("Please select address.");
+                $('#spinner').hide();
                 $("#btnplaceorder").attr("disabled", false);
                 return;
             }
@@ -1091,12 +1094,13 @@
                     //url: "OrderSummery.aspx/CODPlaceOrder",
                     //data: '{CustId:"' + CustId + '",PayAmt:"' + PaidAmt + '",addr:"' + addrid + '",qty:"' + Qty + '",buyflag:"' + buyflag + '",disc:"' + disct + '",redm:"' + Redamt + '",ccode:"' + Ccode + '",shipcharg:"' + shipcharge + '",rcode:"' + refcode + '"}',
                     url: "OrderSummery.aspx/CODPlaceMultipleOrder",
-                    data: JSON.stringify({ summeryModel: products, totalamount,redeemamount,PromoAmount,Discount,PaidAmt,PromoCode,reorderid }),
+                    data: JSON.stringify({ summeryModel: products, totalamount, redeemamount, PromoAmount, Discount, PaidAmt, PromoCode, reorderid }),
                     contentType: "application/json",
                     dataType: "json",
 
                     success: function (response) {
                         //window.location = "final.aspx";
+                        $('#spinner').hide();
                         window.location = "checkout.aspx";
                         // alert(response.d)
                         if (response != "") {
@@ -1119,9 +1123,11 @@
                         }
                     },
                     failure: function (response) {
+                        $('#spinner').hide();
+                        $("#btnplaceorder").attr("disabled", false);
                         alert("err");
                     }
-                })
+                });
             }
             //else {
             //    $.ajax({

@@ -443,4 +443,10 @@ public class clsModals
         public string NumberOfTimesOrdered;
     }
 
+    public class CheckJurisdictionModel
+    {
+        public string Response { get; set; }
+        public string Message { get; set; }
+    }
+
 }

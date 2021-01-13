@@ -151,6 +151,7 @@
 
                         <p class="number">Order Number: <span id="lblorderid" runat="server"></span></p>
                        <asp:Label ID="lblWhatsAppNo" runat="server" CssClass="hide"></asp:Label>
+                        <input type="hidden" id="encodedorderid" runat="server" value="0"/>
                         <%--<p class="number">Product Name: <span runat="server" id="Span1"></span></p>
                         <p class="number">Units: <span id="Span2" runat="server"></span></p>--%>
                         <div id="details" runat="server">
@@ -366,7 +367,7 @@
          });
 
          $("#orderdetails").click(function () {
-             window.location.href = 'order_details.aspx?Orderid=' + '<%=Session["PlaceOrderId"].ToString()%>';
+            window.location.href = 'order_details.aspx?Orderid=' +  $('#ContentPlaceHolder1_encodedorderid').val();
          });
 </script>
 

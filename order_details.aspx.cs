@@ -234,6 +234,7 @@ public partial class order_details : System.Web.UI.Page
                 lbltotordeamt.InnerHtml = objorder.Amount;
                 lblqtyno.InnerHtml = objorder.TotalQty;
                 lblpayment.InnerHtml = objorder.PaymentMode;
+                lblstatus.InnerHtml = objorder.OrderStatusText;
                 lblmsgtest.InnerHtml = "<span class=\"whatsapp\"><a class=\"fa fa-whatsapp\" id=\"web\" href=\"https://web.whatsapp.com/send?text=" + objorder.WhatsappMsg + " \"share/whatsapp/share\" target=\"_blank\" style=\"cursor:pointer;font-size: 22px;background: #25D366;color: #fff;padding: 6px;border-radius: 4px;\"></a></span> <span class=\"whatsapp\"><a class=\"fa fa-whatsapp\" id=\"mo-wa\" href=\"whatsapp://send?text=" + objorder.WhatsappMsg + "\"target=\"_blank\" style=\"cursor:pointer;font-size: 22px;background: #25D366;color: #fff;padding: 6px;border-radius: 4px;\"></a></span>";
                 if (objorder.products != null && objorder.products.Count > 0){
                     //string productid = objorder.products.FirstOrDefault().ProductId;

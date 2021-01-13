@@ -97,15 +97,23 @@ public partial class register : System.Web.UI.Page
                             link += "&f=" + lblflag1 + "&q=" + lblqty1 + "";
                           
                         }
-                        if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
+                        //if (!string.IsNullOrWhiteSpace(Request.QueryString["offercode"]))
+                        //{
+                        //    Response.Redirect(link + "&offercode=" + Request.QueryString["offercode"], false);
+                        //}
+                        //else
+                        //{
+                        //    Response.Redirect(link + "&offercode=" + Request.QueryString["offercode"], false);
+                        //}
+                        if (!string.IsNullOrWhiteSpace(Request.QueryString["fcode"]))
                         {
-                            Response.Redirect(link + "&offercode=" + Request.QueryString["offercode"], false);
+                            Response.Redirect(link + "&fcode=" + Request.QueryString["fcode"], false);
                         }
                         else
                         {
-                            Response.Redirect(link + "&offercode=" + Request.QueryString["offercode"], false);
+                            Response.Redirect(link + "&fcode=" + Request.QueryString["fcode"], false);
                         }
-                        
+
                         //Next Page Url
                     }
                 }
