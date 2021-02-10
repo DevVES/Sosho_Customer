@@ -623,20 +623,20 @@ public partial class Default : System.Web.UI.Page
                             {
                                 sOpenUrlLink = objproduct.ProductList[j].openUrlLink.ToString();
 
-                                BannerIntermediateHtml += "<a href='" + sOpenUrlLink + "' target='_blank'>";
-                                BannerIntermediateHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
-                                BannerIntermediateHtml += "</a>";
-                                BannerIntermediateHtml += "</div>";
-                                BannerIntermediateHtml += "</div>";
+                                BannerHtml += "<a href='" + sOpenUrlLink + "' target='_blank'>";
+                                BannerHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
+                                BannerHtml += "</a>";
+                                BannerHtml += "</div>";
+                                BannerHtml += "</div>";
                             }
                             else if (sBannerActionId == "2") // Action Id =2 (Navigate To Category)
                             {
                                 sBannerCategoryId = objproduct.ProductList[j].ActionCategoryId.ToString();
                                 sCategoryName = objproduct.ProductList[j].ActionCategoryName.ToString();
 
-                                BannerIntermediateHtml += "<img class='img' style='cursor:pointer;' src='" + objproduct.ProductList[j].bannerURL + "' onclick='Categoryimage(" + sBannerCategoryId + ",this)'/>";
-                                BannerIntermediateHtml += "</div>";
-                                BannerIntermediateHtml += "</div>";
+                                BannerHtml += "<img class='img' style='cursor:pointer;' src='" + objproduct.ProductList[j].bannerURL + "' onclick='Categoryimage(" + sBannerCategoryId + ",this)'/>";
+                                BannerHtml += "</div>";
+                                BannerHtml += "</div>";
                             }
                             else if (sBannerActionId == "3") // Action Id =3 (Add To Cart)
                             {
@@ -690,7 +690,7 @@ public partial class Default : System.Web.UI.Page
                                 BannerHtml += "</div>";
 
                             }
-                            else if (sBannerActionId == "-1") // Action Id =-1 (None)
+                            else if (sBannerActionId == "-1" || sBannerActionId == "0") // Action Id =-1 (None)
                             {
                                 BannerHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
                                 BannerHtml += "</div>";
@@ -1142,7 +1142,7 @@ public partial class Default : System.Web.UI.Page
                                 BannerIntermediateHtml += "</div>";
 
                             }
-                            else if (sBannerActionId == "-1") // Action Id =-1 (None)
+                            else if (sBannerActionId == "-1" || sBannerActionId == "0") // Action Id =-1 (None)
                             {
                                 BannerIntermediateHtml += "<img class='img' src='" + objproduct.ProductList[j].bannerURL + "' />";
                                 BannerIntermediateHtml += "</div>";

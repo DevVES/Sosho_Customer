@@ -1250,7 +1250,7 @@
     <%--</table>
     </div>--%>
 
-    <div id="divProductNew">
+    <div id="divProductNew" style="display:none;">
     </div>
 
     <div id="divIntermediateBannerImage">
@@ -2035,12 +2035,12 @@
                     //    window.location = "checkout.aspx";
                     //}
                     $('#spinner').hide();
-                    if (querystring != "") {
-                        window.location = "OrderSummery.aspx/" + querystring;
-                    } else {
-                        window.location = "OrderSummery.aspx";
-                    }
-                    //window.location = "OrderSummery.aspx";
+                    //if (querystring != "") {
+                    //    window.location = "OrderSummery.aspx/" + querystring;
+                    //} else {
+                    //    window.location = "OrderSummery.aspx";
+                    //}
+                    window.location = "OrderSummery.aspx";
 
                 },
                 failure: function (response) {
@@ -2097,7 +2097,9 @@
                             $("#divProductNew").html(response.d.response);
                             $("#divBannerImage").html(response.d.bannerresponse);
                             //$("#divIntermediateBannerImage").html(response.d.intermediateresponse);
+                            $("#divProductNew").hide();
                             $("#divProductNew").append(response.d.intermediateresponse);
+                            $("#divProductNew").fadeIn(3000);
                             AllProducts.push(...response.d.productdata.ProductList);
                             //document.documentElement.scrollTop = 0;
                             $('html, body').animate({ scrollTop: 0 }, 'slow', function () {
@@ -2809,7 +2811,8 @@
                         if (resultflag == "1") {
                             //$("#lblpinnotmsg").hide();
                             $("#lblpinmsg").show();
-                            $('#header_topbar1').show();
+                            //$('#header_topbar1').show();
+                            $('#header_topbar1').fadeIn(3000);
                             var labelObj = document.getElementById("<%=lblpinmsg.ClientID %>");
                             labelObj.innerHTML = message;
                             $("#lblpinmsg").val(message);
@@ -2881,15 +2884,20 @@
                                     //}
                                     //$("#btnsendMessage").text(getdata.data);
 
-                                    $('.mobile-number').show();
-                                    $('.offer-time').show();
+                                    //$('.mobile-number').show();
+                                    //$('.offer-time').show();
+                                      $('.mobile-number').fadeIn(3000);
+                                    $('.offer-time').fadeIn(3000);
                                     $('#ContentPlaceHolder1_divCategory').show();
                                     $('#ContentPlaceHolder1_divSubCat').show();
-                                    $('#lbllogout').show();
-                                    $('#divSortProduct').show();
+                                    //$('#lbllogout').show();
+                                    //$('#divSortProduct').show();
+                                    $('#lbllogout').fadeIn(3000);
+                                    $('#divSortProduct').fadeIn(3000);
                                     $("#btnsendMessage").text(response.d.whatsapp);
                                     //$("#divProductNew").append(JSON.stringify(response.d.response).replace('"', " "));
                                     $("#divProductNew").append(response.d.response);
+                                    $("#divProductNew").fadeIn(3000);
                                     $("#divBannerImage").append(response.d.bannerresponse);
 
                                     //$("#divIntermediateBannerImage").append(response.d.intermediateresponse);

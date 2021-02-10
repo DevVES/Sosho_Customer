@@ -454,7 +454,7 @@ public partial class OrderSummery : System.Web.UI.Page
                 //}
                 if (objreed.response.Equals("1"))
                 {
-                    reeamt.InnerHtml = objreed.RedeemeAmount.ToString();
+                    reeamt.InnerHtml = string.IsNullOrEmpty(objreed.RedeemeAmount) ? "0" : objreed.RedeemeAmount;
                     punchamt.Value = objreed.RedeemableAmount;
                     lblshowmsgwallet.InnerHtml = objreed.RedeemDetails;
                     minOrderAmount.Value = objreed.MinimumOrderAmount;
