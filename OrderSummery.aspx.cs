@@ -193,7 +193,7 @@ public partial class OrderSummery : System.Web.UI.Page
                     if (item.Productvariant.ToString() == "BannerProduct")
                     {
                         //imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
-                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name, pm.PackingType,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
+                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name, pm.PackingType,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze,pm.MaxQty from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
                         dtimg = dbc.GetDataTable(imgquery);
 
                         querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
@@ -202,7 +202,7 @@ public partial class OrderSummery : System.Web.UI.Page
                     else if (item.Productvariant.ToString() == "HomeBannerProduct")
                     {
                         //imgquery = "select ImageName as ImageFileName, Product.Name,UnitMaster.UnitName,Product.Unit,Product.IsQtyFreeze from IntermediateBanners InBanner inner join Product ON Product.Id = InBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where InBanner.ProductId =" + item.productid + " and isnull(InBanner.Isdeleted,0)=0";
-                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name, pm.PackingType,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze from HomepageBanner HomeBanner inner join Product ON Product.Id = HomeBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where HomeBanner.ProductId =" + item.productid + " and isnull(HomeBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
+                        imgquery = "select pm.ProductImage as ImageFileName, Product.Name, pm.PackingType,UnitMaster.UnitName,Product.Unit,pm.IsQtyFreeze,pm.MaxQty from HomepageBanner HomeBanner inner join Product ON Product.Id = HomeBanner.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId inner join Product_ProductAttribute_Mapping pm ON pm.ProductId = Product.Id Where HomeBanner.ProductId =" + item.productid + " and isnull(HomeBanner.Isdeleted,0)=0 and pm.Id=" + item.AttributeId;
                         dtimg = dbc.GetDataTable(imgquery);
 
                         querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
@@ -216,7 +216,7 @@ public partial class OrderSummery : System.Web.UI.Page
                         //querydata = "select KeyValue from StringResources where KeyName='ProductImageUrl'";
                         //dtpathimg = dbc.GetDataTable(querydata);
 
-                        imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,Product_ProductAttribute_Mapping.PackingType,UnitMaster.UnitName,Product.Unit,Product_ProductAttribute_Mapping.IsQtyFreeze from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
+                        imgquery = "select Product_ProductAttribute_Mapping.ProductImage as ImageFileName, Product.Name,Product_ProductAttribute_Mapping.PackingType,UnitMaster.UnitName,Product.Unit,Product_ProductAttribute_Mapping.IsQtyFreeze,Product_ProductAttribute_Mapping.MaxQty from Product_ProductAttribute_Mapping inner join Product ON Product.Id = Product_ProductAttribute_Mapping.ProductId inner join UnitMaster ON UnitMaster.Id = Product.UnitId Where Product_ProductAttribute_Mapping.ProductId =" + item.productid + " and isnull(Product_ProductAttribute_Mapping.Isdeleted,0)=0 and Product_ProductAttribute_Mapping.Id=" + item.AttributeId;
                         dtimg = dbc.GetDataTable(imgquery);
 
                         querydata = "select KeyValue from StringResources where KeyName='ProductAttributeImageUrl'";
@@ -225,6 +225,7 @@ public partial class OrderSummery : System.Web.UI.Page
                     //}
                     string urlpathimg = "";
                     Boolean IsQtyFreeze = false;
+                    string MaxQty = string.Empty;
                     if (dtpathimg != null && dtpathimg.Rows.Count > 0)
                     {
                         urlpathimg = dtpathimg.Rows[0]["KeyValue"].ToString();
@@ -243,6 +244,10 @@ public partial class OrderSummery : System.Web.UI.Page
                             if (dtimg.Rows[0]["IsQtyFreeze"].ToString() == "True")
                                 IsQtyFreeze = true;
                         }
+                        if (!string.IsNullOrEmpty(dtimg.Rows[0]["MaxQty"].ToString()))
+                        {
+                                MaxQty = dtimg.Rows[0]["MaxQty"].ToString();
+                        }
 
                         if (!string.IsNullOrEmpty(dtimg.Rows[0]["PackingType"].ToString()))
                         {
@@ -258,32 +263,32 @@ public partial class OrderSummery : System.Web.UI.Page
                     html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lbldisplayunit\"> Weight:" + Weight + "</span></div>";
                     html += "<div class=\"final-amt\"><p id=\"lbltotprices\">" + SoshoTotal + ".00 </p></div></div>";
                     html += "<div class=\"price\"><div class=\"gram\"> <span id=\"lblproprice\"> <span>Price / Qty : " + item.PaidAmount + "</span> <span id=\"lblmrp\" style=\"display:none;\">"+item.Mrp+"</span></div></div>";
-                    if (IsQtyFreeze)
-                    {
-                        html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid +','+item.AttributeId+','+item.PaidAmount+','+item.Mrp+','+item.BannerId+','+item.BannerProductType+",this)\"><i class=\"fa fa-minus\"></i></button>";
-                        html += "<div class=\"qty\" style=\"display: grid;\"><input readonly=true type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
-                        html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#a5a5a5\" onclick=\"Priceplus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ','  + item.BannerId + ',' + item.BannerProductType + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div>";
+                    //if (IsQtyFreeze)
+                    //{
+                    //    html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" style=\"color:white;background-color:#1DA1F2\" class=\"minus\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid +','+item.AttributeId+','+item.PaidAmount+','+item.Mrp+','+item.BannerId+','+item.BannerProductType+",this)\"><i class=\"fa fa-minus\"></i></button>";
+                    //    html += "<div class=\"qty\" style=\"display: grid;\"><input readonly=true type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
+                    //    html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
+                    //    html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#a5a5a5\" onclick=\"Priceplus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ','  + item.BannerId + ',' + item.BannerProductType + ",this)\" disabled><i class=\"fa fa-plus\"></i></button></div>";
 
-                        if (!item.isProductAvailable)
-                        {
-                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Not Serviceble</lable></div>";
-                        }else if (item.isOfferExpired){
-                            html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Offer Expired</lable></div>";
-                        }
-                        else if (item.isOutOfStock)
-                        {
-                            html += "<div class=\"clsOutofStock col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
-                        }
+                    //    if (!item.isProductAvailable)
+                    //    {
+                    //        html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Not Serviceble</lable></div>";
+                    //    }else if (item.isOfferExpired){
+                    //        html += "<div class=\"col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Offer Expired</lable></div>";
+                    //    }
+                    //    else if (item.isOutOfStock)
+                    //    {
+                    //        html += "<div class=\"clsOutofStock col-sm-4\" style=\"border: 2px solid red;text-align: center;color: red;font-size: large;font-weight: 600;border-radius: 8px;\"><lable>Out of Stock</lable></div>";
+                    //    }
 
-                        html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ","+item.AttributeId+ ",this)\"></i></div></div></div>";
-                    }
-                    else
-                    {
+                    //    html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid + ","+item.AttributeId+ ",this)\"></i></div></div></div>";
+                    //}
+                    //else
+                    //{
                         html += "<div class=\"product-qty\"><div class=\"inline col-sm-3\" style=\"padding: 0px;\"><button type=\"button\" class=\"minus\" style=\"color:white;background-color:#1DA1F2\" id=\"btnminuqty\" onclick=\"PriceMinus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ',' + item.BannerId + ',' + item.BannerProductType + ",this)\"><i class=\"fa fa-minus\"></i></button>";
-                        html += "<div class=\"qty\" style=\"display: grid;\"><input type=\"text\" id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
+                        html += "<div class=\"qty\" style=\"display: grid;\"><input type=\"text\" readonly=true id=\"txtqty\" value=\"" + item.Quantity + "\" class=\"\" style=\"width:29px; height:27px;\" onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g,'')\" maxlength=\"2\" />";
                         html += "<a onclick=\"saveitem(0); return false;\" class=\"hide\" > Save </a></div>";
-                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ',' + item.BannerId + ',' + item.BannerProductType + ",this)\"><i class=\"fa fa-plus\"></i></button></div>";
+                        html += "<button type=\"button\"  class=\"plus\" id=\"btnplus\" style=\"color:white;background-color:#1DA1F2\" onclick=\"Priceplus(" + item.productid + ',' + item.AttributeId + ',' + item.PaidAmount + ',' + item.Mrp + ',' + item.BannerId + ',' + item.BannerProductType + ",this,"+MaxQty+")\"><i class=\"fa fa-plus\"></i></button></div>";
 
                         if (!item.isProductAvailable)
                         {
@@ -299,7 +304,7 @@ public partial class OrderSummery : System.Web.UI.Page
                         }
 
                         html += "</div><div class=\"product-line-price\"><i class=\"fa fa-trash\" onclick=\"Remove(" + item.productid +","+item.AttributeId+ ",this)\"></i></div></div></div>";
-                    }
+                    //}
                     if (item.isOfferExpired || !item.isProductAvailable || item.isOutOfStock)
                     {
                         productstatus.Value = "true";

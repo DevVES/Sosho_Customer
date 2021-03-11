@@ -664,7 +664,7 @@
             console.log(products);
         }
 
-        function Priceplus(prodid,Grpid,soshoprice,mrp,bannerid,producttype, el) {
+        function Priceplus(prodid,Grpid,soshoprice,mrp,bannerid,producttype, el,maxQty) {
             $this = $(el);
             var elprice = $this.parents('.single-product').find('#lblproprice');
             var price = elprice[0].firstElementChild.innerText.substring(elprice[0].firstElementChild.innerText.indexOf(":") + 2);
@@ -681,6 +681,10 @@
 
             var qty = Number(proqty);
             qty = qty + 1;
+            if (qty > Number(maxQty)) {
+                alert("Quantity cannot be exceeded more than " + maxQty);
+                return;
+            }
 
             var prtotal = price * qty;
             var total = prtotal.toFixed(2);

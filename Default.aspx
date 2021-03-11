@@ -23,6 +23,10 @@
             margin: 0 auto;
             min-height: 60px
         }
+        input:read-only {
+            opacity: 1;
+            background-color: #fff;
+        }
         /*#header_topbar {
             position: relative;
             z-index: 1;
@@ -1511,7 +1515,7 @@
                 UpdateSessionCart();
             }
         }
-        function plusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType) {
+        function plusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType,maxQty) {
             var grpId = grpid;
             var productvariant = $('#hdnProductVariant' + grpid).val();
             var unitId = $('#ddlUnit' + grpid).val();
@@ -1529,7 +1533,10 @@
 
             if (type == 1) {
                 value = value + 1;
-
+                if (value > Number(maxQty)) {
+                    alert("Quantity cannot be exceeded more than "+maxQty);
+                    return;
+                }
                 var product = products.find(x => x.Productid == prodid);
                 if (product != null && product != undefined) {
                     products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
@@ -1555,8 +1562,6 @@
                 //    value = value - 1;
                 //}
                 value = value - 1;
-
-
                 if (value == 0) {
                     $('#AddShow' + rowindexval).hide();
                     $('#BtnAdd' + rowindexval).show();
@@ -1719,7 +1724,7 @@
         //}
 
 
-        function Bannerplusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType, BannerId) {
+        function Bannerplusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType, BannerId,maxQty) {
             var grpId = grpid;
             var productvariant;
             if (bannerProductType == "3") {
@@ -1740,7 +1745,10 @@
 
             if (type == 1) {
                 value = value + 1;
-
+                if (value > Number(maxQty)) {
+                    alert("Quantity cannot be exceeded more than " + maxQty);
+                    return;
+                }
                 var product = products.find(x => x.Productid == prodid);
                 if (product != null && product != undefined) {
                     products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);

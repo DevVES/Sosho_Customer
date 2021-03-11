@@ -32,7 +32,7 @@ public partial class Reorder : System.Web.UI.Page
 
                     string sDiscount = "", sProductVariant = "", sMrp = "", sSoshoPrice = "", sWeight = "", sIsProductDescription = "", sAImageName = "";
                     decimal dMrp = 0, dSoshoPrice = 0, dSavePrice = 0;
-                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "", sMinQty = string.Empty, sIsOutofStock = "", sPackingType = string.Empty;
+                    string sProductId = "", sGrpId = "", sCategoryId = "", sIsQtyFreeze = "", sMinQty = string.Empty, sMaxQty = string.Empty, sIsOutofStock = "", sPackingType = string.Empty;
                     string sisSelected = "", sProductName = "", sProductDesc = "", sProductKeyFeatures = "",sOrderedQty = string.Empty;
                     int iIndex = 0;
                     sWhatsAppNo = objproduct.WhatsAppNo;
@@ -61,6 +61,7 @@ public partial class Reorder : System.Web.UI.Page
                             sMinQty = objproduct.ProductList[j].MinQty.ToString();
                             sPackingType = objproduct.ProductList[j].PackingType;
                             sOrderedQty = objproduct.ProductList[j].OrderedQuantity.ToString();
+                            sMaxQty = objproduct.ProductList[j].MaxQty.ToString();
 
 
 
@@ -169,18 +170,18 @@ public partial class Reorder : System.Web.UI.Page
                             html += "</tr>";
                             html += "<tr id='AddShow" + sGrpId + "' style='display:none;'>";
                             html += "<td colspan='3' style='padding-top:15px;padding-left:10px;' class='AmazonFont'>";
-                            if (!string.IsNullOrEmpty(sIsQtyFreeze) && Convert.ToBoolean(sIsQtyFreeze))
-                            {
-                                html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-minus'></i></button>";
-                                html += "<input id='txtqty' runat='server' value='" + sMinQty + "' style='font-weight:bold;width:40px;text-align: center;'  onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                html += "<button class='btn ProductBtn' type='button' id='btnplus' style='background: #a5a5a5;' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1) disabled'><i class='fa fa-plus'></i></button>";
-                            }
-                            else
-                            {
-                                html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-minus'></i></button>";
-                                html += "<input id='txtqty' runat='server' value='"+ sOrderedQty + "' style='font-weight:bold;width:40px;text-align: center;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
-                                html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-plus'></i></button>";
-                            }
+                            //if (!string.IsNullOrEmpty(sIsQtyFreeze) && Convert.ToBoolean(sIsQtyFreeze))
+                            //{
+                            //    html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1)'><i class='fa fa-minus'></i></button>";
+                            //    html += "<input id='txtqty' runat='server' value='" + sMinQty + "' style='font-weight:bold;width:40px;text-align: center;'  onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                            //    html += "<button class='btn ProductBtn' type='button' id='btnplus' style='background: #a5a5a5;' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1) disabled'><i class='fa fa-plus'></i></button>";
+                            //}
+                            //else
+                            //{
+                                html += "<button class='btn ProductBtn' type='button' id='btnminus' runat='server' onclick='plusqty(0," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1," + sMaxQty + ")'><i class='fa fa-minus'></i></button>";
+                                html += "<input id='txtqty' readonly=true runat='server' value='"+ sOrderedQty + "' style='font-weight:bold;width:40px;text-align: center;' onkeyup=\"if (/\\D/g.test(this.value)) this.value = this.value.replace(/\\D/g, '')\"/>";
+                                html += "<button class='btn ProductBtn' type='button' id='btnplus' runat='server' onclick='plusqty(1," + sProductId + "," + sGrpId + "," + sMrp + "," + sSoshoPrice + ",this,1," + sMaxQty + ")'><i class='fa fa-plus'></i></button>";
+                            //}
 
                             html += "</td>";
                             html += "</tr>";

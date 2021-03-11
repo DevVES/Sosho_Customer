@@ -21,6 +21,10 @@
             font-size: 15px;
             font-family: 'Amazon Ember'
         }
+         input:read-only {
+            opacity: 1;
+            background-color: #fff;
+        }
 
         .ProductImage {
             /*height: 400px;
@@ -406,7 +410,7 @@
             }
         }
 
-        function plusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType) {
+        function plusqty(type, prodid, grpid, mrp, soshoprice, el, bannerProductType,maxQty) {
             var grpId = grpid;
             var productvariant = $('#hdnProductVariant' + grpid).val();
             var unitId = $('#ddlUnit' + grpid).val();
@@ -424,7 +428,10 @@
 
             if (type == 1) {
                 value = value + 1;
-
+                if (value > Number(maxQty)) {
+                    alert("Quantity cannot be exceeded more than " + maxQty);
+                    return;
+                }
                 var product = products.find(x => x.Productid == prodid);
                 if (product != null && product != undefined) {
                     products.splice(products.findIndex(x => x.Productid == prodid && x.Grpid == grpid), 1);
